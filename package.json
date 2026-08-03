@@ -7,7 +7,7 @@
     "build": "ng build",
     "vendor:pack": "node scripts/pack-vendor.js",
     "vendor:refs": "node scripts/update-vendor-refs.js",
-    "vendor:install": "rm -rf vendor/* && npm run vendor:pack && npm run vendor:refs && npm install"
+    "vendor:install": "rm -rf vendor/* && npm run vendor:pack && npm run vendor:refs && npm install --no-package-lock"
   },
   "dependencies": {
     "@a3-digital/configurability": "file:./vendor/a3-digital-configurability.tgz",
