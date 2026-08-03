@@ -4,7 +4,13 @@
       "mcp__claude-in-chrome__navigate",
       "mcp__claude-in-chrome__tabs_context_mcp",
       "mcp__visualize__read_me",
-      "mcp__visualize__show_widget"
+      "mcp__visualize__show_widget",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(json.dumps\\({k:d[k] for k in ['scripts','dependencies','devDependencies'] if k in d}, indent=2\\)\\)\")",
+      "Bash(node scripts/wire-prototypes.js)",
+      "Read(//dev/**)",
+      "Bash(git -C /Users/mcarlucci/projects/lumin-prototype diff -- src/app/app-routing.module.ts src/app/app.module.ts src/app/prototype-registry.ts)",
+      "Bash(git -C /Users/mcarlucci/projects/lumin-prototype diff -- src/app/app-routing.module.ts src/app/app.module.ts)",
+      "Bash(git -C /Users/mcarlucci/projects/lumin-prototype diff -- src/app)"
     ]
   }
 }

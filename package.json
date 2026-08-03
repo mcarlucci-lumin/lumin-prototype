@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "ng serve",
+    "start": "node scripts/wire-prototypes.js --watch & ng serve",
     "build": "ng build",
+    "wire": "node scripts/wire-prototypes.js",
+    "wire:watch": "node scripts/wire-prototypes.js --watch",
     "vendor:pack": "node scripts/pack-vendor.js",
     "vendor:refs": "node scripts/update-vendor-refs.js",
     "vendor:install": "rm -rf vendor/* && npm run vendor:pack && npm run vendor:refs && npm install --no-package-lock"
