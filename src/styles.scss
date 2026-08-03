@@ -1,0 +1,16 @@
+@use '@a3-digital/ui-styles/styles/partials/configuration-v2';
+@use '@a3-digital/ui-styles/styles/partials/native-css-variables';
+@use '@a3-digital/ui-styles/styles/partials/tokens';
+@use '@a3-digital/ui-styles/styles/partials/global';
+@use '@a3-digital/ui-styles/styles/mixins/icons';
+
+@use './app/styles/fonts';
+
+@include icons.generate-svg-icons();
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: var(--color-background-sunken, var(--color-gray-100, #f4f4f4));
+}

@@ -1,0 +1,67 @@
+name: Refresh vendor packages
+
+on:
+  # Run whenever vendor-config.json changes (version bumps)
+  push:
+    branches: [main]
+    paths: ['vendor-config.json']
+  # Run weekly to pick up patch releases if using ranges
+  schedule:
+    - cron: '0 2 * * 1'
+  # Manual trigger (e.g. first-time setup or forced refresh)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh-vendor:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Use a PAT so the push back to main triggers downstream workflows if needed.
+          # If no downstream workflows need triggering, the default GITHUB_TOKEN is fine.
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Configure npm registry auth
+        run: |
+          npm config set "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}"
+          npm config set legacy-peer-deps true
+
+      - name: Remove stale tarballs
+        run: rm -f vendor/*.tgz
+
+      - name: Pack @a3-digital packages into vendor/
+        run: |
+          # Read vendor-config.json and pack each package at its pinned version.
+          # npm pack <pkg>@<ver> downloads from the registry and writes a .tgz to vendor/.
+          node -e "
+            const config = JSON.parse(require('fs').readFileSync('vendor-config.json', 'utf8'));
+            for (const [pkg, ver] of Object.entries(config)) {
+              process.stdout.write(pkg + '@' + ver + '\n');
+            }
+          " | while IFS= read -r pkg; do
+            echo "Packing $pkg..."
+            npm pack "$pkg" --pack-destination vendor/ --quiet
+          done
+
+      - name: "Update package.json with file: references"
+        run: node scripts/update-vendor-refs.js
+
+      - name: Commit and push vendor updates
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add vendor/ package.json
+          if git diff --staged --quiet; then
+            echo "Vendor packages unchanged — nothing to commit."
+          else
+            git commit -m "chore: refresh @a3-digital vendor tarballs"
+            git push
+          fi

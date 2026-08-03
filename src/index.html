@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Lumin Prototype</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preload" href="/assets/fonts/MaterialSymbols-Sharp-Filled-Bold-v2.941.woff2" as="font" type="font/woff2" crossorigin>
+  <script>
+    function checkMaterialIconsLoaded() {
+      document.fonts.load('1em "Material Symbols Sharp Filled Bold"').then(function() {
+        document.documentElement.classList.add('material-icons-loaded');
+      }).catch(function(e) { console.warn('material-symbols font failed to load', e); });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', checkMaterialIconsLoaded);
+    } else {
+      checkMaterialIconsLoaded();
+    }
+  </script>
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>

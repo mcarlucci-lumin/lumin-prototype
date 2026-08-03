@@ -1,0 +1,34 @@
+<main class="prototype-gallery">
+    <div class="prototype-gallery__header">
+        <h1 class="prototype-gallery__title">Prototypes</h1>
+        <p class="prototype-gallery__subtitle">{{ prototypes.length }} prototype{{ prototypes.length !== 1 ? 's' : '' }}</p>
+    </div>
+
+    <div class="prototype-gallery__grid">
+        @for (proto of prototypes; track proto.path) {
+            <ui-core-card
+                theme="elevated-interactive"
+                [equalPadding]="true"
+                height="100%"
+                class="prototype-gallery__tile"
+                (click)="navigate(proto.path)">
+                <div class="prototype-gallery__tile-inner">
+                    <p class="prototype-gallery__tile-path">{{ proto.path }}</p>
+                    <h2 class="prototype-gallery__tile-name">{{ proto.name }}</h2>
+                    @if (proto.description) {
+                        <p class="prototype-gallery__tile-desc">{{ proto.description }}</p>
+                    }
+                    <div class="prototype-gallery__tile-action">
+                        <ui-core-button
+                            theme="primary"
+                            themeGroup="neutral"
+                            message="View prototype"
+                            icon="arrow_forward"
+                            iconPosition="right">
+                        </ui-core-button>
+                    </div>
+                </div>
+            </ui-core-card>
+        }
+    </div>
+</main>

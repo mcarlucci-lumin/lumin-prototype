@@ -1,0 +1,74 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "lumin-prototype": {
+      "projectType": "application",
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/lumin-prototype",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": ["zone.js", "reflect-metadata"],
+            "tsConfig": "tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "node_modules/@a3-digital/ui-styles/fonts",
+                "output": "./assets/fonts"
+              }
+            ],
+            "styles": ["src/styles.scss"],
+            "stylePreprocessorOptions": {
+              "includePaths": ["node_modules"]
+            },
+            "allowedCommonJsDependencies": [
+              "card-validator",
+              "dompurify",
+              "file-saver",
+              "handlebars",
+              "lottie-web",
+              "moment",
+              "moment-timezone",
+              "quill-delta",
+              "reflect-metadata"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "buildOptimizer": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "budgets": [
+                { "type": "initial", "maximumWarning": "8mb", "maximumError": "20mb" }
+              ]
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "buildTarget": "lumin-prototype:build:development"
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": "33bb4a41-b012-476c-af7c-1d1fbf541b5c"
+  }
+}

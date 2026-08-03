@@ -1,0 +1,19 @@
+# Dependencies — vendor/ is intentionally committed (pre-built @a3-digital tarballs)
+node_modules/
+
+# Build output
+dist/
+.angular/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Angular cache
+.angular/cache
