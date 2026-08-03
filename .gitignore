@@ -1,5 +1,6 @@
 # Dependencies — vendor/ is intentionally committed (pre-built @a3-digital tarballs)
 node_modules/
+.package-lock.json
 
 # Build output
 dist/
