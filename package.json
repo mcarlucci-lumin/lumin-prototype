@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node scripts/wire-prototypes.js --watch & ng serve",
+    "start": "node scripts/dev-file-server.js & node scripts/wire-prototypes.js --watch & ng serve",
     "build": "ng build",
     "wire": "node scripts/wire-prototypes.js",
     "wire:watch": "node scripts/wire-prototypes.js --watch",

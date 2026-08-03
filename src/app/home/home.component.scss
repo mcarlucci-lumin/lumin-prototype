@@ -34,10 +34,82 @@
         }
     }
 
+    // ── Tile wrapper (positions the remove button + removing overlay) ─────
+    &__tile-wrap {
+        position: relative;
+
+        &:hover > .prototype-gallery__tile-remove {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        &--removing {
+            pointer-events: none;
+        }
+    }
+
     &__tile {
         cursor: pointer;
         display: block;
         height: 100%;
+    }
+
+    // ── Remove button (top-right, visible on tile hover) ──────────────────
+    &__tile-remove {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        z-index: 2;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        padding: 0;
+        border: none;
+        border-radius: 6px;
+        background: rgba(15, 15, 15, 0.65);
+        color: #fff;
+        cursor: pointer;
+
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.15s, background 0.15s;
+
+        &:hover { background: #dc2626; }
+        &:disabled { opacity: 0.4; cursor: default; }
+
+        svg {
+            width: 13px;
+            height: 13px;
+        }
+    }
+
+    // ── Removing overlay ──────────────────────────────────────────────────
+    &__tile-removing {
+        position: absolute;
+        inset: 0;
+        z-index: 3;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.82);
+        font-size: 0.825rem;
+        color: var(--text-color-secondary, #666);
+        backdrop-filter: blur(2px);
+    }
+
+    &__tile-removing-spinner {
+        width: 22px;
+        height: 22px;
+        border: 2px solid var(--border-color, #d0d5dd);
+        border-top-color: var(--text-color-secondary, #666);
+        border-radius: 50%;
+        animation: dz-spin 0.75s linear infinite;
     }
 
     &__tile-inner {
@@ -72,4 +144,157 @@
     &__tile-action {
         margin-top: 1.25rem;
     }
+}
+
+// ── Drop zone ─────────────────────────────────────────────────────────────────
+
+.prototype-dropzone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    min-height: 140px;
+    margin-bottom: 2rem;
+    padding: 2rem 1.5rem;
+    border-radius: 10px;
+
+    border: 2px dashed var(--border-color, #d0d5dd);
+    background: var(--surface-subtle, #f9fafb);
+    color: var(--text-color-secondary, #666);
+
+    transition: border-color 0.15s, background 0.15s, color 0.15s;
+    cursor: default;
+    user-select: none;
+
+    // ── Drag-over state ───────────────────────────────────────────────────
+    &--dragover {
+        border-style: solid;
+        border-color: var(--color-primary, #2563eb);
+        background: var(--color-primary-subtle, #eff6ff);
+        color: var(--color-primary, #2563eb);
+    }
+
+    // ── Uploading state ───────────────────────────────────────────────────
+    &--uploading {
+        border-style: solid;
+        border-color: var(--border-color, #d0d5dd);
+        color: var(--text-color-secondary, #666);
+    }
+
+    // ── Success state ─────────────────────────────────────────────────────
+    &--success {
+        border-style: solid;
+        border-color: #16a34a;
+        background: #f0fdf4;
+        color: #15803d;
+    }
+
+    // ── Error state ───────────────────────────────────────────────────────
+    &--error {
+        border-style: solid;
+        border-color: #dc2626;
+        background: #fef2f2;
+        color: #b91c1c;
+    }
+
+    // ── Upload icon ───────────────────────────────────────────────────────
+    &__icon {
+        width: 40px;
+        height: 40px;
+        opacity: 0.6;
+
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .prototype-dropzone--dragover & {
+            opacity: 1;
+        }
+    }
+
+    // ── Status badge (success / error icon) ───────────────────────────────
+    &__badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+
+        svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        &--success {
+            background: #16a34a;
+            color: #fff;
+        }
+
+        &--error {
+            background: #dc2626;
+            color: #fff;
+        }
+    }
+
+    // ── Text ──────────────────────────────────────────────────────────────
+    &__label {
+        margin: 0;
+        font-size: 0.9rem;
+        text-align: center;
+        line-height: 1.4;
+
+        strong {
+            font-weight: 600;
+            color: var(--text-color-primary, #1a1a1a);
+
+            .prototype-dropzone--dragover & {
+                color: inherit;
+            }
+        }
+
+        &--error {
+            max-width: 560px;
+            font-size: 0.825rem;
+        }
+    }
+
+    &__hint {
+        margin: 0;
+        font-size: 0.78rem;
+        text-align: center;
+        color: var(--text-color-tertiary, #999);
+    }
+
+    // ── Dismiss button ────────────────────────────────────────────────────
+    &__dismiss {
+        margin-top: 0.25rem;
+        padding: 0.25rem 0.875rem;
+        border: 1px solid currentColor;
+        border-radius: 4px;
+        background: transparent;
+        color: inherit;
+        font-size: 0.8rem;
+        cursor: pointer;
+        opacity: 0.75;
+
+        &:hover { opacity: 1; }
+    }
+
+    // ── Spinner ───────────────────────────────────────────────────────────
+    &__spinner {
+        width: 32px;
+        height: 32px;
+        border: 3px solid var(--border-color, #d0d5dd);
+        border-top-color: var(--text-color-secondary, #666);
+        border-radius: 50%;
+        animation: dz-spin 0.75s linear infinite;
+    }
+}
+
+@keyframes dz-spin {
+    to { transform: rotate(360deg); }
 }

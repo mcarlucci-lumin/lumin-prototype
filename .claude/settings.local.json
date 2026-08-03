@@ -10,7 +10,15 @@
       "Read(//dev/**)",
       "Bash(git -C /Users/mcarlucci/projects/lumin-prototype diff -- src/app/app-routing.module.ts src/app/app.module.ts src/app/prototype-registry.ts)",
       "Bash(git -C /Users/mcarlucci/projects/lumin-prototype diff -- src/app/app-routing.module.ts src/app/app.module.ts)",
-      "Bash(git -C /Users/mcarlucci/projects/lumin-prototype diff -- src/app)"
+      "Bash(git -C /Users/mcarlucci/projects/lumin-prototype diff -- src/app)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); s=d['projects']['lumin-prototype']['architect']['serve']; print\\(json.dumps\\(s, indent=2\\)\\)\")",
+      "Bash(node -e ' *)",
+      "Bash(node scripts/dev-file-server.js)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" -X OPTIONS http://localhost:4201/upload)",
+      "Bash(curl -s -X POST http://localhost:4201/upload -H 'X-File-Path: smoke-test/smoke-test.component.ts' --data-binary @-)",
+      "Bash(kill %1)",
+      "Bash(wait)",
+      "Bash(pkill -f dev-file-server)"
     ]
   }
 }

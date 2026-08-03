@@ -4,31 +4,116 @@
         <p class="prototype-gallery__subtitle">{{ prototypes.length }} prototype{{ prototypes.length !== 1 ? 's' : '' }}</p>
     </div>
 
+    <div class="prototype-dropzone"
+         [class.prototype-dropzone--dragover]="dropState === 'dragover'"
+         [class.prototype-dropzone--uploading]="dropState === 'uploading'"
+         [class.prototype-dropzone--success]="dropState === 'success'"
+         [class.prototype-dropzone--error]="dropState === 'error'"
+         (dragover)="onDragOver($event)"
+         (dragenter)="onDragEnter($event)"
+         (dragleave)="onDragLeave()"
+         (drop)="onDrop($event)">
+
+        @if (dropState === 'idle' || dropState === 'dragover') {
+            <div class="prototype-dropzone__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+            </div>
+            <p class="prototype-dropzone__label">
+                @if (dropState === 'dragover') {
+                    Release to upload
+                } @else {
+                    Drop a <strong>prototype directory</strong> or <strong>.zip</strong>
+                }
+            </p>
+            @if (dropState === 'idle') {
+                <p class="prototype-dropzone__hint">
+                    The folder name becomes the route &amp; the app rewires automatically
+                </p>
+            }
+        }
+
+        @if (dropState === 'uploading') {
+            <div class="prototype-dropzone__spinner"></div>
+            <p class="prototype-dropzone__label">Uploading…</p>
+        }
+
+        @if (dropState === 'success') {
+            <div class="prototype-dropzone__badge prototype-dropzone__badge--success">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                </svg>
+            </div>
+            <p class="prototype-dropzone__label">{{ statusMessage }}</p>
+        }
+
+        @if (dropState === 'error') {
+            <div class="prototype-dropzone__badge prototype-dropzone__badge--error">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </div>
+            <p class="prototype-dropzone__label prototype-dropzone__label--error">{{ statusMessage }}</p>
+            <button class="prototype-dropzone__dismiss" (click)="dismissError()">Dismiss</button>
+        }
+    </div>
+
     <div class="prototype-gallery__grid">
         @for (proto of prototypes; track proto.path) {
-            <ui-core-card
-                theme="elevated-interactive"
-                [equalPadding]="true"
-                height="100%"
-                class="prototype-gallery__tile"
-                (click)="navigate(proto.path)">
-                <div class="prototype-gallery__tile-inner">
-                    <p class="prototype-gallery__tile-path">{{ proto.path }}</p>
-                    <h2 class="prototype-gallery__tile-name">{{ proto.name }}</h2>
-                    @if (proto.description) {
-                        <p class="prototype-gallery__tile-desc">{{ proto.description }}</p>
-                    }
-                    <div class="prototype-gallery__tile-action">
-                        <ui-core-button
-                            theme="primary"
-                            themeGroup="neutral"
-                            message="View prototype"
-                            icon="arrow_forward"
-                            iconPosition="right">
-                        </ui-core-button>
+            <div class="prototype-gallery__tile-wrap"
+                 [class.prototype-gallery__tile-wrap--removing]="removingSlug === proto.path.slice(1)">
+
+                <ui-core-card
+                    theme="elevated-interactive"
+                    [equalPadding]="true"
+                    height="100%"
+                    class="prototype-gallery__tile"
+                    (click)="navigate(proto.path)">
+                    <div class="prototype-gallery__tile-inner">
+                        <p class="prototype-gallery__tile-path">{{ proto.path }}</p>
+                        <h2 class="prototype-gallery__tile-name">{{ proto.name }}</h2>
+                        @if (proto.description) {
+                            <p class="prototype-gallery__tile-desc">{{ proto.description }}</p>
+                        }
+                        <div class="prototype-gallery__tile-action">
+                            <ui-core-button
+                                theme="primary"
+                                themeGroup="neutral"
+                                message="View prototype"
+                                icon="arrow_forward"
+                                iconPosition="right">
+                            </ui-core-button>
+                        </div>
                     </div>
-                </div>
-            </ui-core-card>
+                </ui-core-card>
+
+                <button class="prototype-gallery__tile-remove"
+                        [disabled]="removingSlug !== null"
+                        (click)="removePrototype($event, proto)"
+                        title="Remove prototype">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="3 6 5 6 21 6"/>
+                        <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                        <path d="M10 11v6M14 11v6"/>
+                        <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+                    </svg>
+                </button>
+
+                @if (removingSlug === proto.path.slice(1)) {
+                    <div class="prototype-gallery__tile-removing">
+                        <div class="prototype-gallery__tile-removing-spinner"></div>
+                        <span>Removing…</span>
+                    </div>
+                }
+            </div>
         }
     </div>
 </main>

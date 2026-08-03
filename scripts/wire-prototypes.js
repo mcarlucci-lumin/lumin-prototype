@@ -206,7 +206,7 @@ if (process.argv.includes('--watch')) {
         debounce = setTimeout(() => {
             console.log(`[wire-prototypes] Change detected: ${filename}`);
             try { run(); } catch (e) { console.error('[wire-prototypes] Error:', e.message); }
-        }, 200);
+        }, 3000);
     });
 } else {
     run();
