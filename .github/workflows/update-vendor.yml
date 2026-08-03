@@ -41,18 +41,7 @@ jobs:
         run: rm -f vendor/*.tgz
 
       - name: Pack @a3-digital packages into vendor/
-        run: |
-          # Read vendor-config.json and pack each package at its pinned version.
-          # npm pack <pkg>@<ver> downloads from the registry and writes a .tgz to vendor/.
-          node -e "
-            const config = JSON.parse(require('fs').readFileSync('vendor-config.json', 'utf8'));
-            for (const [pkg, ver] of Object.entries(config)) {
-              process.stdout.write(pkg + '@' + ver + '\n');
-            }
-          " | while IFS= read -r pkg; do
-            echo "Packing $pkg..."
-            npm pack "$pkg" --pack-destination vendor/ --quiet
-          done
+        run: node scripts/pack-vendor.js
 
       - name: "Update package.json with file: references"
         run: node scripts/update-vendor-refs.js

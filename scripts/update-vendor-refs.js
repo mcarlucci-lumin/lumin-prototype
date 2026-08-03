@@ -14,10 +14,10 @@ const pkg = JSON.parse(readFileSync('package.json', 'utf8'));
 
 let updated = 0;
 
-for (const [packageName, version] of Object.entries(config)) {
+for (const [packageName] of Object.entries(config)) {
     // npm pack converts @scope/name → scope-name (drops @, replaces / with -)
     // e.g. @a3-digital/ui-core@4.0.59 → a3-digital-ui-core-4.0.59.tgz
-    const tarballName = packageName.replace('@', '').replace('/', '-') + `-${version.replace('^', '')}.tgz`;
+    const tarballName = packageName.replace('@', '').replace('/', '-') + '.tgz';
     const fileRef = `file:./vendor/${tarballName}`;
 
     if (pkg.dependencies?.[packageName] !== undefined) {
