@@ -2,6 +2,7 @@
   "@a3-digital/configurability": "^2.4.36",
   "@a3-digital/date-utils": "^1.1.27",
   "@a3-digital/formatter": "^1.4.8",
+  "@a3-digital/inversify-plugins": "^2.0.19",
   "@a3-digital/ui-core": "^4.0.59",
   "@a3-digital/ui-forms": "^4.0.27",
   "@a3-digital/ui-layouts": "^4.0.8",
