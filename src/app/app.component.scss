@@ -1,3 +1,32 @@
 :host {
   display: block;
 }
+
+.back-btn {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.85);
+  }
+
+  &__icon {
+    color: #fff;
+    font-size: 20px;
+  }
+}
