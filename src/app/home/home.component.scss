@@ -262,11 +262,109 @@
         }
     }
 
+    // ── Idle-only content (hints + example) ──────────────────────────────
+    // Uses visibility rather than *ngIf so the block always occupies its
+    // full height — prevents the dropzone from shrinking on drag-over.
+    &__idle-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+
+        &--hidden {
+            visibility: hidden;
+        }
+    }
+
     &__hint {
         margin: 0;
         font-size: 0.78rem;
         text-align: center;
         color: var(--text-color-tertiary, #999);
+
+        &--files {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.35rem;
+            margin-top: 0.2rem;
+        }
+    }
+
+    &__filetype {
+        font-family: monospace;
+        font-size: 0.72rem;
+        padding: 1px 5px;
+        border-radius: 3px;
+        background: var(--border-color, #e5e7eb);
+        color: var(--text-color-secondary, #555);
+
+        &--required {
+            background: var(--color-primary-subtle, #dbeafe);
+            color: var(--color-primary, #1d4ed8);
+        }
+    }
+
+    &__filetype-note {
+        font-size: 0.72rem;
+        color: var(--text-color-tertiary, #aaa);
+    }
+
+    // ── Directory example ─────────────────────────────────────────────────
+    &__example {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 0.6rem;
+        padding: 0.45rem 0.75rem;
+        border-radius: 5px;
+        background: var(--surface-sunken, #f3f4f6);
+        border: 1px solid var(--border-color, #e5e7eb);
+        font-family: monospace;
+        font-size: 0.7rem;
+        line-height: 1.7;
+        color: var(--text-color-secondary, #666);
+        user-select: none;
+    }
+
+    &__example-dir {
+        font-weight: 600;
+        color: var(--text-color-primary, #374151);
+    }
+
+    &__example-file {
+        padding-left: 0.25rem;
+
+        &--dim {
+            opacity: 0.55;
+        }
+    }
+
+    // ── Picker action row ─────────────────────────────────────────────────
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 0.25rem;
+    }
+
+    &__actions-sep {
+        font-size: 0.78rem;
+        color: var(--text-color-tertiary, #999);
+    }
+
+    &__pick-btn {
+        padding: 0.25rem 0.875rem;
+        border: 1px solid currentColor;
+        border-radius: 4px;
+        background: transparent;
+        color: inherit;
+        font-size: 0.8rem;
+        cursor: pointer;
+        opacity: 0.75;
+
+        &:hover { opacity: 1; }
     }
 
     // ── Dismiss button ────────────────────────────────────────────────────

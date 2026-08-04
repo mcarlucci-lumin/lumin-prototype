@@ -30,11 +30,24 @@
                     Drop a <strong>prototype directory</strong> or <strong>.zip</strong>
                 }
             </p>
-            @if (dropState === 'idle') {
+            <div class="prototype-dropzone__idle-content"
+                 [class.prototype-dropzone__idle-content--hidden]="dropState !== 'idle'">
                 <p class="prototype-dropzone__hint">
                     The folder name becomes the route &amp; the app rewires automatically
                 </p>
-            }
+                <!-- <p class="prototype-dropzone__hint prototype-dropzone__hint--files">
+                    <span class="prototype-dropzone__filetype prototype-dropzone__filetype--required">.component.ts</span>
+                    <span class="prototype-dropzone__filetype">.component.html</span>
+                    <span class="prototype-dropzone__filetype">.component.scss</span>
+                    <span class="prototype-dropzone__filetype-note">— .ts required, .html &amp; .scss optional</span>
+                </p> -->
+                <div class="prototype-dropzone__example">
+                    <span class="prototype-dropzone__example-dir">example-prototype/</span>
+                    <span class="prototype-dropzone__example-file">├── example-prototype.component.ts (required)</span>
+                    <span class="prototype-dropzone__example-file">├── example-prototype.component.html (optional)</span>
+                    <span class="prototype-dropzone__example-file">└── example-prototype.component.scss (optional)</span>
+                </div>
+            </div>
         }
 
         @if (dropState === 'uploading') {

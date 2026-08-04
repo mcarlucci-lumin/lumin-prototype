@@ -20,8 +20,23 @@ const os     = require('os');
 const zlib   = require('zlib');
 const { spawnSync } = require('child_process');
 
-const PORT      = 7788;
-const PROTOS    = path.resolve(__dirname, '../src/app/prototypes');
+const PORT        = 7788;
+const PROTOS      = path.resolve(__dirname, '../src/app/prototypes');
+const WIRE_SCRIPT = path.join(__dirname, 'wire-prototypes.js');
+const ALLOWED     = /\.component\.(ts|html|scss)$/;
+
+async function wireWithRetry() {
+    const MAX = 3;
+    let lastErr;
+    for (let i = 1; i <= MAX; i++) {
+        const r = spawnSync(process.execPath, [WIRE_SCRIPT], { stdio: 'inherit' });
+        if (!r.error && r.status === 0) return;
+        lastErr = r.error ?? new Error(`wire-prototypes exited ${r.status}`);
+        console.error(`[dev-file-server] wire attempt ${i}/${MAX} failed: ${lastErr.message}`);
+        if (i < MAX) await new Promise(resolve => setTimeout(resolve, 600 * i)); // 600 ms, 1200 ms
+    }
+    throw lastErr;
+}
 
 const CORS = {
     'Access-Control-Allow-Origin':  '*',
@@ -79,6 +94,7 @@ function extractZip(buffer, destDir) {
         pos += 46 + fnLen + extraLen + commentLen;
 
         if (filename.endsWith('/')) continue; // directory entry — created on demand
+        if (!ALLOWED.test(filename)) continue; // skip non-component files
 
         // Jump to local file header to find actual data offset
         const lfhFnLen    = buffer.readUInt16LE(localOff + 26);
@@ -133,6 +149,7 @@ if (u !== location.href) location.replace(u);
     if (req.method === 'POST' && url === '/upload') {
         const filePath = req.headers['x-file-path'];
         if (!filePath) { res.writeHead(400); res.end('Missing X-File-Path'); return; }
+        if (!ALLOWED.test(filePath)) { res.writeHead(400); res.end('Only .component.ts, .component.html and .component.scss files are allowed'); return; }
 
         try {
             const dest = safePath(filePath);
@@ -172,7 +189,7 @@ if (u !== location.href) location.replace(u);
             const dest = safePath(dirName);
             copyDir(src, dest);
             console.log(`[dev-file-server] + ${dirName}/ (from zip)`);
-            spawnSync(process.execPath, [path.join(__dirname, 'wire-prototypes.js')], { stdio: 'inherit' });
+            await wireWithRetry();
             res.writeHead(200); res.end('OK');
         } catch (e) {
             console.error('[dev-file-server] Error:', e.message);
@@ -188,7 +205,7 @@ if (u !== location.href) location.replace(u);
     // Runs wire-prototypes synchronously so every file is on disk before wiring.
     if (req.method === 'POST' && url === '/finalize') {
         try {
-            spawnSync(process.execPath, [path.join(__dirname, 'wire-prototypes.js')], { stdio: 'inherit' });
+            await wireWithRetry();
             res.writeHead(200); res.end('OK');
         } catch (e) {
             res.writeHead(500); res.end(e.message);
@@ -209,7 +226,7 @@ if (u !== location.href) location.replace(u);
             fs.rmSync(dir, { recursive: true, force: true });
             console.log(`[dev-file-server] - ${slug}/`);
             // Re-wire synchronously so the caller can reload once files are settled
-            spawnSync(process.execPath, [path.join(__dirname, 'wire-prototypes.js')], { stdio: 'inherit' });
+            await wireWithRetry();
             res.writeHead(200); res.end('OK');
         } catch (e) {
             console.error('[dev-file-server] Error:', e.message);
