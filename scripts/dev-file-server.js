@@ -20,7 +20,7 @@ const os     = require('os');
 const zlib   = require('zlib');
 const { spawnSync } = require('child_process');
 
-const PORT      = 4201;
+const PORT      = 7788;
 const PROTOS    = path.resolve(__dirname, '../src/app/prototypes');
 
 const CORS = {
@@ -222,5 +222,7 @@ if (u !== location.href) location.replace(u);
 });
 
 server.listen(PORT, '127.0.0.1', () => {
-    console.log(`[dev-file-server] http://localhost:${PORT}`);
+    // Log port number as plain text so StackBlitz does NOT parse it as a
+    // server URL and open it in the preview pane instead of ng serve (4200).
+    console.log(`[dev-file-server] ready on port ${PORT}`);
 });
