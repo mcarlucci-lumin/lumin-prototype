@@ -1,3 +1,4 @@
 {
-  "startCommand": "npm start"
+  "installDependencies": false,
+  "startCommand": "rm package-lock.json && npm install && npm start"
 }
