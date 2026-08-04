@@ -18,3 +18,6 @@ Thumbs.db
 
 # Angular cache
 .angular/cache
+src/app/app-routing.module.ts
+src/app/app.module.ts
+src/app/prototype-registry.ts
