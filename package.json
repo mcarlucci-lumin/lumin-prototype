@@ -2,6 +2,10 @@
   "name": "lumin-prototype",
   "version": "0.1.0",
   "private": true,
+  "stackblitz": {
+    "installDependencies": false,
+    "startCommand": "rm package-lock.json && npm install && npm start"
+  },
   "scripts": {
     "start": "node scripts/start.js",
     "build": "ng build",
