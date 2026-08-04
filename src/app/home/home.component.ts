@@ -4,7 +4,7 @@ import { PROTOTYPES, PrototypeMeta } from '../prototype-registry';
 
 type DropState = 'idle' | 'dragover' | 'uploading' | 'success' | 'error';
 
-const FILE_SERVER = 'http://localhost:4201';
+const FILE_SERVER = '/api';
 
 @Component({
     standalone: false,

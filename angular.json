@@ -62,7 +62,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "buildTarget": "lumin-prototype:build:development"
+            "buildTarget": "lumin-prototype:build:development",
+            "proxyConfig": "proxy.conf.json"
           }
         }
       }

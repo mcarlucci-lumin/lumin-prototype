@@ -6,9 +6,4 @@ export interface PrototypeMeta {
 
 // ─── Claude: add one entry per prototype here ────────────────────────────────
 export const PROTOTYPES: PrototypeMeta[] = [
-    // {
-    //     name: 'Login Form',
-    //     path: '/login-form',
-    //     description: 'User authentication flow'
-    // }
 ];

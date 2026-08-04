@@ -18,7 +18,11 @@
       "Bash(curl -s -X POST http://localhost:4201/upload -H 'X-File-Path: smoke-test/smoke-test.component.ts' --data-binary @-)",
       "Bash(kill %1)",
       "Bash(wait)",
-      "Bash(pkill -f dev-file-server)"
+      "Bash(pkill -f dev-file-server)",
+      "Bash(node -e \"require\\('./scripts/dev-file-server.js'\\)\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4201/finalize -X POST)",
+      "Bash(curl -s -o /dev/null -w \"direct /finalize: %{http_code}\\\\n\" -X POST http://localhost:4201/finalize)",
+      "Bash(curl -s -w \"direct /upload \\(no header\\): %{http_code}\\\\n\" -o /dev/null -X POST http://localhost:4201/upload)"
     ]
   }
 }
