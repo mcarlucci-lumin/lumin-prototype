@@ -1,139 +1,183 @@
-# Lumin Prototype Template
+# Lumin Prototype Sandbox
 
-A StackBlitz-ready Angular app for building and sharing UI prototypes using the Lumin Design System — no local dev environment, no Docker, no npm auth required for non-developers.
+A live, shareable sandbox for viewing and demoing UI prototypes built with the Lumin Design System.
 
-A developer sets this up once. After that, non-devs open a StackBlitz link and see a live, interactive prototype built with real Lumin components.
-
----
-
-## How it works
-
-The `@a3-digital/ui-*` packages are private npm packages. Rather than requiring StackBlitz to authenticate with the private registry at runtime, this repo stores pre-built package tarballs in `vendor/`. The `package.json` references them as `file:./vendor/*.tgz`, so `npm install` unpacks local files instead of hitting the registry.
-
-A GitHub Action (using an `NPM_TOKEN` secret) refreshes those tarballs whenever `vendor-config.json` changes, on a weekly schedule, or on demand.
+Open one link in your browser and you get a working app with real Lumin components — real buttons, cards, forms, layouts and styling. Nothing to install. No GitHub account, no Node, no npm, no Docker, no access to the banking codebase.
 
 ---
 
-## Part 1 — For developers (setup & maintenance)
+## Open the sandbox
 
-### One-time setup
+```
+https://stackblitz.com/github/mcarlucci-lumin/lumin-prototype
+```
 
-**1. Create the GitHub repo**
+Click the link and wait roughly 60 seconds the first time. StackBlitz downloads the project, installs everything, and starts the app in the preview pane on the right.
 
-Create a new **private** GitHub repository (the `vendor/` tarballs contain compiled private library code) and push this directory to it.
+When it's ready you'll land on the **Prototypes** page — a gallery of every prototype currently in the sandbox. Click any tile to open that prototype full screen. Use your browser's back button to return to the gallery.
 
-**2. Add the npm token secret**
+---
 
-In the repo: **Settings → Secrets and variables → Actions → New repository secret**
+## Add a prototype
 
-| Name | Value |
+You don't need to edit any code. The Prototypes page has a drop zone at the top.
+
+**Drag a prototype folder onto it**, or drag a `.zip` of that folder. The app uploads the files, wires the prototype up for you, and it appears as a new tile in the gallery a few seconds later.
+
+A prototype folder looks like this:
+
+```
+example-prototype/
+├── example-prototype.component.ts     (required)
+├── example-prototype.component.html   (optional)
+└── example-prototype.component.scss   (optional)
+```
+
+Three rules worth knowing:
+
+- **The folder name becomes the address.** A folder named `loan-application` shows up at `/loan-application` in the gallery, and its tile is titled "Loan Application."
+- **The file names must match the folder name.** `loan-application/loan-application.component.ts`, not `loan-application/main.component.ts`.
+- **Only `.component.ts`, `.component.html` and `.component.scss` files are accepted.** Anything else in the folder is quietly ignored. The `.ts` file is the only one that's required.
+
+If you drop a `.zip`, the zip's file name (minus `.zip`) becomes the folder name.
+
+Typically Claude or a developer hands you the folder and you just drop it in.
+
+---
+
+## Remove a prototype
+
+Hover over a tile in the gallery and click the trash icon in its corner. The prototype is deleted and the page refreshes on its own.
+
+---
+
+## Important: changes are temporary
+
+A StackBlitz session is your own private, disposable copy. Prototypes you add or remove live only in that browser tab.
+
+- **Closing the tab discards your changes.** Reopening the link gives you a fresh copy of the shared sandbox.
+- **Other people don't see your uploads.** To share a prototype you added, either send them the prototype folder so they can drop it in themselves, or ask a developer to commit it to the repo so it's in the gallery for everyone.
+
+---
+
+## If something goes wrong
+
+| What you see | What to do |
 |---|---|
-| `NPM_TOKEN` | A read-only npm token with access to the `@a3-digital` scope. Generate one with `npm token create --read-only`. |
-
-**3. Run the vendor workflow**
-
-Go to **Actions → Refresh vendor packages → Run workflow**.
-
-This packs each `@a3-digital` package listed in `vendor-config.json`, updates `package.json` to use `file:./vendor/` references, and commits both back to `main`. After it completes, the repo is ready to use.
-
-**4. Smoke-test in StackBlitz**
-
-Open `https://stackblitz.com/github/<org>/<repo>` in a browser. StackBlitz clones the repo, runs `npm install` (unpacking the vendor tarballs + installing public Angular deps), and boots `ng serve`. You should see a blank page at `/` — the template is working.
+| Preview pane is blank after it finishes loading | Click the refresh icon in the preview pane, or open the preview in its own browser tab using the "Open in new tab" icon at its top-right. |
+| Still loading after 3 minutes | Close the tab and open the link again. StackBlitz occasionally stalls on the first load. |
+| Red error text in the terminal pane at the bottom | Something in the prototype code doesn't compile. Copy the error text and send it to whoever gave you the prototype. |
+| "Could not reach the dev file server" after a drop | The sandbox is still starting up, or it went to sleep. Reload the page and try the drop again. |
+| Dropped a folder and nothing appeared | Check the folder name matches the `.component.ts` file name, and that you dropped the folder itself rather than the files inside it. |
+| Icons show as words like `arrow_forward` instead of symbols | Cosmetic only — the icon font didn't load. Layout and behavior are still accurate. |
 
 ---
+---
 
-### Updating package versions
+# For developers
 
-Edit `vendor-config.json` and bump the version number(s). Pushing to `main` triggers the workflow automatically.
+Everything below is setup and maintenance. Non-developers don't need any of it.
+
+## How the sandbox works
+
+The `@a3-digital/*` packages are private. Rather than making StackBlitz authenticate against the private registry at runtime, this repo commits pre-built tarballs to `vendor/` and points `package.json` at them via `file:./vendor/*.tgz`, so `npm install` unpacks local files instead of hitting the registry. That's why **the repo must stay private** — the tarballs contain compiled private library code.
+
+`npm start` runs [`scripts/start.js`](scripts/start.js), which supervises three processes:
+
+| Process | Role |
+|---|---|
+| `wire-prototypes --watch` | Watches `src/app/prototypes/` and regenerates the registry, routes and module declarations on change |
+| `ng serve` (port 4200) | The Angular dev server; its output is scanned for `Failed to compile.` and the group is restarted when that appears |
+| `dev-file-server` (port 7788) | Local HTTP API backing the drop zone — upload, unzip, delete, re-wire. Started only after 4200 is up, so StackBlitz opens the app and not the API in its preview. |
+
+Auto-wiring means prototypes never require manual edits to `app.module.ts` or `app-routing.module.ts`. Those three generated files are gitignored:
+
+- [`src/app/prototype-registry.ts`](src/app/prototype-registry.ts) — powers the gallery
+- [`src/app/app-routing.module.ts`](src/app/app-routing.module.ts) — `/` → home, `/<slug>` → prototype
+- [`src/app/app.module.ts`](src/app/app.module.ts) — imports and declarations
+
+Run the wiring by hand with `npm run wire` if you ever need to.
+
+In StackBlitz's WebContainers, process-to-process localhost networking doesn't work, so the `ng serve` proxy (`/api` → `:7788`) can't reach the file server. The home component detects a webcontainer hostname and calls port 7788 directly by rewriting the `--4200--` segment of the URL. See [`home.component.ts:12-18`](src/app/home/home.component.ts#L12-L18).
+
+## Running locally
+
+```bash
+npm install          # requires npm auth for @a3-digital, or an existing vendor/
+npm start            # http://localhost:4200
+```
+
+To rebuild the vendor tarballs from the private registry (needs npm auth):
+
+```bash
+npm run vendor:install
+```
+
+## One-time repo setup
+
+1. **Private GitHub repo** — required; the vendor tarballs are private code.
+2. **Add the npm token secret** — Settings → Secrets and variables → Actions → New repository secret:
+
+   | Name | Value |
+   |---|---|
+   | `NPM_TOKEN` | Read-only npm token with `@a3-digital` scope access. Create with `npm token create --read-only`. |
+
+3. **Run the vendor workflow** — Actions → *Refresh vendor packages* → Run workflow. It packs each package in `vendor-config.json`, rewrites `package.json` to `file:./vendor/` references, and commits both to `main`.
+4. **Smoke test** — open the StackBlitz link and confirm the Prototypes page renders.
+
+## Updating package versions
+
+Edit [`vendor-config.json`](vendor-config.json) and bump the version(s). Pushing to `main` triggers [`update-vendor.yml`](.github/workflows/update-vendor.yml) automatically. The workflow also runs weekly (Mondays, 02:00 UTC) to pick up patch releases within the configured ranges, and can be dispatched manually.
+
+## Adding a prototype from the command line
+
+Create `src/app/prototypes/<slug>/<slug>.component.ts` (plus optional `.html` / `.scss`). The watcher wires it on save. Every `Ui*Module` is already imported in `app.module.ts`, so prototype components need no extra module setup.
+
+Optionally add a `meta.json` next to the component to control how the tile reads:
 
 ```json
-{
-  "@a3-digital/ui-core": "4.1.0",
-  ...
-}
+{ "name": "Loan Application", "description": "Multi-step application flow" }
 ```
 
----
+Note that `meta.json` only applies to prototypes added on disk or committed to the repo — the drop zone filters out everything that isn't a `.component.*` file, so a dropped `meta.json` is discarded and the tile falls back to the title-cased folder name.
 
-### Adding a prototype (manual path)
-
-Each prototype is a standard Angular component placed in `src/app/prototypes/`. After adding the files:
-
-1. Import and declare the component in [`src/app/app.module.ts`](src/app/app.module.ts)
-2. Add the route in [`src/app/app-routing.module.ts`](src/app/app-routing.module.ts)
-3. Add a root redirect so StackBlitz opens directly on the prototype: `{ path: '', redirectTo: 'my-prototype', pathMatch: 'full' }`
-4. Push to a new branch (e.g. `prototype/loan-application-2025-08-03`)
-5. Share the StackBlitz URL: `https://stackblitz.com/github/<org>/<repo>/tree/prototype/loan-application-2025-08-03`
-
-The non-dev just opens the link — no setup needed on their end.
-
----
-
-### Claude auto-push (recommended path)
-
-When using the `lumin-ui` skill in Claude Code with the `lumin-design-mcp` connected, Claude generates prototype components and can push them to this repo automatically, then share a ready-to-open StackBlitz link.
-
-> **Status:** see `lumin-design-mcp` for the `publish_prototype` tool or the SKILL.md placement option that implements this flow.
-
----
-
-## Part 2 — For non-developers (using a prototype)
-
-You will receive a link from a developer or from Claude. It looks like:
+To share a prototype with everyone, commit it and push to `main`. To share a one-off variant, push a branch and send its StackBlitz URL:
 
 ```
-https://stackblitz.com/github/<org>/<repo>/tree/prototype/some-name
+https://stackblitz.com/github/mcarlucci-lumin/lumin-prototype/tree/prototype/loan-application
 ```
-
-1. Click the link
-2. Wait ~60 seconds for StackBlitz to install dependencies and start the app
-3. The prototype opens in the preview pane on the right
-
-You do not need to install anything. You do not need a GitHub account, npm, Node, or the banking codebase. The link is everything.
-
-### If the preview pane is blank after loading
-
-Click the refresh icon in the StackBlitz preview pane, or open the preview URL in a new tab (the "Open in new tab" icon in the top-right of the preview).
-
-### If you see an error in the terminal pane
-
-The prototype branch may be missing a component declaration or route. Send the error text to the developer who created the prototype.
-
----
 
 ## Repository structure
 
 ```
 lumin-prototype/
 ├── .github/workflows/
-│   └── update-vendor.yml        # Packs @a3-digital tarballs, commits to vendor/
+│   └── update-vendor.yml         # Packs @a3-digital tarballs, commits to vendor/
 ├── scripts/
-│   └── update-vendor-refs.js    # Updates package.json to file:./vendor/ refs
-├── src/
-│   ├── app/
-│   │   ├── app.module.ts        # Imports all Ui*Modules — prototypes need nothing extra
-│   │   ├── app-routing.module.ts
-│   │   ├── app.component.*
-│   │   ├── styles/fonts.scss
-│   │   └── prototypes/          # Generated prototype components land here
-│   ├── index.html
-│   ├── main.ts
-│   └── styles.scss              # Lumin design tokens + global styles
-├── vendor/                      # Pre-built @a3-digital tarballs (committed by GHA)
-├── vendor-config.json           # Pinned @a3-digital package versions — edit to upgrade
-├── angular.json
-├── package.json                 # @a3-digital refs are file:./vendor/ after first GHA run
-├── tsconfig.json
-└── stackblitz.json
+│   ├── start.js                  # Supervises watcher + ng serve + file server
+│   ├── wire-prototypes.js        # Generates registry, routes, module declarations
+│   ├── dev-file-server.js        # Upload / unzip / delete API on :7788
+│   ├── pack-vendor.js            # npm pack each @a3-digital package
+│   └── update-vendor-refs.js     # Rewrites package.json to file:./vendor/ refs
+├── src/app/
+│   ├── home/                     # Prototype gallery + drop zone
+│   ├── prototypes/               # One directory per prototype
+│   ├── prototype-registry.ts     # generated
+│   ├── app-routing.module.ts     # generated
+│   ├── app.module.ts             # generated regions
+│   └── styles/fonts.scss
+├── vendor/                       # Pre-built @a3-digital tarballs (committed by CI)
+├── vendor-config.json            # Pinned @a3-digital versions — edit to upgrade
+├── proxy.conf.json               # /api → localhost:7788 (local dev only)
+└── stackblitz.json               # startCommand: npm start
 ```
 
----
-
-## Troubleshooting
+## Developer troubleshooting
 
 | Problem | Fix |
 |---|---|
-| `npm install` fails on StackBlitz with "Cannot find package" | The vendor tarballs may be missing or outdated. Run the **Refresh vendor packages** workflow, then re-open the StackBlitz link. |
-| `ng serve` fails with a module import error | A new `@a3-digital` package was added to the component but not to `vendor-config.json`. Add it there and re-run the workflow. |
-| StackBlitz takes more than 3 minutes to load | Close and re-open the link. StackBlitz occasionally stalls on first clone of a new branch. |
-| Fonts or icons look wrong (text instead of icons) | Cosmetic only — the icon font file path may differ from what `fonts.scss` expects. Does not affect layout accuracy. |
+| `npm install` fails on StackBlitz with "Cannot find package" | Vendor tarballs are missing or stale. Run *Refresh vendor packages*, then reopen the link. |
+| Import error for a `@a3-digital` package | The package isn't in `vendor-config.json`. Add it and re-run the workflow. |
+| Prototype dropped but never appears | The component file name must match its folder name. Check the `[wire-prototypes]` line in the terminal for the count of wired prototypes. |
+| Dev server restart loop | `start.js` restarts on `Failed to compile.` with a 10s minimum gap. A persistent compile error will log "Restart suppressed" — fix the error in the prototype source. |
+| Local drop zone requests 404 | The file server only runs under `npm start`; `ng serve` alone doesn't start it. |
