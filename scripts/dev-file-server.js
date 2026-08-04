@@ -113,6 +113,22 @@ const server = http.createServer(async (req, res) => {
 
     const url = req.url?.split('?')[0];
 
+    // ── GET / — redirect preview to the Angular app (port 4200) ───────────
+    // StackBlitz opens the first ready port in its preview pane. Since this
+    // server starts faster than ng serve, redirect any browser landing here
+    // to port 4200 by swapping the port in the URL (works for both StackBlitz
+    // webcontainer hostnames and plain localhost).
+    if (req.method === 'GET' && (url === '/' || url === '')) {
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(`<!DOCTYPE html><html><head>
+<script>
+var u = location.href.replace(/--${PORT}--/, '--4200--').replace(':${PORT}', ':4200');
+if (u !== location.href) location.replace(u);
+</script>
+</head><body>Redirecting to app…</body></html>`);
+        return;
+    }
+
     // ── POST /upload ───────────────────────────────────────────────────────
     if (req.method === 'POST' && url === '/upload') {
         const filePath = req.headers['x-file-path'];
