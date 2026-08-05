@@ -37,13 +37,15 @@ jobs:
           npm config set "//registry.npmjs.org/:_authToken=${NPM_TOKEN}"
           npm config set legacy-peer-deps true
 
+      - name: Install pack-vendor dependencies
+        run: npm install --prefix /tmp/vendor-build-tools --no-package-lock javascript-obfuscator terser
+
       - name: Remove stale tarballs
         run: rm -f vendor/*.tgz
 
-      - name: Install pack-vendor dependencies
-        run: npm install --no-save javascript-obfuscator terser
-
       - name: Pack @a3-digital packages into vendor/
+        env:
+          NODE_PATH: /tmp/vendor-build-tools/node_modules
         run: node scripts/pack-vendor.js
 
       - name: "Update package.json with file: references"
