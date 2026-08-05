@@ -40,6 +40,9 @@ jobs:
       - name: Remove stale tarballs
         run: rm -f vendor/*.tgz
 
+      - name: Install pack-vendor dependencies
+        run: npm install --no-save javascript-obfuscator terser
+
       - name: Pack @a3-digital packages into vendor/
         run: node scripts/pack-vendor.js
 
