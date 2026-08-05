@@ -2,7 +2,7 @@
 
 A live, shareable sandbox for viewing and demoing UI prototypes built with the Lumin Design System.
 
-Open one link in your browser and you get a working app with real Lumin components — real buttons, cards, forms, layouts and styling. Nothing to install. No GitHub account, no Node, no npm, no Docker, no access to the banking codebase.
+Open one link in your browser and you get a working app with real Lumin components — real buttons, cards, forms, layouts and styling. Nothing to install.
 
 ---
 
