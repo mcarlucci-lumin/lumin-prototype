@@ -100,6 +100,7 @@ export class HomeComponent {
 
     dismissError(): void {
         this.dropState = 'idle';
+        window.location.reload();
     }
 
     async removePrototype(e: MouseEvent, proto: PrototypeMeta): Promise<void> {
