@@ -8,9 +8,7 @@ Open one link in your browser and you get a working app with real Lumin componen
 
 ## Open the sandbox
 
-```
-https://stackblitz.com/github/mcarlucci-lumin/lumin-prototype
-```
+[https://stackblitz.com/github/mcarlucci-lumin/lumin-prototype](https://stackblitz.com/~/github.com/mcarlucci-lumin/lumin-prototype)
 
 Click the link and wait roughly 60 seconds the first time. StackBlitz downloads the project, installs everything, and starts the app in the preview pane on the right.
 
