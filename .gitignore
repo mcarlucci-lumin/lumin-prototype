@@ -11,6 +11,7 @@ dist/
 .idea/
 *.swp
 *.swo
+settings.local.json
 
 # OS
 .DS_Store
