@@ -2,11 +2,12 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ActiveConfiguration, ConfigurableEntityRegistry } from '@a3-digital/configurability';
 import { DateProvider, SystemClock } from '@a3-digital/date-utils';
-import { UiCoreModule, UI_ANALYTICS_PUBLISHER } from '@a3-digital/ui-core';
+import { UiCoreModule, UI_ANALYTICS_PUBLISHER, ModalService, ModalBridgeService } from '@a3-digital/ui-core';
 import { UiFormsModule, UI_BOT_DETECTION_PROVIDER } from '@a3-digital/ui-forms';
 import { UiLayoutsModule } from '@a3-digital/ui-layouts';
 import { UiManagementModule } from '@a3-digital/ui-management';
@@ -37,6 +38,7 @@ if (typeof window !== 'undefined') {
         BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
+        DragDropModule,
         NgbModule,
         UiCoreModule,
         UiFormsModule,
@@ -47,6 +49,8 @@ if (typeof window !== 'undefined') {
     ],
     providers: [
         TableStateService,
+        ModalService,
+        ModalBridgeService,
         {
             provide: DateProvider,
             useFactory: () => new DateProvider(new SystemClock())
