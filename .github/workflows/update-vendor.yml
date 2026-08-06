@@ -51,11 +51,28 @@ jobs:
       - name: "Update package.json with file: references"
         run: node scripts/update-vendor-refs.js
 
+      # The committed lockfile is what lets StackBlitz skip dependency
+      # resolution on boot. It must be regenerated whenever the vendor
+      # tarballs change, or the recorded versions and transitive dependency
+      # tree drift from what is actually in vendor/.
+      - name: Refresh package-lock.json
+        run: npm run lock:refresh
+
+      - name: Verify a clean install works from the lockfile
+        run: |
+          rm -rf /tmp/lock-verify && mkdir -p /tmp/lock-verify
+          cp -R vendor package.json package-lock.json .npmrc /tmp/lock-verify/
+          cd /tmp/lock-verify
+          # Cold cache — reproduces a fresh StackBlitz WebContainer, where a
+          # bad lockfile fails with EINTEGRITY instead of degrading quietly.
+          npm install --cache /tmp/lock-verify-cache --no-audit --no-fund
+          test -d node_modules/@a3-digital/ui-core || { echo "::error::Lockfile install did not produce @a3-digital packages"; exit 1; }
+
       - name: Commit and push vendor updates
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add vendor/ package.json
+          git add vendor/ package.json package-lock.json
           if git diff --staged --quiet; then
             echo "Vendor packages unchanged — nothing to commit."
           else

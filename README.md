@@ -80,6 +80,15 @@ Everything below is setup and maintenance. Non-developers don't need any of it.
 
 The `@a3-digital/*` packages are private. Rather than making StackBlitz authenticate against the private registry at runtime, this repo commits pre-built tarballs to `vendor/` and points `package.json` at them via `file:./vendor/*.tgz`, so `npm install` unpacks local files instead of hitting the registry. That's why **the repo must stay private** — the tarballs contain compiled private library code.
 
+`package-lock.json` is also committed, which cuts install time roughly in three (measured cold-cache: 81s without it, 29s with it) because npm can skip dependency resolution for ~960 registry packages. It has one deliberate quirk: the 13 `file:` vendor entries carry **no `integrity` field**. npm derives that hash from a repack of the tarball rather than its raw bytes, and the repack is not reproducible between npm runs — so a lockfile that keeps those hashes installs fine on the machine that generated it and then fails everywhere with a cold cache:
+
+```
+npm error code EINTEGRITY
+npm error sha512-... integrity checksum failed when using sha512
+```
+
+That is exactly a fresh StackBlitz WebContainer, and it affects `npm ci` and `npm install` alike. Never hand-edit the lockfile or regenerate it with a bare `npm install --package-lock-only` — run `npm run lock:refresh`, which handles both this and the clean-tree requirement. See [`scripts/refresh-lock.js`](scripts/refresh-lock.js).
+
 `npm start` runs [`scripts/start.js`](scripts/start.js), which supervises three processes:
 
 | Process | Role |
@@ -108,7 +117,13 @@ npm start            # http://localhost:4200
 To rebuild the vendor tarballs from the private registry (needs npm auth):
 
 ```bash
-npm run vendor:install
+npm run vendor:install   # repacks vendor/, refreshes the lockfile, installs
+```
+
+If you change `package.json` dependencies by hand, refresh the lockfile so StackBlitz keeps its fast boot:
+
+```bash
+npm run lock:refresh
 ```
 
 ## One-time repo setup
@@ -166,9 +181,12 @@ lumin-prototype/
 │   └── styles/fonts.scss
 ├── vendor/                       # Pre-built @a3-digital tarballs (committed by CI)
 ├── vendor-config.json            # Pinned @a3-digital versions — edit to upgrade
+├── package-lock.json             # Committed; regenerate only via npm run lock:refresh
 ├── proxy.conf.json               # /api → localhost:7788 (local dev only)
-└── stackblitz.json               # startCommand: npm start
+└── .stackblitzrc                 # installDependencies: false; startCommand
 ```
+
+StackBlitz reads `.stackblitzrc` and the `stackblitz` field in `package.json`; it does **not** read a file named `stackblitz.json`. Both supported locations are kept in sync here so precedence never matters — change them together.
 
 ## Developer troubleshooting
 

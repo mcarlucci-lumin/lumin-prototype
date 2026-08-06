@@ -1,6 +1,7 @@
-# Dependencies — vendor/ is intentionally committed (pre-built @a3-digital tarballs)
+# Dependencies — vendor/ and package-lock.json are intentionally committed.
+# The lockfile lets StackBlitz skip dependency resolution on boot; see
+# scripts/refresh-lock.js for why its file: entries carry no integrity.
 node_modules/
-package-lock.json
 
 # Build output
 dist/
