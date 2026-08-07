@@ -1,0 +1,5119 @@
+{
+  "version": "0.1.9",
+  "generatedAt": "2026-07-22T21:54:18.654348+00:00",
+  "totalTokens": 570,
+  "tokens": [
+    {
+      "name": "--mobile-max-width",
+      "value": "767px",
+      "category": "layout",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--tablet-min-width",
+      "value": "768px",
+      "category": "layout",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--tablet-max-width",
+      "value": "1079px",
+      "category": "layout",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--desktop-min-width",
+      "value": "1080px",
+      "category": "layout",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--rem-scale",
+      "value": "1",
+      "category": "layout",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--android-rem-scale",
+      "value": "1",
+      "category": "layout",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--desktop-min-height",
+      "value": "40.625rem;",
+      "category": "layout",
+      "description": "keeping current size: rem-calc(650) at 16px",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-footer-height",
+      "value": "65px",
+      "category": "layout",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--navbar-mobile-height",
+      "value": "52px",
+      "category": "layout",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--navbar-menu-desktop-height",
+      "value": "4.125rem;",
+      "category": "layout",
+      "description": "keeping current size: rem-calc(66) at 16px",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--navbar-desktop-height",
+      "value": "8.25rem;",
+      "category": "layout",
+      "description": "keeping current size: rem-calc(132) at 16px",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--fdic-header-height",
+      "value": "0",
+      "category": "layout",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-mobile-height",
+      "value": "var(--navbar-mobile-height)",
+      "category": "layout",
+      "description": "Design tokens 2.0 aliases \u2014 preferred names going forward. Replace after MCP is converted",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-desktop-menu-height",
+      "value": "var(--navbar-menu-desktop-height)",
+      "category": "layout",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-desktop-height",
+      "value": "var(--navbar-desktop-height)",
+      "category": "layout",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-opacity-white-60",
+      "value": "rgba(255, 255, 255, 0.60)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-opacity-white-75",
+      "value": "rgba(255, 255, 255, 0.75)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--neutral-color",
+      "value": "#FFFFFF",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--neutral-bg-color",
+      "value": "#FFFFFF",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--font-weight-normal",
+      "value": "400",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--font-weight-semibold",
+      "value": "500",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--icon-font-family",
+      "value": "'Material Symbols Sharp Filled Bold'",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-font-size",
+      "value": "var(--type-body2-scale)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--link-font-size",
+      "value": "var(--type-body2-scale)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-base-scale",
+      "value": "clamp(12.8px, 1rem, 32px)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-scale",
+      "value": "1.1",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-caption-scale",
+      "value": "calc(var(--type-body2-scale) / (var(--type-scale) * var(--type-scale)))",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-body2-scale",
+      "value": "calc(var(--type-base-scale) / var(--type-scale))",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-h4-scale",
+      "value": "calc(var(--type-base-scale) * var(--type-scale))",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-h3-scale",
+      "value": "calc(var(--type-h4-scale) * var(--type-scale))",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-h2-scale",
+      "value": "calc(var(--type-h3-scale) * var(--type-scale))",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-h1-scale",
+      "value": "calc(var(--type-h2-scale) * var(--type-scale))",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-display-scale",
+      "value": "calc(var(--type-h1-scale) * var(--type-scale) * var(--type-scale))",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--line-height-unit",
+      "value": "calc(var(--type-base-scale) / 2)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--line-height-xs",
+      "value": "calc(var(--line-height-unit) * 2)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--line-height-base",
+      "value": "calc(var(--line-height-unit) * 3)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--line-height-xl",
+      "value": "calc(var(--line-height-unit) * 4)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--forms-input-border-width",
+      "value": "1px",
+      "category": "form",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--forms-input-height",
+      "value": "calc(var(--line-height-unit) * 6.25)",
+      "category": "form",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--forms-input-line-height",
+      "value": "calc(var(--forms-input-height) - calc(var(--forms-input-border-width) * 2))",
+      "category": "form",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--forms-input-height-sm",
+      "value": "calc(var(--line-height-unit) * 4)",
+      "category": "form",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--forms-input-line-height-sm",
+      "value": "calc(var(--forms-input-height-sm) - calc(var(--forms-input-border-width) * 2))",
+      "category": "form",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--forms-x-spacing",
+      "value": "16px",
+      "category": "form",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--forms-y-spacing",
+      "value": "24px",
+      "category": "form",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--forms-y-spacing-large",
+      "value": "52px",
+      "category": "form",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--forms-radio-button-size",
+      "value": "1.25rem",
+      "category": "form",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--forms-column-gap",
+      "value": "40px",
+      "category": "form",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--scrollbox-height",
+      "value": "282px",
+      "category": "layout",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--modal-scrollbox-height",
+      "value": "330px",
+      "category": "layout",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--microapp-chin-height",
+      "value": "40px",
+      "category": "layout",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--microapp-container-spacing",
+      "value": "20px",
+      "category": "layout",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--box-shadow-xs",
+      "value": "0 0 1px 0 rgba(0, 0, 0, 0.25)",
+      "category": "shadow",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--box-shadow-sm",
+      "value": "0 4px 10px 0 rgba(0, 0, 0, 0.04)",
+      "category": "shadow",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--box-shadow-md",
+      "value": "0 4px 16px 1px rgba(0, 0, 0, 0.08)",
+      "category": "shadow",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--box-shadow-lg",
+      "value": "0 8px 24px 1px rgba(0, 0, 0, 0.10)",
+      "category": "shadow",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--box-shadow-xl",
+      "value": "0 8px 32px -1px rgba(0, 0, 0, 0.10), 0 4px 12px 2px rgba(0, 0, 0, 0.08)",
+      "category": "shadow",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--forms-choice-size",
+      "value": "1.25rem",
+      "category": "form",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--forms-choice-margin-right",
+      "value": "8px",
+      "category": "form",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--forms-choice-touch-size",
+      "value": "2.5rem",
+      "category": "form",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--forms-choice-y-spacing-xxs",
+      "value": "4px",
+      "category": "form",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--backdrop-filter-blur",
+      "value": "blur(5px)",
+      "category": "overlay",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--spacer",
+      "value": "1.625rem",
+      "category": "spacing",
+      "description": "used for gaps/margins/padding throughout the app",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--spacer-half",
+      "value": "calc(var(--spacer) / 2)",
+      "category": "spacing",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--spacer-quarter",
+      "value": "calc(var(--spacer) / 4)",
+      "category": "spacing",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--transition-duration",
+      "value": "250ms",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--transition-timing",
+      "value": "ease",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--z-index-notification-top",
+      "value": "800",
+      "category": "z-index",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--z-index-nav",
+      "value": "1000",
+      "category": "z-index",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--z-index-dropdown",
+      "value": "1001",
+      "category": "z-index",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--z-index-fixed",
+      "value": "1030",
+      "category": "z-index",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--z-index-chart-tooltip",
+      "value": "1039",
+      "category": "z-index",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--z-index-modal-scrim",
+      "value": "1040",
+      "category": "z-index",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--z-index-modal",
+      "value": "1050",
+      "category": "z-index",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--z-index-form-dropdown",
+      "value": "1051",
+      "category": "z-index",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--z-index-popover",
+      "value": "1060",
+      "category": "z-index",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--z-index-tooltip",
+      "value": "1070",
+      "category": "z-index",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--z-index-notification",
+      "value": "10000",
+      "category": "z-index",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--z-index-modal-partial",
+      "value": "10001",
+      "category": "z-index",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-x-padding",
+      "value": "32px",
+      "category": "misc",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-y-padding",
+      "value": "12px",
+      "category": "misc",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_native-css-variables.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--font-family-base",
+      "value": "\"Open Sans\", Helvetica, Arial, sans-serif",
+      "category": "typography",
+      "description": "Confirm no FI overrides rely on this variable before relocating!",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--font-weight-bold",
+      "value": "700",
+      "category": "typography",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-primary-font-weight",
+      "value": "var(--font-weight-semibold)",
+      "category": "typography",
+      "description": "Button text font weights",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-secondary-font-weight",
+      "value": "var(--font-weight-semibold)",
+      "category": "typography",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-tertiary-font-weight",
+      "value": "var(--font-weight-semibold)",
+      "category": "typography",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-primary-text-transform",
+      "value": "none",
+      "category": "typography",
+      "description": "Button text font transform",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-secondary-text-transform",
+      "value": "none",
+      "category": "typography",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-tertiary-text-transform",
+      "value": "none",
+      "category": "typography",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--brand-primary",
+      "value": "#187CAA",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--brand-primary-dark",
+      "value": "#005684",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--brand-primary-light",
+      "value": "#4BAFDD",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--brand-secondary",
+      "value": "#BFD730",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--brand-secondary-light",
+      "value": "color-mix(in srgb, var(--brand-secondary) 60%, white)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--brand-neutral",
+      "value": "#1F1F1F",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--brand-background",
+      "value": "#F9F9F9",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--accent-color-1",
+      "value": "#250662",
+      "category": "color",
+      "description": "Accent colors",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--accent-color-2",
+      "value": "#E0E321",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--accent-color-3",
+      "value": "#F29856",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--accent-color-4",
+      "value": "#BC6475",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--accent-color-5",
+      "value": "#6C5E87",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--accent-color-6",
+      "value": "#00AAE7",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--accent-color-7",
+      "value": "#6F6C74",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--gray-100",
+      "value": "#E2E2E2",
+      "category": "color",
+      "description": "Grays",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--gray-200",
+      "value": "#CCCCCC",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--gray-300",
+      "value": "#B8B8B8",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--gray-400",
+      "value": "#A0A0A0",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--gray-500",
+      "value": "#8B8B8B",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--gray-600",
+      "value": "#767676",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--gray-700",
+      "value": "#565656",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--gray-800",
+      "value": "#383838",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--gray-900",
+      "value": "#1c1c1c",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--positive-color",
+      "value": "#3B7859",
+      "category": "color",
+      "description": "Balance colors",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--negative-color",
+      "value": "#953E3E",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--cash-flow-pos-color",
+      "value": "var(--positive-color)",
+      "category": "color",
+      "description": "Cash flow colors",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--cash-flow-neg-color",
+      "value": "var(--negative-color)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--success",
+      "value": "#255B40",
+      "category": "color",
+      "description": "Toaster alert banner and form validation colors",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--info",
+      "value": "#187CAA",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--warning",
+      "value": "#F2A708",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--danger",
+      "value": "#862C1F",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--success-text",
+      "value": "#FFFFFF",
+      "category": "color",
+      "description": "Toaster alert text colors",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--info-text",
+      "value": "#FFFFFF",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--warning-text",
+      "value": "var(--brand-neutral)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--danger-text",
+      "value": "#FFFFFF",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--link-hover-color",
+      "value": "var(--brand-primary-dark)",
+      "category": "color",
+      "description": "--link-color is now declared in _base-tokens.scss",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--link-font-weight",
+      "value": "var(--font-weight-semibold)",
+      "category": "color",
+      "description": "Link text modifications",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--link-active-text-decoration",
+      "value": "none",
+      "category": "color",
+      "description": "--link-text-decoration is now declared in _base-tokens.scss",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--link-hover-text-decoration",
+      "value": "none",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--hover-color",
+      "value": "rgba(191, 215, 48, 0.2);",
+      "category": "color",
+      "description": "rgba($brand-secondary, .2)",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-primary-border-size",
+      "value": "1px",
+      "category": "color",
+      "description": "Primary buttons",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-primary-text",
+      "value": "#FFFFFF",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-primary",
+      "value": "var(--brand-primary)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-primary-gradient",
+      "value": "var(--btn-primary)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-primary-border",
+      "value": "var(--btn-primary)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-primary-hover",
+      "value": "#0B6F9D",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-primary-hover-gradient",
+      "value": "var(--btn-primary-hover)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-primary-hover-border",
+      "value": "var(--btn-primary-hover)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-primary-hover-text",
+      "value": "var(--btn-primary-text)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-primary-active",
+      "value": "var(--brand-primary-dark)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-primary-active-gradient",
+      "value": "var(--btn-primary-active)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-primary-active-border",
+      "value": "var(--btn-primary-active)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-primary-active-text",
+      "value": "var(--btn-primary-text)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-secondary-border-size",
+      "value": "1px;",
+      "category": "color",
+      "description": "Sets border size for all secondary button states",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-secondary-text",
+      "value": "var(--brand-primary)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-secondary",
+      "value": "#FFFFFF",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-secondary-gradient",
+      "value": "var(--btn-secondary)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-secondary-border",
+      "value": "var(--brand-primary)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-secondary-hover",
+      "value": "#EDF5F9",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-secondary-hover-gradient",
+      "value": "var(--btn-secondary-hover)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-secondary-hover-border",
+      "value": "var(--btn-secondary-hover)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-secondary-hover-text",
+      "value": "var(--btn-secondary-text)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-secondary-active",
+      "value": "#EDF5F9",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-secondary-active-gradient",
+      "value": "var(--btn-secondary-active)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-secondary-active-border",
+      "value": "var(--btn-secondary-active)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-secondary-active-text",
+      "value": "var(--btn-secondary-text)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-disabled",
+      "value": "#CBCCCF",
+      "category": "color",
+      "description": "Disabled states for all buttons",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-disabled-text",
+      "value": "#FFFFFF",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-navigation-active",
+      "value": "#115777",
+      "category": "color",
+      "description": "Primary navigation button styling",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-navigation-active-text",
+      "value": "#FFFFFF",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-navigation-hover",
+      "value": "#115777",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-navigation-hover-text",
+      "value": "#FFFFFF",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-search-fill-active",
+      "value": "rgba(255, 255, 255, 0.1)",
+      "category": "color",
+      "description": "Primary navigation search colors",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-search-text-active",
+      "value": "#FFFFFF",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-search-icon-active",
+      "value": "#FFFFFF",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-search-fill-inactive",
+      "value": "rgba(255, 255, 255, 0.3)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-search-text-inactive",
+      "value": "#FFFFFF",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-search-icon-inactive",
+      "value": "#FFFFFF",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-search-hint-text",
+      "value": "var(--gray-300)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-search-mobile-close-icon",
+      "value": "var(--nav-search-icon-active)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--pending-fill",
+      "value": "var(--brand-background)",
+      "category": "color",
+      "description": "Pending transaction colors",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--pending-text",
+      "value": "var(--gray-800)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--glass-ui-circle-primary-color",
+      "value": "var(--brand-primary)",
+      "category": "color",
+      "description": "Glass UI",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--glass-ui-circle-secondary-color",
+      "value": "var(--brand-secondary)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--glass-ui-circle-tertiary-color",
+      "value": "var(--brand-primary-light)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--glass-ui-circle-accent-color-1",
+      "value": "var(--accent-color-1)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--glass-ui-circle-accent-color-2",
+      "value": "var(--accent-color-2)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--glass-ui-circle-accent-color-3",
+      "value": "var(--accent-color-3)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--glass-ui-circle-accent-color-4",
+      "value": "var(--accent-color-4)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--glass-ui-circle-accent-color-5",
+      "value": "var(--accent-color-5)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--glass-ui-circle-accent-color-6",
+      "value": "var(--accent-color-6)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--glass-ui-circle-accent-color-7",
+      "value": "var(--accent-color-7)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--glass-ui-circle-blur",
+      "value": "100px",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--glass-ui-circle-blur-dashboard",
+      "value": "125px",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--glass-ui-circle-opacity",
+      "value": "0.5",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--glass-ui-white-overlay-opacity",
+      "value": "0.8",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--ui-forms-accent-color",
+      "value": "var(--brand-primary)",
+      "category": "color",
+      "description": "UI Forms: Globals",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--ui-forms-inactive-border",
+      "value": "var(--gray-600)",
+      "category": "color",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--border-radius",
+      "value": "12px",
+      "category": "border",
+      "description": "Corners",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--btn-border-radius",
+      "value": "var(--border-radius)",
+      "category": "border",
+      "description": "Allows for customizing button radius independently from global border radius",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--ui-forms-border-radius",
+      "value": "var(--border-radius)",
+      "category": "border",
+      "description": "Allows for customizing the radius of UI Form elements independently",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--logo-white",
+      "value": "url('/assets/customization/assets/images/logos/logo-white.png')",
+      "category": "border",
+      "description": "Logo",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--logo-color",
+      "value": "url('/assets/customization/assets/images/logos/logo-color.png')",
+      "category": "border",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--credit-card-img",
+      "value": "url('/assets/customization/assets/images/dashboard-images/LuminFi-card-credit.png')",
+      "category": "border",
+      "description": "Card images",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--debit-card-img",
+      "value": "url('/assets/customization/assets/images/dashboard-images/LuminFi-card-debit.png')",
+      "category": "border",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--facebook-icon",
+      "value": "url('/assets/images/footer/facebook.png')",
+      "category": "border",
+      "description": "Social media icons",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--instagram-icon",
+      "value": "url('/assets/images/footer/instagram.png')",
+      "category": "border",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--linkedin-icon",
+      "value": "url('/assets/images/footer/linkedin.png')",
+      "category": "border",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--twitter-icon",
+      "value": "url('/assets/images/footer/twitter.png')",
+      "category": "border",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--youtube-icon",
+      "value": "url('/assets/images/footer/youtube.png')",
+      "category": "border",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--genericSocialIcon1",
+      "value": "url('/assets/images/footer/genericSocialIcon1.png')",
+      "category": "border",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--genericSocialIcon2",
+      "value": "url('/assets/images/footer/genericSocialIcon2.png')",
+      "category": "border",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--genericSocialIcon3",
+      "value": "url('/assets/images/footer/genericSocialIcon3.png')",
+      "category": "border",
+      "description": "",
+      "branding": true,
+      "sourceFile": "styles/partials/_configuration-v2.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--font-family-monospace",
+      "value": "Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-weight-regular",
+      "value": "var(--font-weight-normal, 400)",
+      "category": "typography",
+      "description": "Font weights",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-weight-regular-italic",
+      "value": "var(--type-weight-regular)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-weight-semibold",
+      "value": "var(--font-weight-semibold, 500)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-weight-semibold-italic",
+      "value": "var(--type-weight-semibold)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-weight-bold",
+      "value": "var(--font-weight-bold, 700)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-weight-bold-italic",
+      "value": "var(--type-weight-bold)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-height-snug",
+      "value": "var(--line-height-xs, 1.13rem)",
+      "category": "typography",
+      "description": "Line heights",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-height-normal",
+      "value": "var(--line-height-base, 1.5rem)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-display-size",
+      "value": "var(--type-display-scale, 28.35px)",
+      "category": "typography",
+      "description": "Type sizes",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-h1-size",
+      "value": "var(--type-h1-scale, 23.43px)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-h2-size",
+      "value": "var(--type-h2-scale, 21.3px)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-h3-size",
+      "value": "var(--type-h3-scale, 19.36px)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-h4-size",
+      "value": "var(--type-h4-scale, 17.6px)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-body-size",
+      "value": "var(--type-base-scale, 16px)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-body2-size",
+      "value": "var(--type-body2-scale, 14.55px)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-caption-size",
+      "value": "var(--type-caption-scale, 12.02px)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-display-weight",
+      "value": "var(--type-weight-semibold)",
+      "category": "typography",
+      "description": "without touching the base weight/height scale.",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-display-height",
+      "value": "var(--type-height-snug)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-h1-weight",
+      "value": "var(--type-weight-bold)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-h1-height",
+      "value": "var(--type-height-snug)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-h2-weight",
+      "value": "var(--type-weight-semibold)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-h2-height",
+      "value": "var(--type-height-snug)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-h3-weight",
+      "value": "var(--type-weight-semibold)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-h3-height",
+      "value": "var(--type-height-snug)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-h4-weight",
+      "value": "var(--type-weight-semibold)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-h4-height",
+      "value": "var(--type-height-snug)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-body-weight",
+      "value": "var(--type-weight-regular)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-body-height",
+      "value": "var(--type-height-normal)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-body2-weight",
+      "value": "var(--type-weight-regular)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-body2-height",
+      "value": "var(--type-height-normal)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-caption-weight",
+      "value": "var(--type-weight-regular)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--type-caption-height",
+      "value": "var(--type-height-normal)",
+      "category": "typography",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-primary",
+      "value": "var(--brand-primary, #002429)",
+      "category": "color",
+      "description": "Primary",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-primary-on",
+      "value": "#FFFFFF",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-primary-50",
+      "value": "#f0f4f5",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-primary-100",
+      "value": "var(--brand-primary-light, #dde7e8)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-primary-300",
+      "value": "#a6bcc0",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-primary-500",
+      "value": "var(--brand-primary, #002429)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-primary-700",
+      "value": "#000c11",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-primary-900",
+      "value": "var(--brand-primary-dark, #000203)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-secondary",
+      "value": "var(--brand-secondary, #52DB8F)",
+      "category": "color",
+      "description": "Secondary",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-secondary-on",
+      "value": "#1C1C1C",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-secondary-50",
+      "value": "#eaf8ee",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-secondary-100",
+      "value": "var(--brand-secondary-light, #d0edd9)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-secondary-300",
+      "value": "#83ca9d",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-secondary-500",
+      "value": "var(--brand-secondary, #52DB8F)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-secondary-700",
+      "value": "#006f32",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-secondary-900",
+      "value": "var(--brand-secondary-dark, #002d00)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-content-neutral",
+      "value": "var(--neutral-color, #FFFFFF)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-content-primary",
+      "value": "var(--brand-neutral, #002429)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-content-secondary",
+      "value": "var(--gray-800, #565656)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-content-tertiary",
+      "value": "var(--color-gray-600)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-gray-50",
+      "value": "#F9F9F9",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-gray-100",
+      "value": "var(--gray-100, #E2E2E2)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-gray-200",
+      "value": "var(--gray-200, #CCCCCC)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-gray-300",
+      "value": "var(--gray-300, #B8B8B8)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-gray-400",
+      "value": "var(--gray-400, #A0A0A0)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-gray-500",
+      "value": "var(--gray-500, #8B8B8B)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-gray-600",
+      "value": "var(--gray-600, #767676)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-gray-700",
+      "value": "var(--gray-700, #565656)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-gray-800",
+      "value": "var(--gray-800, #383838)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-gray-900",
+      "value": "var(--gray-900, #1c1c1c)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-success",
+      "value": "var(--success, #1C8270)",
+      "category": "color",
+      "description": "Success",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-success-on",
+      "value": "var(--success-text, #FFFFFF)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-success-50",
+      "value": "#ecf6f3",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-success-100",
+      "value": "#E8F4F2",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-success-300",
+      "value": "#9FD0C7",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-success-500",
+      "value": "var(--success, #1C8270)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-success-700",
+      "value": "#135A4E",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-success-900",
+      "value": "#09322C",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-warning",
+      "value": "var(--warning, #D4A017)",
+      "category": "color",
+      "description": "Warning",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-warning-on",
+      "value": "var(--warning-text, #1c1c1c)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-warning-50",
+      "value": "#f9f3e7",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-warning-100",
+      "value": "#FBF3E3",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-warning-300",
+      "value": "#EDD089",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-warning-500",
+      "value": "var(--warning, #D4A017)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-warning-700",
+      "value": "#936E10",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-warning-900",
+      "value": "#513D09",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-danger",
+      "value": "var(--danger, #953122)",
+      "category": "color",
+      "description": "Danger",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-danger-on",
+      "value": "var(--danger-text, #FFFFFF)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-danger-50",
+      "value": "#fef0ed",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-danger-100",
+      "value": "#F6EAE7",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-danger-300",
+      "value": "#D9A39A",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-danger-500",
+      "value": "var(--danger, #953122)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-danger-700",
+      "value": "#692218",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-danger-900",
+      "value": "#3D140E",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-info",
+      "value": "var(--info, #018293)",
+      "category": "color",
+      "description": "Info",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-info-on",
+      "value": "var(--info-text, #FFFFFF)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-info-50",
+      "value": "#ebf6f8",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-info-100",
+      "value": "#E5F4F6",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-info-300",
+      "value": "#96D0D8",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-info-500",
+      "value": "var(--info, #018293)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-info-700",
+      "value": "#015C67",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-info-900",
+      "value": "#00363B",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-1",
+      "value": "var(--accent-color-1, #1D4ED8)",
+      "category": "color",
+      "description": "Account 1",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-1-on",
+      "value": "#FFFFFF",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-1-50",
+      "value": "#ebf4ff",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-1-100",
+      "value": "#d3e5ff",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-1-300",
+      "value": "#8db6ff",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-1-500",
+      "value": "var(--accent-color-1, #1D4ED8)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-1-700",
+      "value": "#010187",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-1-900",
+      "value": "#07004d",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-2",
+      "value": "var(--accent-color-2, #6D28D9)",
+      "category": "color",
+      "description": "Account 2",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-2-on",
+      "value": "#FFFFFF",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-2-50",
+      "value": "#f4f0ff",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-2-100",
+      "value": "#e5deff",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-2-300",
+      "value": "#bba5ff",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-2-500",
+      "value": "var(--accent-color-2, #6D28D9)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-2-700",
+      "value": "#380088",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-2-900",
+      "value": "#19004d",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-3",
+      "value": "var(--accent-color-3, #BE185D)",
+      "category": "color",
+      "description": "Account 3",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-3-on",
+      "value": "#FFFFFF",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-3-50",
+      "value": "#ffedf1",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-3-100",
+      "value": "#ffd8e1",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-3-300",
+      "value": "#f796af",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-3-500",
+      "value": "var(--accent-color-3, #BE185D)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-3-700",
+      "value": "#6b0025",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-3-900",
+      "value": "#330006",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-4",
+      "value": "var(--accent-color-4, #B45309)",
+      "category": "color",
+      "description": "Account 4",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-4-on",
+      "value": "#FFFFFF",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-4-50",
+      "value": "#fef0e9",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-4-100",
+      "value": "#faded0",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-4-300",
+      "value": "#e6a786",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-4-500",
+      "value": "var(--accent-color-4, #B45309)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-4-700",
+      "value": "#631000",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-4-900",
+      "value": "#2e0000",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-5",
+      "value": "var(--accent-color-5, #047857)",
+      "category": "color",
+      "description": "Account 5",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-5-on",
+      "value": "#FFFFFF",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-5-50",
+      "value": "#ecf6f1",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-5-100",
+      "value": "#d5eae0",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-5-300",
+      "value": "#92c5ae",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-5-500",
+      "value": "var(--accent-color-5, #047857)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-5-700",
+      "value": "#003a21",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-5-900",
+      "value": "#001404",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-6",
+      "value": "var(--accent-color-6, #0F766E)",
+      "category": "color",
+      "description": "Account 6",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-6-on",
+      "value": "#FFFFFF",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-6-50",
+      "value": "#ecf6f4",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-6-100",
+      "value": "#d6eae7",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-6-300",
+      "value": "#92c3bc",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-6-500",
+      "value": "var(--accent-color-6, #0F766E)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-6-700",
+      "value": "#003833",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-6-900",
+      "value": "#001310",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-7",
+      "value": "var(--accent-color-7, #C2410C)",
+      "category": "color",
+      "description": "Account 7",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-7-on",
+      "value": "#FFFFFF",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-7-50",
+      "value": "#ffefe9",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-7-100",
+      "value": "#ffdbd0",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-7-300",
+      "value": "#f1a086",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-7-500",
+      "value": "var(--accent-color-7, #C2410C)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-7-700",
+      "value": "#6d0000",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-account-7-900",
+      "value": "#340000",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-background-account-1",
+      "value": "var(--glass-ui-circle-accent-color-1, var(--color-account-1))",
+      "category": "color",
+      "description": "Account backgrounds",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-background-account-2",
+      "value": "var(--glass-ui-circle-accent-color-2, var(--color-account-2))",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-background-account-3",
+      "value": "var(--glass-ui-circle-accent-color-3, var(--color-account-3))",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-background-account-4",
+      "value": "var(--glass-ui-circle-accent-color-4, var(--color-account-4))",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-background-account-5",
+      "value": "var(--glass-ui-circle-accent-color-5, var(--color-account-5))",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-background-account-6",
+      "value": "var(--glass-ui-circle-accent-color-6, var(--color-account-6))",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-background-account-7",
+      "value": "var(--glass-ui-circle-accent-color-7, var(--color-account-7))",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-chart-1",
+      "value": "#0F5C66",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-chart-1-on",
+      "value": "#FFFFFF",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-chart-2",
+      "value": "#1F7A82",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-chart-2-on",
+      "value": "#FFFFFF",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-chart-3",
+      "value": "#2E8F57",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-chart-3-on",
+      "value": "#1C1C1C",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-chart-4",
+      "value": "#2FA3B1",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-chart-4-on",
+      "value": "#1C1C1C",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-chart-5",
+      "value": "#52C17A",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-chart-5-on",
+      "value": "#1C1C1C",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-chart-6",
+      "value": "#C96AA6",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-chart-6-on",
+      "value": "#1C1C1C",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-chart-7",
+      "value": "#F5D66D",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-chart-7-on",
+      "value": "#1C1C1C",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-chart-8",
+      "value": "#4F86C6",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-chart-8-on",
+      "value": "#1C1C1C",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-chart-9",
+      "value": "#7A6FD6",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-chart-9-on",
+      "value": "#FFFFFF",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-chart-10",
+      "value": "#E07A5F",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-chart-10-on",
+      "value": "#1C1C1C",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-default",
+      "value": "var(--neutral-bg-color, #FFFFFF)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-sunken",
+      "value": "var(--brand-background, #F9F9F9)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-scrim",
+      "value": "rgba(28, 28, 28, var(--opacity-400))",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-background-1",
+      "value": "var(--glass-ui-circle-primary-color, #002429)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-background-2",
+      "value": "var(--glass-ui-circle-secondary-color, #52DB8F)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-background-3",
+      "value": "var(--glass-ui-circle-tertiary-color, #52DB8F)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-background-overlay",
+      "value": "var(--glass-ui-white-overlay-opacity, rgba(255, 255, 255, 0.85))",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-stroke-white",
+      "value": "#FFFFFF",
+      "category": "color",
+      "description": "Strokes",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-stroke-1",
+      "value": "var(--gray-100, #E2E8F0)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-stroke-2",
+      "value": "var(--gray-200, #D1D1D1)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-positive",
+      "value": "var(--positive-color, #1C8270)",
+      "category": "color",
+      "description": "Transaction colors",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-negative",
+      "value": "var(--negative-color, #953122)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-cashflow-in",
+      "value": "var(--cash-flow-pos-color, #1C8270)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-cashflow-out",
+      "value": "var(--cash-flow-neg-color, #953122)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-background-pending",
+      "value": "var(--pending-fill, #F9F9F9)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-content-pending",
+      "value": "var(--pending-text, #002429)",
+      "category": "color",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--density-comfortable",
+      "value": "1",
+      "category": "layout",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--density-compact",
+      "value": "0.75",
+      "category": "layout",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--spacing-0",
+      "value": "0",
+      "category": "spacing",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--spacing-50",
+      "value": "var(--space-xxs, 4px)",
+      "category": "spacing",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--spacing-100",
+      "value": "var(--space-xs, 8px)",
+      "category": "spacing",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--spacing-150",
+      "value": "var(--space-sm, 12px)",
+      "category": "spacing",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--spacing-200",
+      "value": "var(--space-md, 16px)",
+      "category": "spacing",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--spacing-250",
+      "value": "var(--space-lg, 20px)",
+      "category": "spacing",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--spacing-300",
+      "value": "var(--space-xl, 24px)",
+      "category": "spacing",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--spacing-400",
+      "value": "var(--space-xxl, 32px)",
+      "category": "spacing",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--spacing-500",
+      "value": "var(--space-xxxl, 40px)",
+      "category": "spacing",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--spacing-600",
+      "value": "var(--space-xxxxl, 64px)",
+      "category": "spacing",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--size-100",
+      "value": "8px",
+      "category": "layout",
+      "description": "Most common use case for these is icon sizing",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--size-150",
+      "value": "12px",
+      "category": "layout",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--size-200",
+      "value": "16px",
+      "category": "layout",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--size-250",
+      "value": "20px",
+      "category": "layout",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--size-300",
+      "value": "24px",
+      "category": "layout",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--size-400",
+      "value": "32px",
+      "category": "layout",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--size-500",
+      "value": "40px",
+      "category": "layout",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--size-600",
+      "value": "64px",
+      "category": "layout",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--container-spacing",
+      "value": "var(--microapp-container-spacing, 20px)",
+      "category": "layout",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--elevation-0",
+      "value": "none",
+      "category": "shadow",
+      "description": "Following elevations vars map to --box-shadow-xs, sm, md, lg, & xl",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--elevation-1",
+      "value": "0 4px 10px 0 color-mix(in srgb, var(--color-gray-900) 4%, transparent)",
+      "category": "shadow",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--elevation-2",
+      "value": "0 4px 16px 1px color-mix(in srgb, var(--color-gray-900) 8%, transparent)",
+      "category": "shadow",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--elevation-3",
+      "value": "0 4px 16px 1px color-mix(in srgb, var(--color-gray-900) 12%, transparent)",
+      "category": "shadow",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--elevation-4",
+      "value": "0 8px 32px -1px color-mix(in srgb, var(--color-gray-900) 24%, transparent)",
+      "category": "shadow",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--opacity-50",
+      "value": "0.04",
+      "category": "opacity",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--opacity-100",
+      "value": "0.08",
+      "category": "opacity",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--opacity-150",
+      "value": "0.12",
+      "category": "opacity",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--opacity-200",
+      "value": "0.16",
+      "category": "opacity",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--opacity-300",
+      "value": "0.32",
+      "category": "opacity",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--opacity-400",
+      "value": "0.4",
+      "category": "opacity",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--opacity-500",
+      "value": "0.64",
+      "category": "opacity",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--opacity-600",
+      "value": "0.8",
+      "category": "opacity",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--opacity-700",
+      "value": "0.9",
+      "category": "opacity",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--shape-sharp-small",
+      "value": "0px",
+      "category": "border",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--shape-sharp-medium",
+      "value": "0px",
+      "category": "border",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--shape-sharp-large",
+      "value": "0px",
+      "category": "border",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--shape-soft-small",
+      "value": "8px",
+      "category": "border",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--shape-soft-medium",
+      "value": "8px",
+      "category": "border",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--shape-soft-large",
+      "value": "12px",
+      "category": "border",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--shape-rounded-small",
+      "value": "999px",
+      "category": "border",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--shape-rounded-medium",
+      "value": "12px",
+      "category": "border",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--shape-rounded-large",
+      "value": "16px",
+      "category": "border",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--containers-shape",
+      "value": "var(--border-radius, 12px)",
+      "category": "border",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--forms-shape",
+      "value": "var(--ui-forms-border-radius, 12px)",
+      "category": "border",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-shape",
+      "value": "var(--btn-border-radius, 12px)",
+      "category": "border",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-easing-in",
+      "value": "cubic-bezier(0.4, 0.0, 1.0, 1.0)",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-easing-out",
+      "value": "cubic-bezier(0.0, 0.0, 0.2, 1.0)",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-easing-inout",
+      "value": "cubic-bezier(0.4, 0.0, 0.2, 1.0)",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-easing-linear",
+      "value": "cubic-bezier(0.0, 0.0, 1.0, 1.0)",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-easing-spring",
+      "value": "cubic-bezier(0.34, 1.56, 0.64, 1.0)",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-duration-100",
+      "value": "100ms",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-duration-200",
+      "value": "200ms",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-duration-300",
+      "value": "300ms",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-duration-400",
+      "value": "400ms",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-duration-500",
+      "value": "500ms",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-duration-600",
+      "value": "600ms",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-duration-700",
+      "value": "700ms",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-duration-800",
+      "value": "800ms",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-duration-900",
+      "value": "900ms",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-transition-bounce",
+      "value": "transform var(--motion-duration-300) var(--motion-easing-out), opacity var(--motion-duration-300) var(--motion-easing-out)",
+      "category": "animation",
+      "description": "slide/expand/fill require transform-origin to be set on the consuming element.",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-transition-drag",
+      "value": "transform 250ms cubic-bezier(0, 0, 0.2, 1)",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-transition-expanddown",
+      "value": "transform var(--motion-duration-300) var(--motion-easing-inout)",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-transition-expandup",
+      "value": "transform var(--motion-duration-300) var(--motion-easing-inout)",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-transition-fadein",
+      "value": "opacity var(--motion-duration-300) var(--motion-easing-out)",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-transition-fadeout",
+      "value": "opacity var(--motion-duration-300) var(--motion-easing-in)",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-transition-fill",
+      "value": "transform var(--motion-duration-500) var(--motion-easing-inout)",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-transition-flip",
+      "value": "transform var(--motion-duration-500) var(--motion-easing-inout)",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-transition-scale",
+      "value": "transform var(--motion-duration-300) var(--motion-easing-out)",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-transition-scaledownfade",
+      "value": "transform var(--motion-duration-300) var(--motion-easing-in), opacity var(--motion-duration-300) var(--motion-easing-in)",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-transition-scalefade",
+      "value": "transform var(--motion-duration-300) var(--motion-easing-out), opacity var(--motion-duration-300) var(--motion-easing-out)",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-transition-slidedown",
+      "value": "transform var(--motion-duration-400) var(--motion-easing-out)",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-transition-slideleft",
+      "value": "transform var(--motion-duration-400) var(--motion-easing-out)",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-transition-slideright",
+      "value": "transform var(--motion-duration-400) var(--motion-easing-out)",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--motion-transition-slideup",
+      "value": "transform var(--motion-duration-400) var(--motion-easing-out)",
+      "category": "animation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-primary-1",
+      "value": "var(--btn-primary, #005A66)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-primary-2",
+      "value": "var(--btn-primary-gradient, #005A66)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-primary-on",
+      "value": "var(--btn-primary-text, #FFFFFF)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-size-primary-border",
+      "value": "var(--btn-primary-border-size, 0px)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-primary-border",
+      "value": "var(--btn-primary-border, #005A66)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-primary-hover-1",
+      "value": "var(--btn-primary-hover, #02424B)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-primary-hover-2",
+      "value": "var(--btn-primary-hover-gradient, #02424B)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-primary-hover-on",
+      "value": "var(--btn-primary-hover-text, #FFFFFF)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-primary-border-hover",
+      "value": "var(--btn-primary-hover-border, #02424B)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-primary-active-1",
+      "value": "var(--btn-primary-active, #002F35)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-primary-active-2",
+      "value": "var(--btn-primary-active-gradient, #002F35)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-primary-active-on",
+      "value": "var(--btn-primary-active-text, #FFFFFF)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-primary-border-active",
+      "value": "var(--btn-primary-active-border, #002F35)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-primary-text-weight",
+      "value": "var(--btn-primary-font-weight, var(--type-weight-semibold))",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-primary-text-transform",
+      "value": "var(--btn-primary-text-transform, none)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-primary-disabled",
+      "value": "var(--btn-disabled, #b1b1b1)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-primary-border-disabled",
+      "value": "var(--btn-disabled, #b1b1b1)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-primary-disabled-on",
+      "value": "var(--btn-disabled-text, #FFFFFF)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-secondary-1",
+      "value": "var(--btn-secondary, #FFFFFF)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-secondary-2",
+      "value": "var(--btn-secondary-gradient, #FFFFFF)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-secondary-on",
+      "value": "var(--btn-secondary-text, #FFFFFF)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-size-secondary-border",
+      "value": "var(--btn-secondary-border-size, 1px)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-secondary-border",
+      "value": "var(--btn-secondary-border, #005A66)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-secondary-hover-1",
+      "value": "var(--btn-secondary-hover, #e8f5f4)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-secondary-hover-2",
+      "value": "var(--btn-secondary-hover-gradient, #e8f5f4)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-secondary-hover-on",
+      "value": "var(--btn-secondary-hover-text, #005A66)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-secondary-border-hover",
+      "value": "var(--btn-secondary-hover-border, #005A66)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-secondary-active-1",
+      "value": "var(--btn-secondary-active, #C2E5E2)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-secondary-active-2",
+      "value": "var(--btn-secondary-active-gradient, #C2E5E2)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-secondary-active-on",
+      "value": "var(--btn-secondary-active-text, #01454E)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-secondary-border-active",
+      "value": "var(--btn-secondary-active-border, #01454E)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-secondary-text-weight",
+      "value": "var(--btn-secondary-font-weight, var(--type-weight-semibold))",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-secondary-text-transform",
+      "value": "var(--btn-secondary-text-transform, none)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-secondary-disabled",
+      "value": "#FFFFFF",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-secondary-border-disabled",
+      "value": "#82878e",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-secondary-disabled-on",
+      "value": "#82878e",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-tertiary",
+      "value": "#FFFFFF",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-tertiary-on",
+      "value": "#005A66",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-tertiary-hover",
+      "value": "#e8f5f4",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-tertiary-hover-on",
+      "value": "#005A66",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-tertiary-active",
+      "value": "#c2e5e2",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-color-tertiary-active-on",
+      "value": "#005A66",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-text-tertiary-weight",
+      "value": "var(--btn-tertiary-font-weight, var(--type-weight-semibold))",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-text-tertiary-transform",
+      "value": "var(--btn-tertiary-text-transform, none)",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--button-text-tertiary-disabled",
+      "value": "#82878e",
+      "category": "button",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--form-color",
+      "value": "var(--ui-forms-accent-color, #005A66)",
+      "category": "form",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--form-color-on",
+      "value": "#FFFFFF",
+      "category": "form",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-hover",
+      "value": "var(--hover-color, #eaf8ee)",
+      "category": "form",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-active",
+      "value": "#C2E5E2",
+      "category": "form",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-selected",
+      "value": "#E8F5F4",
+      "category": "form",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--color-focus",
+      "value": "#0066CC",
+      "category": "form",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--offset-focus",
+      "value": "2px",
+      "category": "form",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--size-focus-border",
+      "value": "2px",
+      "category": "form",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--focus-blue-box",
+      "value": "var(--size-focus-border) solid var(--color-focus)",
+      "category": "form",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--focus-blue-box-shadow",
+      "value": "0 0 0 var(--size-focus-border) var(--color-focus)",
+      "category": "form",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--focus-white-box",
+      "value": "var(--size-focus-border) solid #FFFFFF",
+      "category": "form",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--link-color",
+      "value": "var(--brand-primary, #005A66)",
+      "category": "link",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--link-color-hover",
+      "value": "var(--link-hover-color, #177D71)",
+      "category": "link",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--link-color-active",
+      "value": "var(--link-active-color, #01454E)",
+      "category": "link",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--link-text-weight",
+      "value": "var(--link-font-weight, var(--type-weight-semibold))",
+      "category": "link",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--link-text-transform",
+      "value": "none",
+      "category": "link",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--link-text-decoration",
+      "value": "none",
+      "category": "link",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--link-text-decoration-hover",
+      "value": "var(--link-hover-text-decoration, underline)",
+      "category": "link",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--link-text-decoration-active",
+      "value": "var(--link-active-text-decoration, none)",
+      "category": "link",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--link-color-disabled",
+      "value": "#82878e",
+      "category": "link",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-desktop-color",
+      "value": "#002429",
+      "category": "navigation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-desktop-color-on",
+      "value": "#FFFFFF",
+      "category": "navigation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-desktop-color-hover",
+      "value": "var(--btn-navigation-hover, #007180)",
+      "category": "navigation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-desktop-color-hover-on",
+      "value": "var(--btn-navigation-hover-text, #FFFFFF)",
+      "category": "navigation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-desktop-color-active",
+      "value": "var(--btn-navigation-active, #52DB8F)",
+      "category": "navigation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-desktop-color-active-on",
+      "value": "var(--btn-navigation-active-text, #FFFFFF)",
+      "category": "navigation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-mobile-top-color",
+      "value": "#005A66",
+      "category": "navigation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-mobile-top-color-on",
+      "value": "#FFFFFF",
+      "category": "navigation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-mobile-bottom-color",
+      "value": "#FFFFFF",
+      "category": "navigation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-mobile-bottom-color-on",
+      "value": "#484848",
+      "category": "navigation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-mobile-bottom-color-active",
+      "value": "#52DB8F",
+      "category": "navigation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-mobile-bottom-color-active-on",
+      "value": "#002429",
+      "category": "navigation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-search-color",
+      "value": "var(--nav-search-fill-inactive, #002429)",
+      "category": "navigation",
+      "description": "Navigation \u2014 search",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-search-color-on",
+      "value": "var(--nav-search-text-inactive, #FFFFFF)",
+      "category": "navigation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-search-color-active",
+      "value": "var(--nav-search-fill-active, #007180)",
+      "category": "navigation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-search-color-active-on",
+      "value": "var(--nav-search-text-active, #FFFFFF)",
+      "category": "navigation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-search-color-hint-on",
+      "value": "var(--nav-search-hint-text, #FFFFFF)",
+      "category": "navigation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-search-color-icon",
+      "value": "var(--nav-search-icon-inactive, #FFFFFF)",
+      "category": "navigation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-search-color-icon-active",
+      "value": "var(--nav-search-icon-active, #FFFFFF)",
+      "category": "navigation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--nav-mobile-search-color-close",
+      "value": "var(--nav-search-mobile-close-icon, #FFFFFF)",
+      "category": "navigation",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--image-credit",
+      "value": "var(--credit-card-img)",
+      "category": "image",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--image-debit",
+      "value": "var(--debit-card-img)",
+      "category": "image",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--image-logo-default",
+      "value": "var(--logo-color)",
+      "category": "image",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--image-logo-white",
+      "value": "var(--logo-white)",
+      "category": "image",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--image-facebook",
+      "value": "var(--facebook-icon)",
+      "category": "image",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--image-instagram",
+      "value": "var(--instagram-icon)",
+      "category": "image",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--image-linkedin",
+      "value": "var(--linkedin-icon)",
+      "category": "image",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--image-twitter",
+      "value": "var(--twitter-icon)",
+      "category": "image",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--image-youtube",
+      "value": "var(--youtube-icon)",
+      "category": "image",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--image-social-1",
+      "value": "var(--genericSocialIcon1)",
+      "category": "image",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--image-social-2",
+      "value": "var(--genericSocialIcon2)",
+      "category": "image",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    },
+    {
+      "name": "--image-social-3",
+      "value": "var(--genericSocialIcon3)",
+      "category": "image",
+      "description": "",
+      "branding": false,
+      "sourceFile": "styles/partials/_base-tokens.scss",
+      "cssClasses": []
+    }
+  ]
+}
