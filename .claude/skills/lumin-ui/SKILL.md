@@ -193,6 +193,23 @@ If `src/app/prototypes/` was not found, omit the first line and note that only t
 
 Use the **absolute, expanded path** in the `file://` URL (no `~` — replace it with `/Users/<username>`). The link will not resolve if `~` is left unexpanded.
 
+### E — Open preview in Claude Desktop (if available)
+
+**Only run this sub-step if `src/app/prototypes/` was found** (the files were copied to the sandbox).
+
+Check whether the Claude Desktop Browser pane is available by looking for the `preview_start` tool (part of the `mcp__Claude_Browser__*` tool set). This tool is present in Claude Desktop sessions but not in other surfaces.
+
+**If `preview_start` is available:**
+1. Call `preview_start` with `{name: "lumin-prototype"}` — this starts the dev server via `npm run boot && npm start` (or reuses it if already running) and opens a preview tab at `http://localhost:4200`.
+2. Wait for the server to be ready, then navigate the preview pane to `http://localhost:4200/<component-name>` using the `navigate` tool so the user sees the result immediately.
+3. Take a screenshot with `computer {action: "screenshot"}` and share it as proof the prototype is live.
+
+**If `preview_start` is not available**, skip silently — the user can run the preview manually:
+```bash
+npm run boot && npm start
+```
+Then open `http://localhost:4200/<component-name>` in a browser.
+
 ---
 
 ## If a Component Doesn't Exist

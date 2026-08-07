@@ -3,9 +3,10 @@
   "configurations": [
     {
       "name": "lumin-prototype",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["start"],
-      "port": 4200
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "source ~/.nvm/nvm.sh && nvm use v20.20.0 && npm run boot && npm start"],
+      "port": 4200,
+      "autoPort": false
     }
   ]
 }
