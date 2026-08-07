@@ -89,6 +89,8 @@ npm error sha512-... integrity checksum failed when using sha512
 
 That is exactly a fresh StackBlitz WebContainer, and it affects `npm ci` and `npm install` alike. Never hand-edit the lockfile or regenerate it with a bare `npm install --package-lock-only` — run `npm run lock:refresh`, which handles both this and the clean-tree requirement. See [`scripts/refresh-lock.js`](scripts/refresh-lock.js).
 
+Installs use `--no-save` for a related reason. npm rewrites `package-lock.json` on install whenever its own version normalizes the file differently from the version that generated it, and StackBlitz's bundled npm is not the one CI uses. Without `--no-save` every sandbox boot produced a modified lockfile in the user's changes list — noise in a sandbox nobody is meant to commit from. `--no-save` still *reads* the lockfile, so the fast install is unaffected; it only stops npm writing it back.
+
 `npm start` runs [`scripts/start.js`](scripts/start.js), which supervises three processes:
 
 | Process | Role |
