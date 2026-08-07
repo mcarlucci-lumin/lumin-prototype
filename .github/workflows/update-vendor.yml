@@ -7,7 +7,7 @@ on:
     paths: ['vendor-config.json']
   # Run weekly to pick up patch releases if using ranges
   schedule:
-    - cron: '0 2 * * 1'
+    - cron: '0 2 * * 1-5'
   # Manual trigger (e.g. first-time setup or forced refresh)
   workflow_dispatch:
 
