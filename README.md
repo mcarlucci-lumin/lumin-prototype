@@ -28,14 +28,23 @@ A prototype folder looks like this:
 example-prototype/
 ├── example-prototype.component.ts     (required)
 ├── example-prototype.component.html   (optional)
-└── example-prototype.component.scss   (optional)
+├── example-prototype.component.scss   (optional)
+└── meta.json                          (optional)
 ```
 
 Three rules worth knowing:
 
 - **The folder name becomes the address.** A folder named `loan-application` shows up at `/loan-application` in the gallery, and its tile is titled "Loan Application."
 - **The file names must match the folder name.** `loan-application/loan-application.component.ts`, not `loan-application/main.component.ts`.
-- **Only `.component.ts`, `.component.html` and `.component.scss` files are accepted.** Anything else in the folder is quietly ignored. The `.ts` file is the only one that's required.
+- **Only `.component.ts`, `.component.html`, `.component.scss` and `meta.json` are accepted.** Anything else in the folder is quietly ignored. The `.ts` file is the only one that's required.
+
+Add a `meta.json` to control how the tile reads, instead of accepting the title-cased folder name:
+
+```json
+{ "name": "Loan Application", "description": "Multi-step application flow" }
+```
+
+If the file isn't valid JSON the upload is rejected with an error telling you what's wrong, rather than quietly falling back to the folder name.
 
 If you drop a `.zip`, the zip's file name (minus `.zip`) becomes the folder name.
 
@@ -154,7 +163,7 @@ Optionally add a `meta.json` next to the component to control how the tile reads
 { "name": "Loan Application", "description": "Multi-step application flow" }
 ```
 
-Note that `meta.json` only applies to prototypes added on disk or committed to the repo — the drop zone filters out everything that isn't a `.component.*` file, so a dropped `meta.json` is discarded and the tile falls back to the title-cased folder name.
+`meta.json` works the same whether the prototype is committed to the repo or dropped on the gallery. The drop zone accepts `.component.{ts,html,scss}` and `meta.json`; it silently skips OS bookkeeping files (`.DS_Store`, `Thumbs.db`, `desktop.ini`, `__MACOSX/`) and rejects anything else. Uploaded `meta.json` is parsed up front, so a malformed file fails the drop with a readable error instead of silently reverting the tile to the folder name.
 
 To share a prototype with everyone, commit it and push to `main`. To share a one-off variant, push a branch and send its StackBlitz URL:
 

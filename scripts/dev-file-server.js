@@ -10,6 +10,9 @@
  *   POST   /upload-zip        X-Dir-Name:  <slug>       body: raw zip bytes
  *   DELETE /prototype/<slug>                            removes dir + re-wires
  *
+ * Accepted files: <slug>.component.{ts,html,scss} and meta.json. Everything
+ * else in a dropped folder or zip is ignored.
+ *
  * Path traversal is rejected. Only called from localhost — no auth needed.
  */
 
@@ -23,7 +26,18 @@ const { spawnSync } = require('child_process');
 const PORT        = 7788;
 const PROTOS      = path.resolve(__dirname, '../src/app/prototypes');
 const WIRE_SCRIPT = path.join(__dirname, 'wire-prototypes.js');
-const ALLOWED     = /\.component\.(ts|html|scss)$/;
+
+// Uploads are restricted to the files wire-prototypes.js actually consumes.
+// meta.json must be exactly that — wire-prototypes.js looks it up by exact
+// name, so accepting "Meta.json" would silently write a file it never reads.
+const ALLOWED       = /(?:\.component\.(ts|html|scss)|(?:^|\/)meta\.json)$/;
+const ALLOWED_HUMAN = '.component.ts, .component.html, .component.scss and meta.json';
+const IS_META       = /(?:^|\/)meta\.json$/;
+
+// OS bookkeeping files ride along in any dropped folder. These are skipped with
+// a 200 rather than rejected: the client aborts the whole upload batch on the
+// first non-OK response, so a single .DS_Store would fail an entire folder drop.
+const IGNORED = /(?:^|\/)(?:\.DS_Store|Thumbs\.db|desktop\.ini)$|(?:^|\/)__MACOSX(?:\/|$)/;
 
 async function wireWithRetry() {
     const MAX = 3;
@@ -51,6 +65,29 @@ function readBody(req) {
         req.on('end',  () => resolve(Buffer.concat(chunks)));
         req.on('error', reject);
     });
+}
+
+/**
+ * Returns a human-readable problem with a meta.json payload, or null if it is
+ * usable. Only `name` and `description` are read by wire-prototypes.js; other
+ * keys are allowed through so the format can grow without breaking uploads.
+ */
+function validateMeta(buffer) {
+    let parsed;
+    try {
+        parsed = JSON.parse(buffer.toString('utf8'));
+    } catch (e) {
+        return `not valid JSON (${e.message})`;
+    }
+    if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
+        return 'must contain a JSON object, e.g. { "name": "Loan Application" }';
+    }
+    for (const key of ['name', 'description']) {
+        if (key in parsed && typeof parsed[key] !== 'string') {
+            return `"${key}" must be a string`;
+        }
+    }
+    return null;
 }
 
 function safePath(relative) {
@@ -107,6 +144,11 @@ function extractZip(buffer, destDir) {
         else if (method === 8) data = zlib.inflateRawSync(compressed); // deflate
         else throw new Error(`Zip entry "${filename}" uses unsupported compression ${method}`);
 
+        if (IS_META.test(filename)) {
+            const problem = validateMeta(data);
+            if (problem) throw new Error(`${filename}: ${problem}`);
+        }
+
         const dest = path.join(destDir, filename);
         fs.mkdirSync(path.dirname(dest), { recursive: true });
         fs.writeFileSync(dest, data);
@@ -149,11 +191,22 @@ if (u !== location.href) location.replace(u);
     if (req.method === 'POST' && url === '/upload') {
         const filePath = req.headers['x-file-path'];
         if (!filePath) { res.writeHead(400); res.end('Missing X-File-Path'); return; }
-        if (!ALLOWED.test(filePath)) { res.writeHead(400); res.end('Only .component.ts, .component.html and .component.scss files are allowed'); return; }
+        if (IGNORED.test(filePath)) { res.writeHead(200); res.end('Ignored'); return; }
+        if (!ALLOWED.test(filePath)) { res.writeHead(400); res.end(`Only ${ALLOWED_HUMAN} files are allowed`); return; }
 
         try {
             const dest = safePath(filePath);
             const body = await readBody(req);
+
+            // wire-prototypes.js swallows unparseable meta.json and silently falls
+            // back to the title-cased folder name. Reject it here instead, so the
+            // drop zone can tell the user rather than leaving them to wonder why
+            // their tile is named wrong.
+            if (IS_META.test(filePath)) {
+                const problem = validateMeta(body);
+                if (problem) { res.writeHead(400); res.end(`${filePath}: ${problem}`); return; }
+            }
+
             fs.mkdirSync(path.dirname(dest), { recursive: true });
             fs.writeFileSync(dest, body);
             console.log(`[dev-file-server] + ${filePath}`);

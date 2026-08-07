@@ -19,6 +19,19 @@ function resolveFileServer(): string {
 
 const FILE_SERVER = resolveFileServer();
 
+// wire-prototypes.js runs synchronously on the server, so the registry, routes
+// and module declarations are already on disk when an upload or delete returns.
+// The browser still holds the previous bundle though, and ng serve's live reload
+// is unreliable in WebContainers — so the page is reloaded explicitly once the
+// rebuild has had time to land. Adding a prototype compiles a new component, so
+// it gets more headroom than removing one.
+const RELOAD_DELAY_ADD_MS    = 4000;
+const RELOAD_DELAY_REMOVE_MS = 2000;
+
+// OS bookkeeping files that macOS and Windows put inside any dropped folder.
+// The server ignores these too; skipping them here just avoids the round trip.
+const IGNORED_FILES = /(?:^|\/)(?:\.DS_Store|Thumbs\.db|desktop\.ini)$/;
+
 @Component({
     standalone: false,
     selector: 'app-home',
@@ -88,10 +101,8 @@ export class HomeComponent {
             if (needsFinalize) await this.finalize();
 
             this.dropState = 'success';
-            this.statusMessage = 'Done — prototype wired automatically.';
-            setTimeout(() => {
-                if (this.dropState === 'success') this.dropState = 'idle';
-            }, 3500);
+            this.statusMessage = 'Wired — reloading to show the new prototype…';
+            setTimeout(() => window.location.reload(), RELOAD_DELAY_ADD_MS);
         } catch (err: unknown) {
             this.dropState = 'error';
             this.statusMessage = err instanceof Error ? err.message : 'Upload failed.';
@@ -117,10 +128,7 @@ export class HomeComponent {
             }
             if (!res.ok) throw new Error(`Remove failed: ${await res.text()}`);
 
-            // wire-prototypes.js ran synchronously on the server side;
-            // ng serve will hot-reload when it sees the updated files.
-            // Force a reload after a short delay as a reliable fallback.
-            setTimeout(() => window.location.reload(), 2000);
+            setTimeout(() => window.location.reload(), RELOAD_DELAY_REMOVE_MS);
         } catch (err: unknown) {
             this.removingSlug = null;
             this.dropState = 'error';
@@ -146,6 +154,7 @@ export class HomeComponent {
     private async uploadEntries(entries: FileSystemEntry[]): Promise<void> {
         for (const entry of entries) {
             if (entry.isFile) {
+                if (IGNORED_FILES.test(entry.fullPath)) continue;
                 const file = await fileFromEntry(entry as FileSystemFileEntry);
                 await this.postFile(entry.fullPath.slice(1), file);
             } else if (entry.isDirectory) {
