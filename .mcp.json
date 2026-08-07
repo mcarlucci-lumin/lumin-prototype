@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "lumin-design-mcp": {
+      "type": "http",
+      "url": "https://uat-design-mcp.dev-tooling.mercury2023.lumindigital.internal/mcp"
+    },
+    "figma": {
+			"url": "https://mcp.figma.com/mcp",
+			"type": "http"
+		}
+  }
+}
