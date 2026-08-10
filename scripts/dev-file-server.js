@@ -21,11 +21,10 @@ const fs     = require('fs');
 const path   = require('path');
 const os     = require('os');
 const zlib   = require('zlib');
-const { spawnSync } = require('child_process');
 
 const PORT        = 7788;
 const PROTOS      = path.resolve(__dirname, '../src/app/prototypes');
-const WIRE_SCRIPT = path.join(__dirname, 'wire-prototypes.js');
+const { run: wireRun } = require('./wire-prototypes');
 
 // Uploads are restricted to the files wire-prototypes.js actually consumes.
 // meta.json must be exactly that — wire-prototypes.js looks it up by exact
@@ -43,11 +42,14 @@ async function wireWithRetry() {
     const MAX = 3;
     let lastErr;
     for (let i = 1; i <= MAX; i++) {
-        const r = spawnSync(process.execPath, [WIRE_SCRIPT], { stdio: 'inherit' });
-        if (!r.error && r.status === 0) return;
-        lastErr = r.error ?? new Error(`wire-prototypes exited ${r.status}`);
-        console.error(`[dev-file-server] wire attempt ${i}/${MAX} failed: ${lastErr.message}`);
-        if (i < MAX) await new Promise(resolve => setTimeout(resolve, 600 * i)); // 600 ms, 1200 ms
+        try {
+            wireRun();
+            return;
+        } catch (e) {
+            lastErr = e;
+            console.error(`[dev-file-server] wire attempt ${i}/${MAX} failed: ${e.message}`);
+            if (i < MAX) await new Promise(resolve => setTimeout(resolve, 600 * i)); // 600 ms, 1200 ms
+        }
     }
     throw lastErr;
 }
@@ -131,6 +133,7 @@ function extractZip(buffer, destDir) {
         pos += 46 + fnLen + extraLen + commentLen;
 
         if (filename.endsWith('/')) continue; // directory entry — created on demand
+        if (IGNORED.test(filename)) continue;  // skip __MACOSX and OS metadata
         if (!ALLOWED.test(filename)) continue; // skip non-component files
 
         // Jump to local file header to find actual data offset
@@ -240,6 +243,7 @@ if (u !== location.href) location.replace(u);
                 : unzipD;
 
             const dest = safePath(dirName);
+            if (fs.existsSync(dest)) fs.rmSync(dest, { recursive: true, force: true });
             copyDir(src, dest);
             console.log(`[dev-file-server] + ${dirName}/ (from zip)`);
             await wireWithRetry();

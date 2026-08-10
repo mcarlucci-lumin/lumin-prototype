@@ -214,19 +214,23 @@ function run() {
     console.log(`[wire-prototypes] ${protos.length} prototype(s) wired: ${names}`);
 }
 
-if (process.argv.includes('--watch')) {
-    console.log('[wire-prototypes] Watching src/app/prototypes for changes…');
-    run();
+if (require.main === module) {
+    if (process.argv.includes('--watch')) {
+        console.log('[wire-prototypes] Watching src/app/prototypes for changes…');
+        run();
 
-    let debounce;
-    fs.watch(PROTOS_DIR, { recursive: true }, (_, filename) => {
-        if (!filename) return;
-        clearTimeout(debounce);
-        debounce = setTimeout(() => {
-            console.log(`[wire-prototypes] Change detected: ${filename}`);
-            try { run(); } catch (e) { console.error('[wire-prototypes] Error:', e.message); }
-        }, 3000);
-    });
-} else {
-    run();
+        let debounce;
+        fs.watch(PROTOS_DIR, { recursive: true }, (_, filename) => {
+            if (!filename) return;
+            clearTimeout(debounce);
+            debounce = setTimeout(() => {
+                console.log(`[wire-prototypes] Change detected: ${filename}`);
+                try { run(); } catch (e) { console.error('[wire-prototypes] Error:', e.message); }
+            }, 3000);
+        });
+    } else {
+        run();
+    }
 }
+
+module.exports = { run };

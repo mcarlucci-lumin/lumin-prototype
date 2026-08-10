@@ -24,9 +24,11 @@ const FILE_SERVER = resolveFileServer();
 // The browser still holds the previous bundle though, and ng serve's live reload
 // is unreliable in WebContainers — so the page is reloaded explicitly once the
 // rebuild has had time to land. Adding a prototype compiles a new component, so
-// it gets more headroom than removing one.
-const RELOAD_DELAY_ADD_MS    = 4000;
-const RELOAD_DELAY_REMOVE_MS = 2000;
+// it gets more headroom than removing one. WebContainers (StackBlitz) is notably
+// slower to compile than a native machine, so a longer delay is used there.
+const IS_WEBCONTAINER = /\.webcontainer(?:\.io|\.local)/.test(window.location.hostname);
+const RELOAD_DELAY_ADD_MS    = IS_WEBCONTAINER ? 12000 : 4000;
+const RELOAD_DELAY_REMOVE_MS = IS_WEBCONTAINER ?  6000 : 2000;
 
 // OS bookkeeping files that macOS and Windows put inside any dropped folder.
 // The server ignores these too; skipping them here just avoids the round trip.
