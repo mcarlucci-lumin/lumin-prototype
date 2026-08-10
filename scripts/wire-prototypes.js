@@ -122,7 +122,10 @@ function updateRegistry(prototypes) {
     }
 
     lines.push(`];`, ``);
-    fs.writeFileSync(REGISTRY, lines.join('\n'));
+    const next = lines.join('\n');
+    if (!fs.existsSync(REGISTRY) || fs.readFileSync(REGISTRY, 'utf8') !== next) {
+        fs.writeFileSync(REGISTRY, next);
+    }
 }
 
 function updateRouting(prototypes) {
@@ -161,11 +164,15 @@ function updateRouting(prototypes) {
         ``,
     );
 
-    fs.writeFileSync(ROUTING, lines.join('\n'));
+    const next = lines.join('\n');
+    if (!fs.existsSync(ROUTING) || fs.readFileSync(ROUTING, 'utf8') !== next) {
+        fs.writeFileSync(ROUTING, next);
+    }
 }
 
 function updateModule(prototypes) {
-    let content = fs.readFileSync(MODULE, 'utf8');
+    const original = fs.readFileSync(MODULE, 'utf8');
+    let content = original;
 
     const importLines = [
         ...prototypes.map(p => `import { ${p.className} } from '${p.importPath}';`),
@@ -191,7 +198,9 @@ function updateModule(prototypes) {
     if (!content.includes('export class AppModule')) {
         throw new Error('updateModule produced invalid output — write aborted to prevent data loss');
     }
-    fs.writeFileSync(MODULE, content);
+    if (content !== original) {
+        fs.writeFileSync(MODULE, content);
+    }
 }
 
 // ─── main ───────────────────────────────────────────────────────────────────
