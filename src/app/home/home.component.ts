@@ -116,6 +116,31 @@ export class HomeComponent {
         window.location.reload();
     }
 
+    async downloadPrototype(e: MouseEvent, proto: PrototypeMeta): Promise<void> {
+        e.stopPropagation();
+        const slug = proto.path.slice(1);
+        try {
+            let res: Response;
+            try {
+                res = await fetch(`${FILE_SERVER}/prototype/${encodeURIComponent(slug)}/download`);
+            } catch {
+                throw new Error('Could not reach the dev file server — is npm start running?');
+            }
+            if (!res.ok) throw new Error(`Download failed: ${await res.text()}`);
+
+            const blob = await res.blob();
+            const url  = URL.createObjectURL(blob);
+            const a    = document.createElement('a');
+            a.href     = url;
+            a.download = `${slug}.zip`;
+            a.click();
+            URL.revokeObjectURL(url);
+        } catch (err: unknown) {
+            this.dropState    = 'error';
+            this.statusMessage = err instanceof Error ? err.message : 'Download failed.';
+        }
+    }
+
     async removePrototype(e: MouseEvent, proto: PrototypeMeta): Promise<void> {
         e.stopPropagation();
         const slug = proto.path.slice(1); // '/login-form' → 'login-form'

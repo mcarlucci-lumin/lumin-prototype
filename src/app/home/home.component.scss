@@ -34,11 +34,12 @@
         }
     }
 
-    // ── Tile wrapper (positions the remove button + removing overlay) ─────
+    // ── Tile wrapper (positions the action buttons + removing overlay) ────
     &__tile-wrap {
         position: relative;
 
-        &:hover > .prototype-gallery__tile-remove {
+        &:hover > .prototype-gallery__tile-remove,
+        &:hover > .prototype-gallery__tile-download {
             opacity: 1;
             pointer-events: auto;
         }
@@ -54,11 +55,11 @@
         height: 100%;
     }
 
-    // ── Remove button (top-right, visible on tile hover) ──────────────────
+    // ── Download / Remove buttons (top-right, visible on tile hover) ──────
+    &__tile-download,
     &__tile-remove {
         position: absolute;
         top: 8px;
-        right: 8px;
         z-index: 2;
 
         display: flex;
@@ -77,13 +78,22 @@
         pointer-events: none;
         transition: opacity 0.15s, background 0.15s;
 
-        &:hover { background: #dc2626; }
         &:disabled { opacity: 0.4; cursor: default; }
 
         svg {
             width: 13px;
             height: 13px;
         }
+    }
+
+    &__tile-download {
+        right: 44px; // 8px gap + 28px remove button + 8px gap
+        &:hover { background: rgba(15, 15, 15, 0.9); }
+    }
+
+    &__tile-remove {
+        right: 8px;
+        &:hover { background: #dc2626; }
     }
 
     // ── Removing overlay ──────────────────────────────────────────────────

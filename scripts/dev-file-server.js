@@ -22,6 +22,23 @@ const path   = require('path');
 const os     = require('os');
 const zlib   = require('zlib');
 
+// CRC-32 lookup table (standard ZIP polynomial, reflected)
+const CRC32_TABLE = (() => {
+    const t = new Uint32Array(256);
+    for (let i = 0; i < 256; i++) {
+        let c = i;
+        for (let j = 0; j < 8; j++) c = (c & 1) ? (0xedb88320 ^ (c >>> 1)) : (c >>> 1);
+        t[i] = c;
+    }
+    return t;
+})();
+
+function crc32(buf) {
+    let c = 0xffffffff;
+    for (let i = 0; i < buf.length; i++) c = CRC32_TABLE[(c ^ buf[i]) & 0xff] ^ (c >>> 8);
+    return (c ^ 0xffffffff) >>> 0;
+}
+
 const PORT        = 7788;
 const PROTOS      = path.resolve(__dirname, '../src/app/prototypes');
 const { run: wireRun } = require('./wire-prototypes');
@@ -56,7 +73,7 @@ async function wireWithRetry() {
 
 const CORS = {
     'Access-Control-Allow-Origin':  '*',
-    'Access-Control-Allow-Methods': 'POST, DELETE, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS',
     'Access-Control-Allow-Headers': 'X-File-Path, X-Dir-Name, Content-Type',
 };
 
@@ -167,6 +184,89 @@ function copyDir(src, dest) {
     }
 }
 
+/**
+ * Build a ZIP buffer from all ALLOWED files under protoDir.
+ * Files are wrapped in a top-level folder named after the slug so the zip
+ * is re-droppable onto the gallery.
+ */
+function buildZip(protoDir) {
+    const slug  = path.basename(protoDir);
+    const files = [];
+
+    (function collect(dir, rel) {
+        for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+            const entryRel  = rel ? `${rel}/${entry.name}` : entry.name;
+            const entryFull = path.join(dir, entry.name);
+            if (entry.isDirectory()) {
+                collect(entryFull, entryRel);
+            } else if (ALLOWED.test(entryRel)) {
+                files.push({ zipPath: `${slug}/${entryRel}`, data: fs.readFileSync(entryFull) });
+            }
+        }
+    }(protoDir, ''));
+
+    const lfhs = [], datas = [], cds = [];
+    let offset = 0;
+
+    for (const { zipPath, data } of files) {
+        const nameBuf  = Buffer.from(zipPath, 'utf8');
+        const deflated = zlib.deflateRawSync(data);
+        const checksum = crc32(data);
+
+        const lfh = Buffer.alloc(30 + nameBuf.length);
+        lfh.writeUInt32LE(0x04034b50, 0);       // PK\x03\x04
+        lfh.writeUInt16LE(20, 4);               // version needed
+        lfh.writeUInt16LE(0, 6);                // flags
+        lfh.writeUInt16LE(8, 8);                // DEFLATE
+        lfh.writeUInt16LE(0, 10);               // mod time
+        lfh.writeUInt16LE(0, 12);               // mod date
+        lfh.writeUInt32LE(checksum, 14);        // crc-32
+        lfh.writeUInt32LE(deflated.length, 18); // compressed size
+        lfh.writeUInt32LE(data.length, 22);     // uncompressed size
+        lfh.writeUInt16LE(nameBuf.length, 26);  // name length
+        lfh.writeUInt16LE(0, 28);               // extra length
+        nameBuf.copy(lfh, 30);
+
+        const cd = Buffer.alloc(46 + nameBuf.length);
+        cd.writeUInt32LE(0x02014b50, 0);        // PK\x01\x02
+        cd.writeUInt16LE(20, 4);                // version made by
+        cd.writeUInt16LE(20, 6);                // version needed
+        cd.writeUInt16LE(0, 8);                 // flags
+        cd.writeUInt16LE(8, 10);                // DEFLATE
+        cd.writeUInt16LE(0, 12);                // mod time
+        cd.writeUInt16LE(0, 14);                // mod date
+        cd.writeUInt32LE(checksum, 16);         // crc-32
+        cd.writeUInt32LE(deflated.length, 20);  // compressed size
+        cd.writeUInt32LE(data.length, 24);      // uncompressed size
+        cd.writeUInt16LE(nameBuf.length, 28);   // name length
+        cd.writeUInt16LE(0, 30);                // extra length
+        cd.writeUInt16LE(0, 32);                // comment length
+        cd.writeUInt16LE(0, 34);                // disk number start
+        cd.writeUInt16LE(0, 36);                // internal attr
+        cd.writeUInt32LE(0, 38);                // external attr
+        cd.writeUInt32LE(offset, 42);           // local header offset
+        nameBuf.copy(cd, 46);
+
+        lfhs.push(lfh);
+        datas.push(deflated);
+        cds.push(cd);
+        offset += lfh.length + deflated.length;
+    }
+
+    const cdBuf = Buffer.concat(cds);
+    const eocd  = Buffer.alloc(22);
+    eocd.writeUInt32LE(0x06054b50, 0);          // PK\x05\x06
+    eocd.writeUInt16LE(0, 4);                   // disk number
+    eocd.writeUInt16LE(0, 6);                   // start disk
+    eocd.writeUInt16LE(files.length, 8);        // entries on disk
+    eocd.writeUInt16LE(files.length, 10);       // total entries
+    eocd.writeUInt32LE(cdBuf.length, 12);       // CD size
+    eocd.writeUInt32LE(offset, 16);             // CD offset
+    eocd.writeUInt16LE(0, 20);                  // comment length
+
+    return Buffer.concat([...lfhs.flatMap((h, i) => [h, datas[i]]), cdBuf, eocd]);
+}
+
 const server = http.createServer(async (req, res) => {
     Object.entries(CORS).forEach(([k, v]) => res.setHeader(k, v));
 
@@ -265,6 +365,32 @@ if (u !== location.href) location.replace(u);
             await wireWithRetry();
             res.writeHead(200); res.end('OK');
         } catch (e) {
+            res.writeHead(500); res.end(e.message);
+        }
+        return;
+    }
+
+    // ── GET /prototype/:slug/download ─────────────────────────────────────
+    const downloadMatch = url?.match(/^\/prototype\/([a-z0-9_-]+)\/download$/i);
+    if (req.method === 'GET' && downloadMatch) {
+        const slug = downloadMatch[1];
+        const dir  = path.join(PROTOS, slug);
+
+        if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) {
+            res.writeHead(404); res.end('Prototype not found'); return;
+        }
+
+        try {
+            const zipBuf = buildZip(dir);
+            res.writeHead(200, {
+                'Content-Type':        'application/zip',
+                'Content-Disposition': `attachment; filename="${slug}.zip"`,
+                'Content-Length':      zipBuf.length,
+            });
+            res.end(zipBuf);
+            console.log(`[dev-file-server] download ${slug}.zip (${zipBuf.length} bytes)`);
+        } catch (e) {
+            console.error('[dev-file-server] Error building zip:', e.message);
             res.writeHead(500); res.end(e.message);
         }
         return;
