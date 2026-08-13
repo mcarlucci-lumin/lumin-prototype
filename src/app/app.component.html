@@ -1,4 +1,6 @@
 <button *ngIf="isPrototypeRoute" class="back-btn" [class.back-btn--visible]="isBackBtnVisible" (click)="router.navigate(['/'])" aria-label="Back to home">
     <span class="material-icons back-btn__icon">arrow_back</span>
 </button>
-<router-outlet></router-outlet>
+<div [class.prototype-container]="isPrototypeRoute">
+    <router-outlet></router-outlet>
+</div>
