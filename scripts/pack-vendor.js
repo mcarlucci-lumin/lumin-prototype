@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const { execSync } = require('child_process');
-const { readFileSync, renameSync, mkdtempSync, rmSync, readdirSync, statSync, writeFileSync, unlinkSync } = require('fs');
+const { readFileSync, renameSync, mkdtempSync, rmSync, readdirSync, statSync, writeFileSync, unlinkSync, existsSync } = require('fs');
 const { join } = require('path');
 const { tmpdir } = require('os');
 const JavaScriptObfuscator = require('javascript-obfuscator');
@@ -84,10 +84,36 @@ async function obfuscateDir(dir) {
 
 const config = JSON.parse(readFileSync('vendor-config.json', 'utf8'));
 
+const manifestPath = join('vendor', 'manifest.json');
+let manifest = {};
+try {
+  manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+} catch {}
+
+function resolveNpmVersion(ref) {
+  try {
+    const raw = execSync(`npm view "${ref}" version --json`, { stdio: ['pipe', 'pipe', 'pipe'] }).toString().trim();
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed[parsed.length - 1] : parsed;
+  } catch {
+    return null;
+  }
+}
+
 (async () => {
   for (const [pkg, ver] of Object.entries(config)) {
     const ref = `${pkg}@${ver}`;
-    console.log(`Packing ${ref}...`);
+
+    const resolved = resolveNpmVersion(ref);
+    if (resolved && manifest[pkg] === resolved) {
+      console.log(`Skipping ${pkg}@${resolved} — already up to date.`);
+      continue;
+    }
+    if (!resolved) {
+      console.warn(`Could not resolve version for ${ref} — re-packing anyway.`);
+    }
+
+    console.log(`Packing ${ref}${resolved ? ` (${resolved})` : ''}...`);
     const packed = execSync(`npm pack "${ref}" --pack-destination vendor/ --quiet`).toString().trim();
 
     console.log(`Obfuscating ${ref}...`);
@@ -102,5 +128,9 @@ const config = JSON.parse(readFileSync('vendor-config.json', 'utf8'));
 
     const renamed = packed.replace(/-\d+\.\d+\.\d+(?:-[^.]+)?\.tgz$/, '.tgz');
     renameSync(`vendor/${packed}`, `vendor/${renamed}`);
+
+    if (resolved) manifest[pkg] = resolved;
   }
+
+  writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
 })();
