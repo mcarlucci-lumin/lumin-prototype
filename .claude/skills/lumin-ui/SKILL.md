@@ -106,6 +106,41 @@ After writing, run the **Coverage Audit** from `COMPONENT_RULES.md` — every pl
 
 ---
 
+## Step 3B — Fidelity Validation Pass
+
+**Applies to Figma and image flows only.** Skip for description-only builds — there is no reference design to compare against.
+
+> **Note:** This pass reviews the generated code against the reference design. A live screenshot comparison is also required — it happens in **Step 6E** and is a hard gate before reporting the build complete. Do not skip Step 6E for Figma or image builds.
+
+After the component files are written, re-examine the source (the Figma screenshot from Step B/B2, or the user's attached image) alongside the generated `.component.html` and `.component.scss`. Work region-by-region, top to bottom, left to right.
+
+### What to check
+
+| Dimension | Standard |
+|---|---|
+| **Component selection** | Every visual element must use the most specific Lumin component available. Re-run `search_ui_components` for any region that fell back to plain HTML if the first search was inconclusive. |
+| **Layout & spacing** | Gaps, padding, column proportions, and alignment must reflect what the design shows. Spacing values must come from design tokens (`var(--spacing-*)`, utility classes), not hard-coded `px`. |
+| **Design tokens** | All colors, typography sizes/weights, and border-radius values must use CSS variable tokens — never raw hex or hard-coded `px`. |
+| **Content & labels** | All visible text, icon names, button labels, and field labels must match the design exactly. |
+| **Density & proportions** | Card heights, column widths, and padding ratios should feel proportionally close to the source. |
+| **Variants & states** | If the design shows a specific state (loading, error, active tab, filled field), verify the correct component variant or `@Input()` binding is used — not a CSS workaround. |
+
+### How to apply corrections
+
+- Prefer a Lumin component fix over a CSS patch.
+- Prefer a design token value over a hardcoded one.
+- Apply corrections directly — do not defer them as "known limitations" unless no Lumin-compliant fix exists.
+- Re-run the **Coverage Audit** from `COMPONENT_RULES.md` if any plain HTML was added or changed during corrections.
+
+### Fidelity summary (for Step 5)
+
+After corrections, prepare a brief delta for inclusion in **Step 5 — Report Back**:
+
+- **Adjusted in validation pass:** what was changed to better match the design (if anything)
+- **Gaps remaining:** elements that could not be matched with Lumin components or tokens, and why
+
+---
+
 ## Step 4 — Post-Write Checks
 
 **Mobile responsiveness** — apply mobile patterns if: the component owns a route, the template has a multi-field form, it has multi-column rows, or it's a top-level container with no parent providing padding. Skip if: it's a single display-only widget with no layout of its own. If unclear, ask before proceeding. Always tell the user which decision was made and why.
@@ -122,12 +157,16 @@ Consult `KNOWN_ISSUES.md` for common Angular/TypeScript errors (HTML comments in
 
 ## Step 5 — Report Back
 
+> **For Figma and image builds:** Do not proceed to this step until **Step 6E visual render verification** has passed — the live screenshot must confirm the render matches the reference before the build is reported complete.
+
 - Component name and what was built
 - Lumin components used and their packages
+- **If a Figma link or image was the source:** include the fidelity summary from **Step 3B** and the visual verification result from **Step 6E** — what was adjusted and what the final screenshot confirmed
 - Any unmatched UI elements and why custom HTML was used (→ Missing Component Protocol in `COMPONENT_RULES.md`)
 - Any known limitations or follow-up steps
+- Share the final verification screenshot as proof
 
-Then immediately proceed to **Step 6 — Package as Prototype ZIP**.
+Then immediately proceed to **Step 6 — Package as Prototype ZIP** (if not already completed as part of Step 6E).
 
 ---
 
@@ -193,22 +232,31 @@ If `src/app/prototypes/` was not found, omit the first line and note that only t
 
 Use the **absolute, expanded path** in the `file://` URL (no `~` — replace it with `/Users/<username>`). The link will not resolve if `~` is left unexpanded.
 
-### E — Open preview in Claude Desktop (if available)
+### E — Visual Render Verification (mandatory for Figma and image builds)
 
 **Only run this sub-step if `src/app/prototypes/` was found** (the files were copied to the sandbox).
+
+**This step is a hard gate before Step 5 (Report Back) for any build sourced from a Figma link or user-provided image.** Do not tell the user the UI is complete until this verification passes.
 
 Check whether the Claude Desktop Browser pane is available by looking for the `preview_start` tool (part of the `mcp__Claude_Browser__*` tool set). This tool is present in Claude Desktop sessions but not in other surfaces.
 
 **If `preview_start` is available:**
-1. Call `preview_start` with `{name: "lumin-prototype"}` — this starts the dev server via `npm run boot && npm start` (or reuses it if already running) and opens a preview tab at `http://localhost:4200`.
-2. Wait for the server to be ready, then navigate the preview pane to `http://localhost:4200/<component-name>` using the `navigate` tool so the user sees the result immediately.
-3. Take a screenshot with `computer {action: "screenshot"}` and share it as proof the prototype is live.
+1. Call `preview_start` with `{name: "lumin-prototype"}` — reuses the server if already running.
+2. Navigate to `http://localhost:4200/<component-name>` using the `navigate` tool.
+3. Take a screenshot with `computer {action: "screenshot"}`.
+4. Compare the screenshot region-by-region against the reference (the Figma screenshot or user-provided image). Check every visual dimension:
+   - **Icons/avatars:** correct icon name, shape, size, background color, foreground color
+   - **Typography:** all visible text labels, heading copy, type size/weight
+   - **Buttons:** correct `theme` and `themeGroup` variant, label text, border/fill color
+   - **Progress bars and other components:** correct fill percentage, height, fill color, track color
+   - **Layout:** alignment, gaps, padding, column proportions
+   - **Overall density and proportions:** the card or page should feel proportionally close to the reference
+5. For every discrepancy found, apply a Lumin-compliant fix — correct the `@Input()` binding or design token value. Never use raw CSS to mask a wrong component state.
+6. After fixes, re-navigate and take a new screenshot to confirm all discrepancies are resolved.
+7. Only after the live render visually matches the reference: proceed to **Step 5 — Report Back** and share the final screenshot as proof.
 
-**If `preview_start` is not available**, skip silently — the user can run the preview manually:
-```bash
-npm run boot && npm start
-```
-Then open `http://localhost:4200/<component-name>` in a browser.
+**If `preview_start` is not available**, fall back to the code-only fidelity pass in Step 3B and tell the user:
+> ⚠️ Browser preview is not available in this session — live visual render verification was skipped. The fidelity check was code-only (Step 3B). To verify yourself, run `npm run boot && npm start` and open `http://localhost:4200/<component-name>`.
 
 ---
 
@@ -247,6 +295,8 @@ Referenced by the Figma, description, and image build flows. Once component rese
 Create first: `mkdir -p <temp-folder>/<component-name>`
 
 Write three files: `.component.ts`, `.component.html` (Bash/cat heredoc only), `.component.scss`. Infer the component name from the design source (kebab-case). Follow all rules from `COMPONENT_RULES.md` and Post-Write Checks from **Step 4**.
+
+**If the component was built from a Figma link or image**, run **Step 3B — Fidelity Validation Pass** immediately after writing the files and before proceeding.
 
 Show the user a summary of what was built and which Lumin components were used before asking the next question. After placement is complete and reported, always run **Step 6 — Package as Prototype ZIP**.
 
