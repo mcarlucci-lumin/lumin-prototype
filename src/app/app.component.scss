@@ -19,7 +19,14 @@
   cursor: pointer;
   font-size: 20px;
   line-height: 1;
-  transition: background 0.15s ease;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, background 0.15s ease;
+
+  &--visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
 
   &:hover {
     background: rgba(0, 0, 0, 0.85);
