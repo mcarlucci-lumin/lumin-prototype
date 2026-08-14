@@ -1,3 +1,14 @@
+// A zoomed preview is free to spill outside the gallery's 960px column — the
+// only thing it must not do is add a horizontal scrollbar and jog the layout.
+// So the clip lives out here at the host, which spans the viewport, instead of
+// on the gallery itself: the zoom overflows the column and is only cut off at
+// the window edge. `clip` rather than `hidden` so this never becomes a scroll
+// container, and scoping it to the host leaves prototype routes untouched.
+:host {
+    display: block;
+    overflow-x: clip;
+}
+
 .prototype-gallery {
     max-width: 960px;
     margin: 0 auto;
@@ -40,6 +51,13 @@
     &__tile-wrap {
         position: relative;
 
+        // Lifts the whole tile — and the preview zooming out of it — above the
+        // tiles that come after it in the grid.
+        &:hover {
+            z-index: 5;
+            overflow: visible;
+        }
+
         &:hover > .prototype-gallery__tile-remove,
         &:hover > .prototype-gallery__tile-download {
             opacity: 1;
@@ -62,8 +80,6 @@
     &__tile-remove {
         position: absolute;
         top: 8px;
-        z-index: 2;
-
         display: flex;
         align-items: center;
         justify-content: center;
@@ -150,16 +166,12 @@
         margin: 0 0 0.5rem;
     }
 
-    &__tile-desc {
-        font-size: 0.85rem;
-        color: var(--text-color-secondary, #666);
-        margin: 0;
-        flex-grow: 1;
-        line-height: 1.5;
-    }
-
+    // margin-top: auto keeps the button pinned to the bottom of equal-height
+    // tiles — the description used to do that with flex-grow before it was
+    // removed from the tile.
     &__tile-action {
-        margin-top: 1.25rem;
+        margin-top: auto;
+        padding-top: 1.25rem;
     }
 }
 

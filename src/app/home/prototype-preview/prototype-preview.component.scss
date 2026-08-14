@@ -6,6 +6,7 @@
     // Set by the component from the tile's measured width; the fallback keeps a
     // sane thumbnail if the observer hasn't run yet.
     --preview-scale: 0.22;
+    --preview-hover-scale: 1.75;
 
     position: relative;
     overflow: hidden;
@@ -13,6 +14,79 @@
     border-radius: 6px;
     border: 1px solid var(--border-color, #e5e7eb);
     background: var(--surface-subtle, #f9fafb);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+
+    // Two-stage hover: the eye appears when the thumbnail is hovered, and the
+    // zoom only fires once the pointer is on the eye itself — so passing over
+    // the grid doesn't set tiles jumping.
+    //
+    // This scales the frame rather than --preview-scale, so the iframe never
+    // relayouts — the same render just gets bigger. No ancestor clips, so it
+    // lifts over its neighbours; the tile's download and remove buttons sit
+    // above it and stay clickable.
+    //
+    // The chip is centred and scales with the frame, so it stays under the
+    // pointer as the zoom runs — the hover can't drop and oscillate.
+    &:has(.prototype-preview__hint-chip:hover) {
+        transform: scale(var(--preview-hover-scale));
+        box-shadow: 0 12px 28px rgba(15, 15, 15, 0.22);
+        z-index: 10;
+    }
+
+    // ── Hover affordance ──────────────────────────────────────────────────
+    &__hint {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+        // Barely-there scrim, just enough to seat the chip while the pointer is
+        // only passing over the thumbnail.
+        background: rgba(15, 15, 15, 0.07);
+        opacity: 0;
+        transition: opacity 0.18s ease, background-color 0.18s ease;
+
+        .prototype-preview:hover & {
+            opacity: 1;
+        }
+
+        // Once zoomed, the scrim comes off entirely — nothing should tint the
+        // enlarged preview the zoom exists to make readable. The chip stays put:
+        // it's the hover target holding the zoom open.
+        .prototype-preview:has(.prototype-preview__hint-chip:hover) & {
+            background-color: transparent;
+        }
+    }
+
+    &__hint-chip {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: rgba(15, 15, 15, 0.72);
+        color: #fff;
+
+        // The layer around it stays inert so the tile keeps the click; only the
+        // chip takes the pointer, since it's what arms the zoom. A click on it
+        // still bubbles to the tile and navigates.
+        pointer-events: auto;
+        cursor: pointer;
+
+        transform: scale(0.85);
+        transition: transform 0.18s ease;
+
+        .prototype-preview:hover & {
+            transform: scale(1);
+        }
+
+        svg {
+            width: 15px;
+            height: 15px;
+        }
+    }
 
     // Absolute so the iframe's 1280px layout width never becomes the tile's
     // min-content width — otherwise the grid column stretches to fit it and the
