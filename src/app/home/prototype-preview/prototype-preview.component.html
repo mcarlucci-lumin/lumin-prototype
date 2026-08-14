@@ -1,0 +1,26 @@
+<div class="prototype-preview" #stage>
+    @if (src) {
+        <!-- Inert on purpose: the tile's own click handler owns navigation, so the
+             iframe must not swallow pointer events or take focus. -->
+        <iframe class="prototype-preview__frame"
+                [src]="src"
+                [width]="viewportWidth"
+                [height]="viewportHeight"
+                [class.prototype-preview__frame--ready]="state === 'loaded'"
+                scrolling="no"
+                tabindex="-1"
+                aria-hidden="true"
+                (load)="onLoad()"
+                (error)="onError()"></iframe>
+    }
+
+    @if (state !== 'loaded') {
+        <div class="prototype-preview__overlay">
+            @if (state === 'error') {
+                <span class="prototype-preview__error">Preview unavailable</span>
+            } @else {
+                <div class="prototype-preview__shimmer"></div>
+            }
+        </div>
+    }
+</div>

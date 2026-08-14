@@ -1,0 +1,70 @@
+:host {
+    display: block;
+}
+
+.prototype-preview {
+    // Set by the component from the tile's measured width; the fallback keeps a
+    // sane thumbnail if the observer hasn't run yet.
+    --preview-scale: 0.22;
+
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    border-radius: 6px;
+    border: 1px solid var(--border-color, #e5e7eb);
+    background: var(--surface-subtle, #f9fafb);
+
+    // Absolute so the iframe's 1280px layout width never becomes the tile's
+    // min-content width — otherwise the grid column stretches to fit it and the
+    // measured scale collapses to 1.
+    &__frame {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        border: 0;
+        transform: scale(var(--preview-scale));
+        transform-origin: top left;
+        pointer-events: none;
+        background: #fff;
+
+        opacity: 0;
+        transition: opacity 0.2s ease;
+
+        &--ready {
+            opacity: 1;
+        }
+    }
+
+    &__overlay {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background: var(--surface-subtle, #f9fafb);
+    }
+
+    &__shimmer {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            100deg,
+            transparent 20%,
+            rgba(255, 255, 255, 0.75) 50%,
+            transparent 80%
+        );
+        animation: preview-shimmer 1.4s ease-in-out infinite;
+    }
+
+    &__error {
+        font-size: 0.72rem;
+        color: var(--text-color-tertiary, #999);
+    }
+}
+
+@keyframes preview-shimmer {
+    from { transform: translateX(-100%); }
+    to   { transform: translateX(100%); }
+}

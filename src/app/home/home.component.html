@@ -90,6 +90,8 @@
                     class="prototype-gallery__tile"
                     (click)="navigate(proto.path)">
                     <div class="prototype-gallery__tile-inner">
+                        <app-prototype-preview class="prototype-gallery__tile-preview"
+                                               [path]="proto.path"></app-prototype-preview>
                         <p class="prototype-gallery__tile-path">{{ proto.path }}</p>
                         <h2 class="prototype-gallery__tile-name">{{ proto.name }}</h2>
                         @if (proto.description) {
