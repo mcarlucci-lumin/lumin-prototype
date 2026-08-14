@@ -16,6 +16,7 @@ import { UiWorkflowsModule, TableStateService } from '@a3-digital/ui-workflows';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+import { PrototypePreviewComponent } from './home/prototype-preview/prototype-preview.component';
 
 // ─── Claude: add prototype component imports here ───────────────────────────
 
@@ -31,6 +32,7 @@ if (typeof window !== 'undefined') {
     declarations: [
         AppComponent,
         HomeComponent,
+        PrototypePreviewComponent,
         // ─── Claude: add prototype components to declarations here ──────────
     ],
     imports: [
