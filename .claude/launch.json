@@ -4,7 +4,7 @@
     {
       "name": "lumin-prototype",
       "runtimeExecutable": "sh",
-      "runtimeArgs": ["-c", "source ~/.nvm/nvm.sh && nvm use v20.20.0 && npm run boot && npm start"],
+      "runtimeArgs": ["-c", "source ~/.nvm/nvm.sh && nvm use 22 && npm run boot && npm start"],
       "port": 4200,
       "autoPort": false
     }

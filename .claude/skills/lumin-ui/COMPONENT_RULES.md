@@ -4,47 +4,33 @@ Read this file before writing any template code. It covers NgModule imports, Ang
 
 ---
 
-## NgModule Import Rules
+## Component & Module Rules
 
-**HARD RULE — never place a `*Component` class in `imports: []`.** Lumin UI components are not standalone. Importing `CardGridComponent`, `ButtonGroupComponent`, `TableComponent`, or any other `@a3-digital` component class directly always causes:
+**A prototype is a single component file — you never write an NgModule.** The `wire-prototypes` watcher declares every prototype in the generated root `app.module.ts`, which already imports everything a prototype needs. Do not create a feature module, and do not add an `imports` array to the prototype component.
 
-> _"The component appears in 'imports' but is not standalone and cannot be imported directly. It must be imported via an NgModule."_
+**HARD RULE — set `standalone: false` explicitly.** Angular 17+ defaults components to `standalone: true`. A standalone component cannot be declared in an NgModule, so when the watcher adds the prototype to `app.module.ts` the build fails with **NG6008** (_"Component X is standalone, and cannot be declared in an NgModule"_). Always set the flag.
 
-**Use the barrel modules `UiCoreModule` and `UiFormsModule`.** Both are exported from their respective packages and are the standard way to import all Lumin components from a package.
-
-The banking repo uses **NgModule-based architecture** — all components use `standalone: false` and are declared in a `@NgModule`. Lumin modules go in the NgModule's `imports: []` array, not the component decorator.
+**HARD RULE — never import a Lumin `*Component` class, and never place one in an `imports: []`.** Lumin UI components are not standalone; importing `ButtonComponent`, `TableComponent`, or any other `@a3-digital` component class directly triggers _"appears in 'imports' but is not standalone."_ You never need to — the modules that export them are already imported centrally (see below).
 
 ```typescript
-// ✅ Correct — NgModule-based (banking repo pattern)
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Routes, RouterModule } from '@angular/router';
-import { CoreCommonModule } from '@a3/core';
-import { UiCoreModule } from '@a3-digital/ui-core';
-import { UiFormsModule } from '@a3-digital/ui-forms';
-import { MyFeatureComponent } from './my-feature.component';
+// ✅ Correct — a prototype component. No imports array, no feature module.
+import { Component } from '@angular/core';
 
-const routes: Routes = [{ path: '', component: MyFeatureComponent }];
-
-@NgModule({
-    imports: [CommonModule, CoreCommonModule, UiCoreModule, UiFormsModule, RouterModule.forChild(routes)],
-    declarations: [MyFeatureComponent]
-})
-export class MyFeatureModule {}
-
-// Component uses standalone: false — no imports array on the decorator
 @Component({
     standalone: false,
     selector: 'app-my-feature',
     templateUrl: './my-feature.component.html',
-    styleUrls: ['./my-feature.component.scss']
+    styleUrls: ['./my-feature.component.scss'],
 })
-export class MyFeatureComponent extends BaseComponent {}
+export class MyFeatureComponent {}
 ```
 
-Do not invent per-component NgModule names (e.g., `UiCoreButtonModule`) — these do not exist.
+**What the generated root `app.module.ts` already imports** — available to every prototype with zero setup:
+- Every vendored Lumin module — `UiCoreModule`, `UiFormsModule`, `UiLayoutsModule`, `UiManagementModule`, `UiWorkflowsModule`
+- `FormsModule` **and** `ReactiveFormsModule` — both template-driven and reactive (`[formGroup]`, `formControlName`) forms work with no extra imports
+- `BrowserModule` / `BrowserAnimationsModule` (so built-in control flow and Lumin animations work), plus `DragDropModule` and `NgbModule`
 
-**Never add Lumin imports speculatively.** Only import a module if its selector actually appears in the template. Unused imports break the build.
+Use any Lumin selector or either forms API directly in the template — do not add or "wire up" modules yourself. Do not invent per-component NgModule names (e.g. `UiCoreButtonModule`) — they don't exist.
 
 ---
 
@@ -60,14 +46,43 @@ Do not invent per-component NgModule names (e.g., `UiCoreButtonModule`) — thes
 
 ---
 
+## Sizing, Shape & State Inputs — Match the Design
+
+Picking the right *component* is only half of fidelity; getting its **size, shape, density, and state** right is the other half. Many Lumin components expose inputs that control these, and leaving them at their defaults is a top source of "right component, wrong look" — a progress bar too thick or thin, a button the wrong size or shape.
+
+When `get_component_details` lists a component's inputs, scan for ones whose **purpose** is dimensional or stateful, and *consider* whether the design calls for a non-default value:
+
+- **Size / dimension** — e.g. a progress bar's `height` (bar thickness), `size` (`sm`/`md`/`lg`), `width`, `diameter`, `strokeWidth`, `thickness`. Read the design's measured or relative dimension and bind the matching input.
+- **Shape** — `rounded`, `pill`, `shape`, `radius` — pill vs. square button, rounded vs. sharp corners.
+- **Density** — `dense`, `compact`, padding-related inputs — tight vs. roomy.
+- **State / variant that changes size or shape** — a button's `theme` / `themeGroup` (fill vs. outline vs. text shifts its visual weight and sometimes footprint), `fullWidth` / `block`, `disabled`, `loading` (a spinner may replace the label and change width), and active/selected/error states. If the design depicts a specific state, set the input that produces it — never fake it with CSS.
+
+**Consider, don't force — defaults may be theme-driven.** A component's default size/shape/density is often set by the active theme and may already match the design; a visual difference you see could come from a custom theme rather than an unset input. So set a sizing/shape/state input only when the design **clearly** diverges from how the component renders by default — don't override reflexively. **When you're unsure whether a difference is an input to set, a theme effect, or the intended default, ask the user** rather than guessing.
+
+**Match the input's purpose to the visual property.** When you *do* decide to set one: the same input name can mean different things on different components, and the property you're reproducing may map to a non-obvious input — so read each input's type and description in `get_component_details` and pick the one whose *purpose* matches. Example: to reproduce a bar's thickness, use the progress bar's `height` input, not a wrapper `style="height: …"`.
+
+**For absolute sizes, measure — don't estimate a ratio.** When the design is an image, get the real pixel value from the saved `_reference/source.png` with `scripts/measure_png.py` (establish 1:1-vs-retina scale first) rather than judging a size by its proportion to another element ("this bar is ~⅓ of that one") — that shortcut is unreliable and repeatedly wrong. For choosing between *discrete* options (`sm`/`md`/`lg`, pill vs. square) where there's no measurable px, pick the closest provided option or token. Always prefer a provided sizing input over a hardcoded `px`. These are confirmed against the source in **Step 5C**.
+
+---
+
+## Colors — Leave Branded / Theme Tokens In Place
+
+When a component's color is already driven by a **branded or theme token** — its default, or a token you set such as `bg-brand-primary` / `bg-brand-secondary` / `bg-brand-neutral`, or any `--brand-*` / `--color-*` CSS variable the active brand theme resolves — **leave that token as-is, even if it renders a different shade than the source image shows.** Brand colors are theme-driven: the mockup was almost certainly captured under a *different* brand theme, so the **token is the source of truth, not the mockup's literal hex**. Do not override a branded/theme token to chase the pixel color — neither by hardcoding the source's hex nor by swapping to a different token.
+
+A shade difference under a correct branded/theme token is therefore **expected, not a discrepancy** — don't flag it in the fidelity pass or Step 5C, and don't "fix" it.
+
+The one exception is a **semantic** correction: change the token only when the component is using the *wrong token for its meaning* — e.g. a status element rendered with a neutral/brand token when a status token (`success` / `danger` / `warning` / `info`) is clearly intended. That's fixing meaning, not matching color. When unsure whether a shade difference is a wrong token or just this theme's rendering of the right one, **leave the token** and note it in the fidelity summary.
+
+---
+
 ## CSS Utility Classes
 
 Before writing any custom CSS, check whether a utility class already covers the need. The full set of utility classes from `ui-styles` is catalogued in `references/utilities-registry.json` and is searchable via:
 
 ```bash
-python3 scripts/search_utilities.py <keyword>
-python3 scripts/search_utilities.py --category <category>
-python3 scripts/search_utilities.py --categories
+python3 .claude/skills/lumin-ui/scripts/search_utilities.py <keyword>
+python3 .claude/skills/lumin-ui/scripts/search_utilities.py --category <category>
+python3 .claude/skills/lumin-ui/scripts/search_utilities.py --categories
 ```
 
 **These categories are available:** `flex`, `spacing`, `grid`, `display`, `position`, `sizing`, `overflow`, `visibility`, `z-index`, `cursor`, `container`, `float`, `typography`, `color`, `border`, `accessibility`, `animation`, `layout`, `misc`.
@@ -101,18 +116,18 @@ Most layout utility classes have responsive variants using breakpoint infixes: `
 
 Use `--base-only` with `search_utilities.py` to see base classes without responsive variants:
 ```bash
-python3 scripts/search_utilities.py --category flex --base-only
+python3 .claude/skills/lumin-ui/scripts/search_utilities.py --category flex --base-only
 ```
 
 ---
 
 ## Mobile Responsiveness
 
-Every component built for `web-client` renders on both mobile and desktop. Apply these patterns whenever a template contains a form, layout container, or multi-column row — failure to do so causes content to bleed to the screen edge on mobile.
+A prototype renders on both mobile and desktop. Apply these patterns whenever a template contains a form, layout container, or multi-column row — failure to do so causes content to bleed to the screen edge on mobile.
 
 ### Form wrapper padding
 
-Wrap all form content with `px-4 px-md-0` — 16px horizontal padding on mobile, removed at `md+` (768px) where the side-menu layout provides its own spacing.
+Wrap all form content with `px-4 px-md-0` — 16px horizontal padding on mobile, removed at `md+` (768px) where the wider viewport gives the content room to breathe.
 
 ```html
 <form [formGroup]="form" class="d-flex flex-column px-4 px-md-0">
@@ -265,7 +280,7 @@ Never use interactive container classes on a non-interactive element — if the 
 
 ### Focus states and the `using-keyboard` pattern
 
-The banking app adds a `.using-keyboard` class to `<body>` when the user is navigating by keyboard, and removes it on mouse interaction. Focus ring styles in Lumin components are scoped to `.using-keyboard` — this means focus rings are only visible for keyboard users and do not appear on mouse click.
+Lumin's focus-ring styles are scoped to a `.using-keyboard` class on `<body>`, toggled on when the user navigates by keyboard and off on mouse interaction — so focus rings show for keyboard users but not on mouse click.
 
 When writing custom interactive elements, scope custom focus styles the same way:
 
@@ -398,4 +413,4 @@ color: var(--text-color-primary);
 font-size: var(--font-size-body);
 ```
 
-If you are unsure of the exact variable name, look it up with `python3 scripts/search_tokens.py <keyword> [--category <cat>]`, or fetch the relevant URL above from `design.lumindigital.com` — it lists available tokens for that category.
+If you are unsure of the exact variable name, look it up with `python3 .claude/skills/lumin-ui/scripts/search_tokens.py <keyword> [--category <cat>]`, or fetch the relevant URL above from `design.lumindigital.com` — it lists available tokens for that category.
