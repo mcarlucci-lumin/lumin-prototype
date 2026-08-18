@@ -23,6 +23,19 @@
 
 ---
 
+## Component Is Standalone, Can't Be Declared (NG6008)
+
+**Symptom:** The build fails the moment the watcher wires a new prototype:
+```
+NG6008: Component <Name>Component is standalone, and cannot be declared in an NgModule. Did you mean to import it instead?
+```
+
+**Cause:** The prototype component omitted `standalone: false` (or set `standalone: true`). Angular 17+ makes components standalone by default, but the `wire-prototypes` watcher declares every prototype in the generated root `app.module.ts` — a standalone component cannot be declared there.
+
+**Fix:** Set `standalone: false` in the `@Component` decorator. Do not add an `imports: []` to the component and do not create a feature module — see `COMPONENT_RULES.md`.
+
+---
+
 ## `halfWidth = true` Makes Fields Too Narrow
 
 **Symptom:** Fields set with `halfWidth = true` render at roughly 25% of the row width instead of 50%, looking far too narrow for a two-column layout.
@@ -46,30 +59,27 @@ field2.halfWidth = true;
 
 ---
 
-## All `@a3-digital` Imports Stripped
+## Lumin Selectors Render As Unknown Elements
 
-**Symptom:** Build succeeds but all Lumin components render as unknown elements; selectors like `<ui-core-button>` produce no output.
+**Symptom:** Build succeeds but Lumin components render as unknown elements; selectors like `<ui-core-button>` produce no output.
 
-**Cause:** An auto-fix tool or linter may strip all `@a3-digital` imports without adding replacements when it encounters certain error patterns.
+**Cause:** The generated root `app.module.ts` is missing — or was hand-edited to drop — a vendored `Ui*Module`. Prototype components import no Lumin modules themselves; every `Ui*Module` is imported once, centrally, in that root module.
 
-**Fix:** Verify the **NgModule's** `imports: []` array still contains `UiCoreModule` and/or `UiFormsModule`. If missing, add them back manually. The banking repo is NgModule-based — the modules go on the `@NgModule`, never on the `@Component` decorator, and the component stays `standalone: false`:
+**Fix:** Do **not** add module imports to the prototype component. Confirm the root `src/app/app.module.ts` still imports the `Ui*Module` whose selector you're using (`UiCoreModule`, `UiFormsModule`, `UiLayoutsModule`, `UiManagementModule`, `UiWorkflowsModule`); if it was edited, restore it, otherwise restart the app so the module reloads. Never make the prototype `standalone: true` or add `schemas: [NO_ERRORS_SCHEMA]` to work around it — see `COMPONENT_RULES.md`.
 
-```typescript
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-import { UiCoreModule } from '@a3-digital/ui-core';
-import { UiFormsModule } from '@a3-digital/ui-forms';
-import { MyFeatureComponent } from './my-feature.component';
+---
 
-@NgModule({
-  imports: [CommonModule, ReactiveFormsModule, UiCoreModule, UiFormsModule],
-  declarations: [MyFeatureComponent]
-})
-export class MyFeatureModule {}
+## Catalog Component Missing From the Vendored Library (unknown element / dev-server crash)
+
+**Symptom:** A component that the `lumin-design-mcp` catalog returns (via `search_ui_components` / `get_component_details`) fails at build time — its selector is an unknown element and `ng serve` errors or the dev server crashes. Seen with newer or `-v2` components, e.g. `ui-core-button-v2`.
+
+**Cause:** The catalog is generated from banking's `shared/ui` **source** (Compodoc), so it can include components that are **not shipped in the vendored package** the sandbox actually runs against — because they aren't exported from the library's `public-api.ts`, or were added to source without a version bump, or are simply newer than the pinned tarball in `vendor-config.json`. The version number is not a reliable tell: source and the vendored package can share a version (e.g. both `4.0.67`) while only source has the component. **So catalog membership ≠ availability in this repo.** `ui-core-button-v2` is a real example — present and documented in source, absent from the vendored `@a3-digital/ui-core`.
+
+**Fix:** Before relying on an unusual, new, or `-v2` component, confirm the vendored package actually ships its selector:
+```bash
+grep -rE "<selector-or-ComponentName>" node_modules/@a3-digital/<lib>/ | head
 ```
-
-Do **not** convert the component to `standalone: true` or add an `imports: []` / `schemas: [NO_ERRORS_SCHEMA]` array to the `@Component` decorator — that contradicts the repo's NgModule architecture. See `COMPONENT_RULES.md` for the full NgModule rules.
+If it isn't there, **do not use it** — fall back to the shipped equivalent (e.g. `ui-core-button` instead of `ui-core-button-v2`) and tell the user the catalog lists a component the vendored library doesn't yet include. (Upstream this needs the component exported + republished, or the catalog ingestion to exclude non-public-API components — outside this skill.)
 
 ---
 
@@ -114,7 +124,7 @@ readonly columns: TableColumn[] = [
 - **`flex-1`** — the fill utility is **`flex-fill`** (`flex-grow-1` also exists).
 - **`ms-auto` / `me-auto`** — not present.
 
-**Fix:** Verify every class with `python3 scripts/search_utilities.py <class>` before relying on it. For flex/grid gaps, set `gap` in the component SCSS with a spacing token: `gap: var(--spacing-3, 12px)`.
+**Fix:** Verify every class with `python3 .claude/skills/lumin-ui/scripts/search_utilities.py <class>` before relying on it. For flex/grid gaps, set `gap` in the component SCSS with a spacing token: `gap: var(--spacing-3, 12px)`.
 
 ---
 
@@ -137,32 +147,11 @@ readonly columns: TableColumn[] = [
 
 ---
 
-## `Can't bind to 'formGroup'` (NG8002) — missing `ReactiveFormsModule`
+## Reactive / Template-Driven Forms — No NG8002 Here
 
-**Symptom:** Build fails with:
-```
-NG8002: Can't bind to 'formGroup' since it isn't a known property of 'form'.
-  <form [formGroup]="form">
-```
-Also appears for `formControlName`, `[formControl]`, `formGroupName`, and `[formArray]`.
+**Both forms APIs work with no per-prototype setup.** The generated root `app.module.ts` imports both `ReactiveFormsModule` and `FormsModule`, so `[formGroup]`, `formControlName`, `[formControl]`, `formGroupName`, `[formArray]`, and `ngModel` all bind without adding anything. (In banking these had to be added to each feature module — hence the old `NG8002: Can't bind to 'formGroup'` failure; it does not occur in this repo.)
 
-**Cause:** The component's template uses Angular **reactive forms** directives, but the owning **NgModule** does not import `ReactiveFormsModule`. This bites hardest when placing a prototype into an **existing** module that happens not to import it — notably `UIToolsModule` (`a3-web/<client>/src/app/ui-tools/ui-tools.module.ts`), which imports `UiCoreModule`/`UiFormsModule`/`UiLayoutsModule`/`UiStylesModule` but **not** `ReactiveFormsModule`. (`ngModel` template-driven forms need `FormsModule` instead — same failure mode, different module.)
-
-**Fix (preferred):** Prefer the **Form Renderer** (`ui-forms-form-renderer` with `FormRendererRow`/`*Field` models) or individual Lumin form components with static placeholder values — per core rule 3, prototypes are static and usually don't need a hand-rolled `FormGroup` at all. Reach for reactive forms only when the prototype genuinely demonstrates form logic.
-
-**Fix (if reactive forms are needed):** Add `ReactiveFormsModule` to the NgModule that declares the component:
-```typescript
-import { ReactiveFormsModule } from '@angular/forms';
-
-@NgModule({
-  imports: [CommonModule, ReactiveFormsModule, UiCoreModule, UiFormsModule /* ... */],
-  declarations: [HelocApplicationComponent]
-})
-export class UIToolsModule {}
-```
-Add it to the existing `imports` array — do **not** make the component `standalone` or add `schemas: [NO_ERRORS_SCHEMA]` (see `COMPONENT_RULES.md`).
-
-**Prevention:** When placing into any existing module (especially `/ui-tools`), check that module's `imports` array first. If the built template uses `[formGroup]`/`formControlName`, ensure `ReactiveFormsModule` is present before running `gulp rebuild` / `ng build`.
+**Still prefer static or the Form Renderer.** Per core rule 3, prototypes are static — usually you don't need a hand-rolled `FormGroup` at all. Prefer the **Form Renderer** (`ui-forms-form-renderer` with `FormRendererRow`/`*Field` models) or individual Lumin form components with static placeholder values, and reach for a reactive `FormGroup` only when the prototype genuinely demonstrates form logic.
 
 ---
 
@@ -191,3 +180,18 @@ readonly treeItems: NavTreeItem[] = [ /* ... */ ];
 ```
 
 **Prevention:** Before importing any type named only in a component's `types`/input signature, confirm it appears in the package's `export { ... }` block (`grep "export {" node_modules/@a3-digital/<lib>/index.d.ts`). If it is not exported, use a local interface instead — never import from a deep `.d.ts` path.
+
+---
+
+## `.html` / `.scss`-Only Edits Don't Reliably Rebuild
+
+**Symptom:** You edit a prototype's `.component.html` or `.component.scss`, wait, and reload — but the change doesn't appear. In the worst case the change *silently never compiled*: e.g. a brand-new `.scss` was written after the component first compiled, so its scoped styles never applied and the component rendered with no encapsulation attributes at all. The preview pane may also freeze showing a **stale** `ng serve` compile error (referencing a line or symbol you already removed) with a repeating `WebSocket connection to 'ws://localhost:4200/ng-cli-ws' failed` — the pane's HMR socket has dropped, so it never received the "compiled successfully" that cleared the error.
+
+**Cause:** In this local setup, `ng serve`'s watch does **not** reliably rebuild the component on a template- or style-only change; a **`.ts` content change** is what forces a real recompile (which then re-reads the current `.html`/`.scss`). An mtime-only `touch` of the `.ts` is **not** enough — the file's *content* must change. Separately, the Claude Desktop Browser pane can't hold the `ng-cli-ws` HMR socket, so its console can freeze on the last error it received; that frozen error is **not** proof the current code is broken.
+
+**Fix:**
+1. After any `.html`/`.scss` edit, make a trivial **`.ts` content change** to force a rebuild — e.g. add/adjust a one-line comment, or bind the value through a new `@Input()` so future tweaks are `.ts` edits (as the progress-bar `height` was turned into `@Input() barHeight`). Then hard-reload the pane (`navigate` to the URL again, or `window.location.reload()`).
+2. **Don't trust the pane's console error at face value** — confirm the *served* code instead: check the actual DOM/computed styles with `read_page` / `javascript_tool` (`getComputedStyle`, `getBoundingClientRect`), or make a **visibly** different `.ts` change (e.g. a progress value 45 → 80), reload, and verify the DOM reflects it. If the visible change lands, the server is rebuilding fine and the console error is stale.
+3. A brand-new component whose `.scss` isn't applying (no `_ngcontent-*` attribute on its elements, no matching rules in any stylesheet) is the same problem — a `.ts` content change and reload fixes it.
+
+**Prevention:** Prefer driving tunable values (sizes, counts, colors-as-inputs) through `@Input()`s in the `.ts` so iteration edits land in the file that reliably rebuilds. When you must edit only `.html`/`.scss`, always pair it with a `.ts` content change in the same pass.
