@@ -10,8 +10,8 @@
  *   POST   /upload-zip        X-Dir-Name:  <slug>       body: raw zip bytes
  *   DELETE /prototype/<slug>                            removes dir + re-wires
  *
- * Accepted files: <slug>.component.{ts,html,scss} and meta.json. Everything
- * else in a dropped folder or zip is ignored.
+ * Accepted files: *.component.{ts,html,scss} (any base name) and meta.json.
+ * Everything else in a dropped folder or zip is ignored.
  *
  * Path traversal is rejected. Only called from localhost — no auth needed.
  */

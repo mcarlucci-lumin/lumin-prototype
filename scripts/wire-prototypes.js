@@ -2,8 +2,9 @@
 'use strict';
 
 /**
- * Scans src/app/prototypes/ for subdirectories that contain a matching
- * <dirname>.component.ts file and auto-wires them into:
+ * Scans src/app/prototypes/ for subdirectories that contain a
+ * *.component.ts file (any name — it doesn't need to match the directory
+ * name) and auto-wires them into:
  *   - src/app/prototype-registry.ts  (home-screen index)
  *   - src/app/app-routing.module.ts  (import + route)
  *   - src/app/app.module.ts          (import + declaration)
@@ -72,22 +73,46 @@ function replaceBetween(content, markerSubstr, terminatorRe, newLines) {
 
 // ─── discovery ──────────────────────────────────────────────────────────────
 
+/**
+ * Finds the component file inside a prototype directory. Any *.component.ts
+ * file qualifies — its name doesn't need to match the directory name, since
+ * the directory name comes from whatever the user named their dropped zip
+ * or folder. If more than one is found, the alphabetically-first one wins
+ * and the rest are logged as ignored.
+ */
+function findComponentFile(dir) {
+    const candidates = fs.readdirSync(dir, { withFileTypes: true })
+        .filter(f => f.isFile() && f.name.endsWith('.component.ts'))
+        .map(f => f.name)
+        .sort();
+
+    if (candidates.length > 1) {
+        console.warn(`[wire-prototypes] Multiple *.component.ts files in ${path.basename(dir)}/ — using ${candidates[0]}, ignoring ${candidates.slice(1).join(', ')}`);
+    }
+
+    return candidates[0] ?? null;
+}
+
 function discover() {
     if (!fs.existsSync(PROTOS_DIR)) return [];
 
     return fs.readdirSync(PROTOS_DIR, { withFileTypes: true })
         .filter(e => e.isDirectory())
         .flatMap(e => {
-            const slug     = e.name;
-            const compFile = path.join(PROTOS_DIR, slug, `${slug}.component.ts`);
-            if (!fs.existsSync(compFile)) return [];
+            const slug    = e.name;
+            const dir     = path.join(PROTOS_DIR, slug);
+            const compName = findComponentFile(dir);
+            if (!compName) return [];
+
+            const compFile = path.join(dir, compName);
+            const baseName = compName.replace(/\.ts$/, '');
 
             const src   = fs.readFileSync(compFile, 'utf8');
             const match = src.match(/export\s+class\s+(\w+)/);
             const className = match ? match[1] : `${toPascal(slug)}Component`;
 
             let meta = {};
-            const metaFile = path.join(PROTOS_DIR, slug, 'meta.json');
+            const metaFile = path.join(dir, 'meta.json');
             if (fs.existsSync(metaFile)) {
                 try { meta = JSON.parse(fs.readFileSync(metaFile, 'utf8')); } catch {}
             }
@@ -95,7 +120,7 @@ function discover() {
             return [{
                 slug,
                 className,
-                importPath:  `./prototypes/${slug}/${slug}.component`,
+                importPath:  `./prototypes/${slug}/${baseName}`,
                 displayName: meta.name        ?? toTitle(slug),
                 description: meta.description ?? '',
             }];

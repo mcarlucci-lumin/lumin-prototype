@@ -32,11 +32,10 @@ example-prototype/
 └── meta.json                          (optional)
 ```
 
-Three rules worth knowing:
+Two rules worth knowing:
 
-- **The folder name becomes the address.** A folder named `loan-application` shows up at `/loan-application` in the gallery, and its tile is titled "Loan Application."
-- **The file names must match the folder name.** `loan-application/loan-application.component.ts`, not `loan-application/main.component.ts`.
-- **Only `.component.ts`, `.component.html`, `.component.scss` and `meta.json` are accepted.** Anything else in the folder is quietly ignored. The `.ts` file is the only one that's required.
+- **The folder name becomes the address.** A folder named `loan-application` shows up at `/loan-application` in the gallery, and its tile is titled "Loan Application." The component file name doesn't need to match — `loan-application/main.component.ts` works just as well as `loan-application/loan-application.component.ts`.
+- **Only `.component.ts`, `.component.html`, `.component.scss` and `meta.json` are accepted.** Anything else in the folder is quietly ignored. The `.ts` file is the only one that's required. If a folder somehow contains more than one `.component.ts`, only the alphabetically-first one is wired up.
 
 Add a `meta.json` to control how the tile reads, instead of accepting the title-cased folder name:
 
@@ -46,7 +45,7 @@ Add a `meta.json` to control how the tile reads, instead of accepting the title-
 
 If the file isn't valid JSON the upload is rejected with an error telling you what's wrong, rather than quietly falling back to the folder name.
 
-If you drop a `.zip`, the zip's file name (minus `.zip`) becomes the folder name.
+If you drop a `.zip`, the zip's file name (minus `.zip`) becomes the folder name — it doesn't need to match the component file name either.
 
 Typically Claude or a developer hands you the folder and you just drop it in.
 
@@ -75,7 +74,7 @@ A StackBlitz session is your own private, disposable copy. Prototypes you add or
 | Still loading after 3 minutes | Close the tab and open the link again. StackBlitz occasionally stalls on the first load. |
 | Red error text in the terminal pane at the bottom | Something in the prototype code doesn't compile. Copy the error text and send it to whoever gave you the prototype. |
 | "Could not reach the dev file server" after a drop | The sandbox is still starting up, or it went to sleep. Reload the page and try the drop again. |
-| Dropped a folder and nothing appeared | Check the folder name matches the `.component.ts` file name, and that you dropped the folder itself rather than the files inside it. |
+| Dropped a folder and nothing appeared | Check the folder contains a `.component.ts` file (any name), and that you dropped the folder itself rather than the files inside it. |
 | Icons show as words like `arrow_forward` instead of symbols | Cosmetic only — the icon font didn't load. Layout and behavior are still accurate. |
 
 ---
@@ -205,6 +204,6 @@ StackBlitz reads `.stackblitzrc` and the `stackblitz` field in `package.json`; i
 |---|---|
 | `npm install` fails on StackBlitz with "Cannot find package" | Vendor tarballs are missing or stale. Run *Refresh vendor packages*, then reopen the link. |
 | Import error for a `@a3-digital` package | The package isn't in `vendor-config.json`. Add it and re-run the workflow. |
-| Prototype dropped but never appears | The component file name must match its folder name. Check the `[wire-prototypes]` line in the terminal for the count of wired prototypes. |
+| Prototype dropped but never appears | Check the folder contains a `.component.ts` file. Check the `[wire-prototypes]` line in the terminal for the count of wired prototypes. |
 | Dev server restart loop | `start.js` restarts on `Failed to compile.` with a 10s minimum gap. A persistent compile error will log "Restart suppressed" — fix the error in the prototype source. |
 | Local drop zone requests 404 | The file server only runs under `npm start`; `ng serve` alone doesn't start it. |
