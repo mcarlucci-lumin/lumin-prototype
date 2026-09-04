@@ -10,8 +10,9 @@
  *   POST   /upload-zip        X-Dir-Name:  <slug>       body: raw zip bytes
  *   DELETE /prototype/<slug>                            removes dir + re-wires
  *
- * Accepted files: *.component.{ts,html,scss} (any base name) and meta.json.
- * Everything else in a dropped folder or zip is ignored.
+ * Accepted files: *.component.{ts,html,scss} (any base name), meta.json, and
+ * asset files (images, fonts, media, data — see ASSET_EXT below). Everything
+ * else in a dropped folder or zip is ignored.
  *
  * Path traversal is rejected. Only called from localhost — no auth needed.
  */
@@ -43,17 +44,29 @@ const PORT        = 7788;
 const PROTOS      = path.resolve(__dirname, '../src/app/prototypes');
 const { run: wireRun } = require('./wire-prototypes');
 
-// Uploads are restricted to the files wire-prototypes.js actually consumes.
+// Uploads are restricted to the files wire-prototypes.js actually consumes,
+// plus static assets a prototype can reference from its template (images,
+// fonts, media, small data files). No executable/source types beyond the
+// component file itself — the angular.json assets glob copies anything here
+// verbatim into the built app, so only inert file types belong on this list.
 // meta.json must be exactly that — wire-prototypes.js looks it up by exact
 // name, so accepting "Meta.json" would silently write a file it never reads.
-const ALLOWED       = /(?:\.component\.(ts|html|scss)|(?:^|\/)meta\.json)$/;
-const ALLOWED_HUMAN = '.component.ts, .component.html, .component.scss and meta.json';
-const IS_META       = /(?:^|\/)meta\.json$/;
+const ASSET_EXT     = 'png|jpe?g|gif|svg|webp|avif|ico|bmp|pdf|mp4|webm|mov|mp3|wav|ogg|woff2?|ttf|otf|eot|json|csv';
+const ALLOWED       = new RegExp(`(?:\\.component\\.(ts|html|scss)|(?:^|/)meta\\.json|\\.(${ASSET_EXT}))$`, 'i');
+const ALLOWED_HUMAN = '.component.ts, .component.html, .component.scss, meta.json, and asset files (images, fonts, media, .json/.csv data)';
+const IS_META       = /(?:^|\/)meta\.json$/i;
 
 // OS bookkeeping files ride along in any dropped folder. These are skipped with
 // a 200 rather than rejected: the client aborts the whole upload batch on the
 // first non-OK response, so a single .DS_Store would fail an entire folder drop.
 const IGNORED = /(?:^|\/)(?:\.DS_Store|Thumbs\.db|desktop\.ini)$|(?:^|\/)__MACOSX(?:\/|$)/;
+
+// Files under a `_reference/` folder (design screenshots, etc. used to build the
+// prototype) are real assets on disk — wire-prototypes.js and uploads leave them
+// alone — but they're authoring material, not something the running app or a
+// shared deliverable needs. The angular.json assets glob mirrors this exclusion
+// for `ng build`/`ng serve`; buildZip mirrors it for prototype downloads.
+const NOT_SHIPPED = /(?:^|\/)_reference(?:\/|$)/;
 
 async function wireWithRetry() {
     const MAX = 3;
@@ -197,7 +210,9 @@ function buildZip(protoDir) {
         for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
             const entryRel  = rel ? `${rel}/${entry.name}` : entry.name;
             const entryFull = path.join(dir, entry.name);
-            if (entry.isDirectory()) {
+            if (NOT_SHIPPED.test(entryRel)) {
+                continue;
+            } else if (entry.isDirectory()) {
                 collect(entryFull, entryRel);
             } else if (ALLOWED.test(entryRel)) {
                 files.push({ zipPath: `${slug}/${entryRel}`, data: fs.readFileSync(entryFull) });

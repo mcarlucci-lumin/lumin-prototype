@@ -29,13 +29,32 @@ example-prototype/
 ├── example-prototype.component.ts     (required)
 ├── example-prototype.component.html   (optional)
 ├── example-prototype.component.scss   (optional)
-└── meta.json                          (optional)
+├── meta.json                          (optional)
+└── logo.png                           (optional — images & other assets)
 ```
 
 Two rules worth knowing:
 
 - **The folder name becomes the address.** A folder named `loan-application` shows up at `/loan-application` in the gallery, and its tile is titled "Loan Application." The component file name doesn't need to match — `loan-application/main.component.ts` works just as well as `loan-application/loan-application.component.ts`.
-- **Only `.component.ts`, `.component.html`, `.component.scss` and `meta.json` are accepted.** Anything else in the folder is quietly ignored. The `.ts` file is the only one that's required. If a folder somehow contains more than one `.component.ts`, only the alphabetically-first one is wired up.
+- **Only `.component.ts`, `.component.html`, `.component.scss`, `meta.json`, and asset files are accepted.** Assets cover images, fonts, media and small data files (`.png .jpg .jpeg .gif .svg .webp .avif .ico .bmp .pdf .mp4 .webm .mov .mp3 .wav .ogg .woff .woff2 .ttf .otf .eot .json .csv`). Anything else in the folder is quietly ignored. The `.ts` file is the only file that's required. If a folder somehow contains more than one `.component.ts`, only the alphabetically-first one is wired up.
+
+### Using images and other assets
+
+Drop any image or other asset file directly into the prototype folder (or a subfolder inside it) alongside the component files. Reference it from the component's template with a path of the form:
+
+```
+assets/prototypes/<folder-name>/<file-name>
+```
+
+For example, an image at `example-prototype/logo.png` is referenced in `example-prototype.component.html` as:
+
+```html
+<img src="assets/prototypes/example-prototype/logo.png" alt="Logo">
+```
+
+This works in the live preview, survives download (the asset comes back inside the zip in the same spot you put it), and needs no manual wiring — dropping the file in is enough.
+
+Put design references, Figma exports, or other authoring material you don't want shipped in a `_reference/` folder inside the prototype — anything under it is excluded from both the live preview build and prototype downloads, but still lives in the folder for whoever works on it next.
 
 Add a `meta.json` to control how the tile reads, instead of accepting the title-cased folder name:
 
@@ -113,6 +132,8 @@ Auto-wiring means prototypes never require manual edits to `app.module.ts` or `a
 - [`src/app/app-routing.module.ts`](src/app/app-routing.module.ts) — `/` → home, `/<slug>` → prototype
 - [`src/app/app.module.ts`](src/app/app.module.ts) — imports and declarations
 
+Images and other assets need no comparable wiring step. An `assets` entry in [`angular.json`](angular.json) globs `src/app/prototypes/**/*` (excluding component/meta files) straight into `assets/prototypes/…` in the built output, so any file dropped into a prototype folder is servable the moment the build picks it up — no registry entry, no route, no module declaration.
+
 Run the wiring by hand with `npm run wire` if you ever need to.
 
 In StackBlitz's WebContainers, process-to-process localhost networking doesn't work, so the `ng serve` proxy (`/api` → `:7788`) can't reach the file server. The home component detects a webcontainer hostname and calls port 7788 directly by rewriting the `--4200--` segment of the URL. See [`home.component.ts:12-18`](src/app/home/home.component.ts#L12-L18).
@@ -162,7 +183,9 @@ Optionally add a `meta.json` next to the component to control how the tile reads
 { "name": "Loan Application", "description": "Multi-step application flow" }
 ```
 
-`meta.json` works the same whether the prototype is committed to the repo or dropped on the gallery. The drop zone accepts `.component.{ts,html,scss}` and `meta.json`; it silently skips OS bookkeeping files (`.DS_Store`, `Thumbs.db`, `desktop.ini`, `__MACOSX/`) and rejects anything else. Uploaded `meta.json` is parsed up front, so a malformed file fails the drop with a readable error instead of silently reverting the tile to the folder name.
+`meta.json` works the same whether the prototype is committed to the repo or dropped on the gallery. The drop zone accepts `.component.{ts,html,scss}`, `meta.json`, and asset files (images, fonts, media, `.json`/`.csv` data — see `ASSET_EXT` in [`scripts/dev-file-server.js`](scripts/dev-file-server.js) for the exact list); it silently skips OS bookkeeping files (`.DS_Store`, `Thumbs.db`, `desktop.ini`, `__MACOSX/`) and rejects anything else. Uploaded `meta.json` is parsed up front, so a malformed file fails the drop with a readable error instead of silently reverting the tile to the folder name.
+
+Assets placed anywhere under a prototype folder are copied by the Angular build to `assets/prototypes/<slug>/…`, so a template references its own folder's image as `assets/prototypes/<slug>/<relative-path>` — see the [drop zone section above](#using-images-and-other-assets) for a worked example. The same glob backs `ng serve`, `ng build`, and the download zip, so preview, download and auto-wiring all agree on where an asset lives without any manual step.
 
 To share a prototype with everyone, commit it and push to `main`. To share a one-off variant, push a branch and send its StackBlitz URL:
 
@@ -207,3 +230,5 @@ StackBlitz reads `.stackblitzrc` and the `stackblitz` field in `package.json`; i
 | Prototype dropped but never appears | Check the folder contains a `.component.ts` file. Check the `[wire-prototypes]` line in the terminal for the count of wired prototypes. |
 | Dev server restart loop | `start.js` restarts on `Failed to compile.` with a 10s minimum gap. A persistent compile error will log "Restart suppressed" — fix the error in the prototype source. |
 | Local drop zone requests 404 | The file server only runs under `npm start`; `ng serve` alone doesn't start it. |
+| Image/asset 404s in preview | Confirm the path is `assets/prototypes/<slug>/<relative-path>` and the file actually landed under `src/app/prototypes/<slug>/`. New assets are picked up by `ng serve`'s asset watcher; if it doesn't refresh, reload the preview or restart `npm start`. |
+| Asset didn't survive a drop or download | Check the extension against `ASSET_EXT` in [`scripts/dev-file-server.js`](scripts/dev-file-server.js) — unlisted types are quietly skipped, same as any other unrecognized file. |

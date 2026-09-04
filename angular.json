@@ -22,6 +22,12 @@
                 "glob": "**/*",
                 "input": "node_modules/@a3-digital/ui-styles/fonts",
                 "output": "./assets/fonts"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/app/prototypes",
+                "output": "./assets/prototypes",
+                "ignore": ["**/*.component.ts", "**/*.component.html", "**/*.component.scss", "**/meta.json", "**/_reference/**"]
               }
             ],
             "styles": ["src/styles.scss"],
