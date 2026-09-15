@@ -3,6 +3,10 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
+    "paths": {
+      "jwk-to-pem": ["src/stubs/jwk-to-pem.js"],
+      "node-forge": ["src/stubs/node-forge.js"]
+    },
     "strict": false,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
