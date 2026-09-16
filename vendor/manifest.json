@@ -10,6 +10,6 @@
   "@a3-digital/ui-styles": "4.0.62",
   "@a3-digital/ui-workflows": "4.0.54",
   "@a3-digital/utils": "1.2.74",
-  "@a3-digital/lumin-ai-interface": "1.0.42",
-  "@a3-digital/validation": "1.11.19"
+  "@a3-digital/lumin-ai-interface": "1.0.43",
+  "@a3-digital/validation": "1.11.20"
 }
