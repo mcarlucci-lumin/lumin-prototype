@@ -24,6 +24,7 @@ import { LuminTopNavComponent } from './chrome/lumin-top-nav/lumin-top-nav.compo
 import { LuminFooterComponent } from './chrome/lumin-footer/lumin-footer.component';
 import { ChromePickerComponent } from './chrome/chrome-picker/chrome-picker.component';
 import { TabletChromeComponent } from './chrome/tablet-chrome/tablet-chrome.component';
+import { AdminChromeComponent } from './chrome/admin-chrome/admin-chrome.component';
 import { ChromeService } from './chrome/chrome.service';
 
 // ─── Claude: add prototype component imports here ───────────────────────────
@@ -48,6 +49,7 @@ if (typeof window !== 'undefined') {
         LuminFooterComponent,
         ChromePickerComponent,
         TabletChromeComponent,
+        AdminChromeComponent,
         // ─── Claude: add prototype components to declarations here ──────────
     ],
     imports: [

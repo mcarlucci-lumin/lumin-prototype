@@ -1,0 +1,93 @@
+// "Admin" chrome — Lumin Financial logo row + dark admin nav bar.
+
+$nav-bar-bg: #002429;
+$nav-active-bg: #00A2B8;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+
+  &.dimmed .admin-nav {
+    opacity: 0.35;
+    pointer-events: none;
+  }
+}
+
+.admin-nav {
+  width: 100%;
+
+  &__brand-row {
+    display: flex;
+    align-items: center;
+    height: 66px;
+    padding: 0 var(--spacing-500);
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+  }
+
+  &__bar {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    height: 66px;
+    background: $nav-bar-bg;
+    color: #ffffff;
+    padding: 0 var(--spacing-400);
+  }
+
+  &__links {
+    display: flex;
+    align-items: stretch;
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    padding: 0 var(--spacing-300);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: default;
+
+    &--active {
+      background: $nav-active-bg;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-300);
+  }
+
+  &__more {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    line-height: 1;
+  }
+
+  &__avatar {
+    color: #ffffff;
+  }
+}
+
+.prototype-content {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  padding: var(--spacing-500);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-500);
+}

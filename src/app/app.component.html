@@ -46,6 +46,12 @@
                 <router-outlet></router-outlet>
             </app-tablet-chrome>
         }
+        <!-- Admin chrome — logo row + dark admin nav bar -->
+        @case ('admin') {
+            <app-admin-chrome>
+                <router-outlet></router-outlet>
+            </app-admin-chrome>
+        }
         <!-- Default chrome — plain white, exactly as before -->
         @default {
             <div class="prototype-container">
