@@ -1,4 +1,4 @@
-import { NgModule, provideAppInitializer, inject } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -25,8 +25,6 @@ import { LuminFooterComponent } from './chrome/lumin-footer/lumin-footer.compone
 import { ChromePickerComponent } from './chrome/chrome-picker/chrome-picker.component';
 import { TabletChromeComponent } from './chrome/tablet-chrome/tablet-chrome.component';
 import { AdminChromeComponent } from './chrome/admin-chrome/admin-chrome.component';
-import { ChromeService } from './chrome/chrome.service';
-
 // ─── Claude: add prototype component imports here ───────────────────────────
 
 // Initialize configurability with an empty config before the module loads.
@@ -82,11 +80,7 @@ if (typeof window !== 'undefined') {
         // inject them don't throw NullInjectorError in prototype context.
         { provide: UI_ANALYTICS_PUBLISHER, useValue: null },
         { provide: UI_BOT_DETECTION_PROVIDER, useValue: null },
-        provideHttpClient(withInterceptorsFromDi()),
-        // Read the landed-on prototype's chrome from its served meta.json before
-        // the app boots, so a deep link or reload paints the right frame straight
-        // away instead of correcting itself a tick later.
-        provideAppInitializer(() => inject(ChromeService).initialize())
+        provideHttpClient(withInterceptorsFromDi())
     ],
     bootstrap: [AppComponent]
 })

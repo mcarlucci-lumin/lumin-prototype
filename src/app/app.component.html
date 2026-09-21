@@ -1,28 +1,71 @@
-<div *ngIf="isPrototypeRoute && !isPreview" class="back-bar">
-    <button class="back-bar__btn" (click)="router.navigate(['/'])" aria-label="Back to prototypes">
-        <span class="material-icons back-bar__icon">arrow_back</span>
-        <span class="back-bar__label">Back to prototypes</span>
-    </button>
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     SHELL MODE — outer wrapper shown when the user is on a prototype route.
+     The back-bar stays at full browser width; the prototype renders in an iframe
+     so viewport width can be simulated independently of the browser window.
+     ═══════════════════════════════════════════════════════════════════════════ -->
+@if (isPrototypeRoute && !isPreview && !isFrame) {
 
-    <div class="back-bar__controls">
-        @if (chrome.saveError(); as saveError) {
-            <span class="back-bar__save-error" role="status">{{ saveError }}</span>
-        }
-        @if (chrome.displayChrome() !== 'default') {
-            <ui-forms-checkbox
-                class="back-bar__dim"
-                label="Dim chrome"
-                [checked]="chrome.dimChrome()"
-                (change)="onDimChange($event)">
-            </ui-forms-checkbox>
-        }
-        <app-chrome-picker class="back-bar__picker" theme="white"></app-chrome-picker>
+    <div class="back-bar">
+        <button class="back-bar__btn" (click)="router.navigate(['/'])" aria-label="Back to prototypes">
+            <span class="material-icons back-bar__icon">arrow_back</span>
+            <span class="back-bar__label">Back to prototypes</span>
+        </button>
+
+        <div class="back-bar__controls">
+            <!-- Viewport size picker — simulates the responsive breakpoints -->
+            <div class="back-bar__viewport" role="group" aria-label="Viewport size">
+                @for (p of viewportPresets; track p.id) {
+                    <button
+                        class="back-bar__viewport-btn"
+                        [class.back-bar__viewport-btn--active]="viewportPreset() === p.id"
+                        (click)="onViewportChange(p.id)"
+                        [title]="p.label + (p.width ? ' · ' + p.width + 'px' : ' · browser width')"
+                        [attr.aria-pressed]="viewportPreset() === p.id">
+                        <span class="material-icons">{{ p.icon }}</span>
+                    </button>
+                }
+            </div>
+
+            @if (effectiveChrome() !== 'default') {
+                <ui-forms-checkbox
+                    class="back-bar__dim"
+                    label="Dim chrome"
+                    [checked]="chrome.dimChrome()"
+                    (change)="onDimChange($event)">
+                </ui-forms-checkbox>
+            }
+
+            @if (viewportPreset() === 'full' || viewportPreset() === 'desktop') {
+                <app-chrome-picker
+                    class="back-bar__picker"
+                    theme="white"
+                    [allowedIds]="viewportPreset() === 'desktop' ? desktopChromeIds : null"
+                    (pick)="onChromePick($event)">
+                </app-chrome-picker>
+            }
+        </div>
     </div>
-</div>
 
-@if (isPrototypeRoute && !isPreview && chrome.ready()) {
+    <!-- The prototype renders inside this iframe. Its width is controlled by the
+         viewport preset; the height always fills the remaining viewport below the bar. -->
+    <div class="viewport-shell" [class.viewport-shell--constrained]="viewportPreset() !== 'full'">
+        <iframe
+            class="prototype-frame"
+            [src]="safeFrameUrl()"
+            [style.width]="frameWidth()"
+            [style.height]="frameHeight()"
+            title="Prototype"
+            #protoFrame>
+        </iframe>
+    </div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     FRAME MODE — prototype route loaded inside the shell's <iframe> (?frame=1).
+     Renders chrome + prototype content; no back-bar rendered here.
+     ═══════════════════════════════════════════════════════════════════════════ -->
+} @else if (isPrototypeRoute && !isPreview && isFrame) {
     @switch (chrome.displayChrome()) {
-        <!-- Desktop Basic chrome — the prototype renders inside its content container -->
+        <!-- Desktop Basic chrome — shared top nav + centered content + footer -->
         @case ('desktop-basic') {
             <app-desktop-basic-chrome>
                 <router-outlet></router-outlet>
@@ -52,16 +95,14 @@
                 <router-outlet></router-outlet>
             </app-admin-chrome>
         }
-        <!-- Default chrome — plain white, exactly as before -->
+        <!-- Default chrome — plain white, no chrome wrapper, no back-bar offset needed -->
         @default {
-            <div class="prototype-container">
-                <router-outlet></router-outlet>
-            </div>
+            <router-outlet></router-outlet>
         }
     }
-} @else if (isPrototypeRoute && !isPreview) {
-    <!-- Reading this prototype's meta.json; a blank tick beats the wrong frame -->
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     HOME + PREVIEW MODE — home gallery and thumbnail iframes render with no chrome
+     ═══════════════════════════════════════════════════════════════════════════ -->
 } @else {
-    <!-- Home gallery and preview thumbnails render with no chrome -->
     <router-outlet></router-outlet>
 }
