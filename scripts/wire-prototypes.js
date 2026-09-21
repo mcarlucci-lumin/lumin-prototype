@@ -14,7 +14,13 @@
  *   node scripts/wire-prototypes.js --watch   # re-run on any change in prototypes/
  *
  * Optional meta.json alongside the component:
- *   { "name": "Human-Readable Name", "description": "Short description" }
+ *   { "name": "Human-Readable Name", "description": "Short description",
+ *     "chrome": "desktop-side-nav" }
+ *
+ * `chrome` names the visual frame the prototype renders inside — one of the ids
+ * in src/app/chrome/chrome-options.json. Omitted means the plain 'default' frame.
+ * It is deliberately NOT written into prototype-registry.ts: the app fetches it
+ * from the served meta.json so changing it never rebuilds a compiled file.
  *
  * Managed regions in app.module.ts are bounded by:
  *   - Imports:      the "Claude: add prototype component imports here" comment
@@ -31,6 +37,11 @@ const PROTOS_DIR = path.join(ROOT, 'src/app/prototypes');
 const ROUTING    = path.join(ROOT, 'src/app/app-routing.module.ts');
 const MODULE     = path.join(ROOT, 'src/app/app.module.ts');
 const REGISTRY   = path.join(ROOT, 'src/app/prototype-registry.ts');
+
+// Same list ChromeService reads, so a meta.json chrome id means the same thing
+// to this script, the dev-file-server and the app.
+const CHROME_IDS = require('../src/app/chrome/chrome-options.json').map(o => o.id);
+const DEFAULT_CHROME = 'default';
 
 // ─── helpers ────────────────────────────────────────────────────────────────
 
@@ -93,6 +104,20 @@ function findComponentFile(dir) {
     return candidates[0] ?? null;
 }
 
+/**
+ * The chrome id is read at runtime from the served meta.json, not from the
+ * generated registry — that is what keeps changing it from rewriting a compiled
+ * file and reloading the browser. So nothing is emitted here; this only reports a
+ * value the app would silently ignore, since wiring is what runs on every save
+ * and every boot.
+ */
+function warnOnBadChrome(value, slug) {
+    if (value === undefined || value === null || value === '') return;
+    if (typeof value !== 'string' || !CHROME_IDS.includes(value)) {
+        console.warn(`[wire-prototypes] ${slug}/meta.json: unknown chrome ${JSON.stringify(value)} — the app will use '${DEFAULT_CHROME}'. Valid ids: ${CHROME_IDS.join(', ')}`);
+    }
+}
+
 function discover() {
     if (!fs.existsSync(PROTOS_DIR)) return [];
 
@@ -116,6 +141,7 @@ function discover() {
             if (fs.existsSync(metaFile)) {
                 try { meta = JSON.parse(fs.readFileSync(metaFile, 'utf8')); } catch {}
             }
+            warnOnBadChrome(meta.chrome, slug);
 
             return [{
                 slug,

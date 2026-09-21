@@ -1,0 +1,40 @@
+<app-lumin-top-nav class="chrome-top-nav"></app-lumin-top-nav>
+
+<div class="page">
+  <div class="body-card">
+    <!-- Left side navigation -->
+    <aside class="side-nav" [class.side-nav--dimmed]="chrome.dimChrome()">
+      <div class="side-nav__title">Level 3 Title</div>
+      @for (item of menuItems; track $index) {
+        <a class="side-nav__item no-link-hover" [class.side-nav__item--active]="item.active">
+          <span class="side-nav__icon" [class.side-nav__icon--active]="item.active">
+            <ui-core-icon icon="grid_view" size="xs"></ui-core-icon>
+          </span>
+          <span class="side-nav__label">{{ item.label }}</span>
+        </a>
+      }
+    </aside>
+
+    <!-- Right side: page header, body (prototype content), footer -->
+    <div class="right-side">
+      <header class="page-header" [class.page-header--dimmed]="chrome.dimChrome()">
+        <div class="page-header__row">
+          <div class="page-header__title">
+            <span class="page-header__icon">
+              <ui-core-icon icon="grid_view" size="sm"></ui-core-icon>
+            </span>
+            <h1 class="page-header__heading">Page Title</h1>
+          </div>
+        </div>
+        <p class="page-header__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </header>
+
+      <!-- .PageBody — the routed prototype renders here -->
+      <div class="page-body">
+        <ng-content></ng-content>
+      </div>
+
+      <app-lumin-footer class="chrome-footer"></app-lumin-footer>
+    </div>
+  </div>
+</div>

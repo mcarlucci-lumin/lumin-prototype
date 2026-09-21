@@ -1,0 +1,31 @@
+// "Desktop Basic" chrome — shared top nav + centered content + centered footer.
+
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center; // center the content + footer column in the page
+  min-height: 100vh;
+}
+
+.chrome-top-nav {
+  align-self: stretch; // nav spans the full page width
+}
+
+// Content container where the routed prototype renders. Mirrors real client
+// usage patterns: a max-width, padded, top-anchored column, centered in the page.
+.prototype-content {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  padding: var(--spacing-500); // 40px
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-500); // 40px
+}
+
+// Footer centered in the page at the design's own width (895px).
+.chrome-footer {
+  width: 100%;
+  max-width: 895px;
+  margin-top: auto; // pin the footer to the bottom on short pages
+}

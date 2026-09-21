@@ -1,0 +1,200 @@
+// "Desktop Side Nav" chrome — shared top nav + a bordered page card containing
+// a side navigation and a right side (page header + .PageBody + footer).
+
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.chrome-top-nav {
+  width: 100%;
+}
+
+.page {
+  position: relative;
+  flex: 1 1 auto;
+  display: flex;
+  padding: 32px; // matches the design's outer padding around the card
+
+  // Glass gradient behind/around the rounded content card.
+  background-color: var(--color-background-3);
+  background-image: radial-gradient(circle farthest-corner at top left, var(--color-background-1) 0%, rgba(255, 255, 255, 0) 35%),
+    radial-gradient(circle farthest-corner at top right, var(--color-background-2) 0%, rgba(255, 255, 255, 0) 50%),
+    radial-gradient(circle farthest-corner at bottom left, var(--color-background-2) 0%, rgba(255, 255, 255, 0) 40%),
+    radial-gradient(circle farthest-corner at bottom right, var(--color-background-3) 0%, rgba(255, 255, 255, 0) 60%);
+
+  // Overlay that softens the gradient colors, beneath the content card.
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-color: rgba(255, 255, 255, var(--color-background-overlay, var(--opacity-600)));
+  }
+}
+
+.body-card {
+  position: relative; // sit above the .page overlay
+  z-index: 1;
+}
+
+.body-card {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: stretch;
+  min-width: 0;
+  background: var(--surfaces-color-default, #ffffff);
+  border: 1px solid var(--color-stroke-1, #e2e2e2);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+// ── Side navigation ──────────────────────────────────────────────────────────
+.side-nav {
+  flex: 0 0 280px;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-right: 1px solid var(--color-stroke-1, #e2e2e2);
+  transition: opacity 0.2s ease;
+
+  &--dimmed {
+    opacity: 0.15;
+  }
+
+  &__title {
+    padding: 24px 20px;
+    font-size: 17.6px;
+    font-weight: 600;
+    color: var(--color-content-secondary, #565656);
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 48px;
+    box-sizing: border-box;
+    padding: 12px 24px;
+    cursor: default;
+    text-decoration: none;
+    background: #ffffff;
+
+    &--active {
+      background: var(--color-secondary-50, #edf6ef);
+    }
+  }
+
+  &__icon {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+
+    &--active {
+      background: var(--color-secondary, #52db8f);
+    }
+
+    ::ng-deep * {
+      font-size: 16px;
+      color: var(--color-content-secondary, #565656);
+    }
+
+    &--active ::ng-deep * {
+      color: #ffffff;
+    }
+  }
+
+  &__label {
+    font-size: 14.55px;
+    color: var(--color-content-secondary, #565656);
+  }
+
+  &__item--active &__label {
+    font-weight: 600;
+    color: var(--color-content-primary, #002429);
+  }
+}
+
+// ── Right side ───────────────────────────────────────────────────────────────
+.right-side {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+}
+
+.page-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 32px;
+  transition: opacity 0.2s ease;
+
+  &--dimmed {
+    opacity: 0.15;
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  &__icon {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: var(--color-secondary, #52db8f);
+
+    ::ng-deep * {
+      font-size: 20px;
+      color: #ffffff;
+    }
+  }
+
+  &__heading {
+    margin: 0;
+    font-size: 23.4px;
+    font-weight: 700;
+    color: var(--color-content-primary, #002429);
+  }
+
+  &__desc {
+    margin: 0;
+    font-size: 16px;
+    color: var(--color-content-secondary, #565656);
+    line-height: 20px;
+  }
+}
+
+// .PageBody — the routed prototype renders here.
+.page-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+  padding: 32px;
+}
+
+.chrome-footer {
+  width: 100%;
+}

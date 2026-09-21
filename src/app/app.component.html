@@ -1,6 +1,61 @@
-<button *ngIf="isPrototypeRoute && !isPreview" class="back-btn" [class.back-btn--visible]="isBackBtnVisible" (click)="router.navigate(['/'])" aria-label="Back to home">
-    <span class="material-icons back-btn__icon">arrow_back</span>
-</button>
-<div [class.prototype-container]="isPrototypeRoute && !isPreview">
-    <router-outlet></router-outlet>
+<div *ngIf="isPrototypeRoute && !isPreview" class="back-bar">
+    <button class="back-bar__btn" (click)="router.navigate(['/'])" aria-label="Back to prototypes">
+        <span class="material-icons back-bar__icon">arrow_back</span>
+        <span class="back-bar__label">Back to prototypes</span>
+    </button>
+
+    <div class="back-bar__controls">
+        @if (chrome.saveError(); as saveError) {
+            <span class="back-bar__save-error" role="status">{{ saveError }}</span>
+        }
+        @if (chrome.displayChrome() !== 'default') {
+            <ui-forms-checkbox
+                class="back-bar__dim"
+                label="Dim chrome"
+                [checked]="chrome.dimChrome()"
+                (change)="onDimChange($event)">
+            </ui-forms-checkbox>
+        }
+        <app-chrome-picker class="back-bar__picker" theme="white"></app-chrome-picker>
+    </div>
 </div>
+
+@if (isPrototypeRoute && !isPreview && chrome.ready()) {
+    @switch (chrome.displayChrome()) {
+        <!-- Desktop Basic chrome — the prototype renders inside its content container -->
+        @case ('desktop-basic') {
+            <app-desktop-basic-chrome>
+                <router-outlet></router-outlet>
+            </app-desktop-basic-chrome>
+        }
+        <!-- Desktop Side Nav chrome — top nav + side nav + page header + footer -->
+        @case ('desktop-side-nav') {
+            <app-desktop-side-nav-chrome>
+                <router-outlet></router-outlet>
+            </app-desktop-side-nav-chrome>
+        }
+        <!-- Mobile chrome — top bar + tabs + fixed bottom nav -->
+        @case ('mobile') {
+            <app-mobile-chrome>
+                <router-outlet></router-outlet>
+            </app-mobile-chrome>
+        }
+        <!-- Tablet chrome — dark top bar (Lumin logo) + content card + bottom nav -->
+        @case ('tablet') {
+            <app-tablet-chrome>
+                <router-outlet></router-outlet>
+            </app-tablet-chrome>
+        }
+        <!-- Default chrome — plain white, exactly as before -->
+        @default {
+            <div class="prototype-container">
+                <router-outlet></router-outlet>
+            </div>
+        }
+    }
+} @else if (isPrototypeRoute && !isPreview) {
+    <!-- Reading this prototype's meta.json; a blank tick beats the wrong frame -->
+} @else {
+    <!-- Home gallery and preview thumbnails render with no chrome -->
+    <router-outlet></router-outlet>
+}

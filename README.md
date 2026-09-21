@@ -56,13 +56,40 @@ This works in the live preview, survives download (the asset comes back inside t
 
 Put design references, Figma exports, or other authoring material you don't want shipped in a `_reference/` folder inside the prototype — anything under it is excluded from both the live preview build and prototype downloads, but still lives in the folder for whoever works on it next.
 
-Add a `meta.json` to control how the tile reads, instead of accepting the title-cased folder name:
+Add a `meta.json` to control how the tile reads, instead of accepting the title-cased folder name, and to pick the chrome the prototype renders inside:
 
 ```json
-{ "name": "Loan Application", "description": "Multi-step application flow" }
+{ "name": "Loan Application", "description": "Multi-step application flow", "chrome": "desktop-side-nav" }
 ```
 
-If the file isn't valid JSON the upload is rejected with an error telling you what's wrong, rather than quietly falling back to the folder name.
+If the file isn't valid JSON the upload is rejected with an error telling you what's wrong, rather than quietly falling back to the folder name. The same goes for a `chrome` value that isn't one of the known ids.
+
+### Chrome — the frame a prototype renders inside
+
+Chrome is the surrounding app elements a prototype is presented in to mimic these viewport types: default (plain white), desktop basic, desktop side nav, tablet, and mobile. It's there so a prototype can be reviewed the way it will roughly be seen in various page layouts, without every prototype having to build its own shell. This does not control actual viewport sizes so browser tools would still be used for sizing. 
+
+**Chrome belongs to the prototype, not to you.** It's stored in the prototype's own `meta.json`, so whoever opens it next — a teammate, a fresh clone, a StackBlitz link — sees it in the frame it was designed for. It rides along in the download zip too.
+
+| `chrome` | What you get |
+| --- | --- |
+| omitted, or `"default"` | Plain white page, no furniture |
+| `"desktop-basic"` | Top nav + footer, prototype in the content container |
+| `"desktop-side-nav"` | Top nav + side nav + page header + footer |
+| `"mobile"` | Mobile top bar + tabs + fixed bottom nav |
+| `"tablet"` | Dark top bar with Lumin logo + white content card + bottom nav (no side nav) |
+| `"responsive"` | Switches automatically: mobile below 768 px, tablet 768–1079 px, desktop ≥ 1080 px |
+
+The canonical list lives in [`src/app/chrome/chrome-options.json`](src/app/chrome/chrome-options.json) — the app, the wiring script and the upload validator all read it, so there's one place to add a new frame. An id that isn't on the list is reported by the wiring script and the app falls back to `default`.
+
+To change it while you're looking at a prototype, hover the top edge of the window to reveal the bar and use the **Chrome** picker. The frame swaps immediately and the pick is written straight to that prototype's `meta.json`, so it sticks — no save step, and **no page reload**.
+
+Note: if using browser tools to emulate mobile/tablet viewport sizes then the hover effect may not work, try clicking at the top of the page to show the bar.
+
+That last part is why `chrome` is deliberately *not* written into the generated `prototype-registry.ts`. A value compiled into the bundle would change it on every pick, and `ng serve` would rebuild and reload the page each time, costing you scroll position and any state in the prototype. Instead the app fetches `assets/prototypes/<slug>/meta.json` at runtime, which leaves the bundle byte-identical on a save — `ng serve` does a ~0.3s no-op pass and tells the browser "nothing changed". The frame is read before the app boots, so a deep link or a reload paints the right chrome on the first frame.
+
+Saving needs `npm start` running. Without it the pick is remembered in your own browser instead and the bar says "Saved locally only — no dev server", so you know it never reached the file.
+
+The **Dim chrome** checkbox fades the chrome elements so the prototype stands out; that one is just a viewing preference and stays local to you.
 
 If you drop a `.zip`, the zip's file name (minus `.zip`) becomes the folder name — it doesn't need to match the component file name either.
 
@@ -177,11 +204,13 @@ Edit [`vendor-config.json`](vendor-config.json) and bump the version(s). Pushing
 
 Create `src/app/prototypes/<slug>/<slug>.component.ts` (plus optional `.html` / `.scss`). The watcher wires it on save. Every `Ui*Module` is already imported in `app.module.ts`, so prototype components need no extra module setup.
 
-Optionally add a `meta.json` next to the component to control how the tile reads:
+Optionally add a `meta.json` next to the component to control how the tile reads and which chrome it renders inside:
 
 ```json
-{ "name": "Loan Application", "description": "Multi-step application flow" }
+{ "name": "Loan Application", "description": "Multi-step application flow", "chrome": "desktop-side-nav" }
 ```
+
+`chrome` is one of the ids in [`src/app/chrome/chrome-options.json`](src/app/chrome/chrome-options.json) — see [Chrome](#chrome--the-frame-a-prototype-renders-inside) above. An unknown id is reported by the wiring script and falls back to `default`. Unlike `name` and `description`, `chrome` is read at runtime from the served copy of `meta.json` rather than from the generated registry, so changing it never rebuilds the bundle.
 
 `meta.json` works the same whether the prototype is committed to the repo or dropped on the gallery. The drop zone accepts `.component.{ts,html,scss}`, `meta.json`, and asset files (images, fonts, media, `.json`/`.csv` data — see `ASSET_EXT` in [`scripts/dev-file-server.js`](scripts/dev-file-server.js) for the exact list); it silently skips OS bookkeeping files (`.DS_Store`, `Thumbs.db`, `desktop.ini`, `__MACOSX/`) and rejects anything else. Uploaded `meta.json` is parsed up front, so a malformed file fails the drop with a readable error instead of silently reverting the tile to the folder name.
 
@@ -202,11 +231,13 @@ lumin-prototype/
 ├── scripts/
 │   ├── start.js                  # Supervises watcher + ng serve + file server
 │   ├── wire-prototypes.js        # Generates registry, routes, module declarations
-│   ├── dev-file-server.js        # Upload / unzip / delete API on :7788
+│   ├── dev-file-server.js        # Upload / unzip / delete / set-chrome API on :7788
 │   ├── pack-vendor.js            # npm pack each @a3-digital package
 │   └── update-vendor-refs.js     # Rewrites package.json to file:./vendor/ refs
 ├── src/app/
 │   ├── home/                     # Prototype gallery + drop zone
+│   ├── chrome/                   # Frames a prototype can render inside
+│   │   └── chrome-options.json   # Canonical chrome ids — read by app + scripts
 │   ├── prototypes/               # One directory per prototype
 │   ├── prototype-registry.ts     # generated
 │   ├── app-routing.module.ts     # generated
