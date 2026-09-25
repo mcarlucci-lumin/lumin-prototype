@@ -17,7 +17,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { PrototypePreviewComponent } from './home/prototype-preview/prototype-preview.component';
-
+import { DesktopBasicChromeComponent } from './chrome/desktop-basic-chrome/desktop-basic-chrome.component';
+import { DesktopSideNavChromeComponent } from './chrome/desktop-side-nav-chrome/desktop-side-nav-chrome.component';
+import { MobileChromeComponent } from './chrome/mobile-chrome/mobile-chrome.component';
+import { LuminTopNavComponent } from './chrome/lumin-top-nav/lumin-top-nav.component';
+import { LuminFooterComponent } from './chrome/lumin-footer/lumin-footer.component';
+import { ChromePickerComponent } from './chrome/chrome-picker/chrome-picker.component';
+import { TabletChromeComponent } from './chrome/tablet-chrome/tablet-chrome.component';
+import { AdminChromeComponent } from './chrome/admin-chrome/admin-chrome.component';
 // ─── Claude: add prototype component imports here ───────────────────────────
 
 // Initialize configurability with an empty config before the module loads.
@@ -33,6 +40,14 @@ if (typeof window !== 'undefined') {
         AppComponent,
         HomeComponent,
         PrototypePreviewComponent,
+        DesktopBasicChromeComponent,
+        DesktopSideNavChromeComponent,
+        MobileChromeComponent,
+        LuminTopNavComponent,
+        LuminFooterComponent,
+        ChromePickerComponent,
+        TabletChromeComponent,
+        AdminChromeComponent,
         // ─── Claude: add prototype components to declarations here ──────────
     ],
     imports: [

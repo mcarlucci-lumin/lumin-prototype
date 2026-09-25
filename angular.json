@@ -27,7 +27,7 @@
                 "glob": "**/*",
                 "input": "src/app/prototypes",
                 "output": "./assets/prototypes",
-                "ignore": ["**/*.component.ts", "**/*.component.html", "**/*.component.scss", "**/meta.json", "**/_reference/**"]
+                "ignore": ["**/*.component.ts", "**/*.component.html", "**/*.component.scss", "**/_reference/**"]
               }
             ],
             "styles": ["src/styles.scss"],

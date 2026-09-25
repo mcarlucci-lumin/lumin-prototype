@@ -1,0 +1,9 @@
+[
+    { "id": "default", "name": "Default" },
+    { "id": "desktop-basic", "name": "Desktop Basic" },
+    { "id": "desktop-side-nav", "name": "Desktop Side Nav" },
+    { "id": "tablet", "name": "Tablet" },
+    { "id": "mobile", "name": "Mobile" },
+    { "id": "admin", "name": "Admin" },
+    { "id": "responsive", "name": "Responsive" }
+]

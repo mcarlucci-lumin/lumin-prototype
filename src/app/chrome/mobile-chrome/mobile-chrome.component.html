@@ -1,0 +1,45 @@
+<!-- Dark top bar -->
+<header class="m-topbar" [class.m-topbar--dimmed]="chrome.dimChrome()">
+  <ui-core-icon class="m-topbar__icon" icon="search" size="md"></ui-core-icon>
+
+  <span class="m-topbar__brand">
+    <ui-core-icon icon="format_list_bulleted" size="sm"></ui-core-icon>
+  </span>
+
+  <div class="m-topbar__right">
+    <svg class="m-topbar__support" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Support Hub">
+      <mask id="support-hub-mask-mobile" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="1" y="2" width="28" height="26">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M26.6122 17.9346C26.5776 17.8109 26.5921 17.6782 26.6557 17.5661C27.5325 16.0198 28.0002 14.282 28.0002 12.495C27.9999 6.71235 23.1341 2 17.1638 2C14.2663 2 11.5438 3.09094 9.49885 5.08173C8.09243 6.44389 7.12069 8.11637 6.65075 9.94167C6.52708 10.4213 6.43838 10.9117 6.38493 11.4098C6.36019 11.6461 6.34314 11.884 6.33432 12.1238C6.33006 12.2505 6.3275 12.3777 6.3275 12.5052C6.17853 18.6882 12.0149 23.3312 17.9144 22.9983C18.5893 22.9603 19.2659 22.857 19.9343 22.683C19.9673 22.675 20.0006 22.6659 20.0336 22.6568C20.7614 22.4597 21.4792 22.1788 22.1755 21.8068C22.288 21.7504 22.4188 21.7371 22.5419 21.7688L27.2212 22.9597C27.6059 23.0577 27.9558 22.716 27.8512 22.344L26.6111 17.9346H26.6122ZM24.6492 17.6771L25.315 20.038C25.3957 20.3238 25.1262 20.5867 24.8305 20.5116L22.2952 19.8659C22.1601 19.8317 22.0171 19.8518 21.8977 19.9209C21.6316 20.0793 21.3587 20.2238 21.0784 20.3535C21.0644 20.3604 21.0511 20.3665 21.0371 20.3731C20.4242 20.6553 19.7805 20.8701 19.1195 21.0124C18.4807 21.1506 17.8251 21.2211 17.1641 21.2211C11.191 21.2916 7.39959 15.8234 8.32072 10.841C8.37047 10.5711 8.43387 10.3032 8.51262 10.038C8.6181 9.67513 8.7503 9.31717 8.91064 8.96582C9.33965 8.02275 9.96653 7.12896 10.8112 6.33154C12.5062 4.67944 14.7695 3.76885 17.1752 3.76885C22.1394 3.76885 26.1849 7.6871 26.1849 12.495C26.1849 14.1917 25.6706 15.8581 24.714 17.274C24.6344 17.3938 24.6105 17.5402 24.6494 17.6774L24.6492 17.6771ZM4.60575 12.5049C4.60575 12.3567 4.60888 12.2091 4.61343 12.0624C4.62053 11.8661 4.63247 11.6703 4.64896 11.4762C1.71926 14.5014 1.0179 19.5657 3.56806 23.129C3.7584 23.196 3.35696 25.0654 3.08909 26.3128C2.96486 26.8914 2.86935 27.3361 2.87494 27.4052C2.80045 27.7835 3.17743 28.098 3.55271 27.9713C3.55271 27.9713 7.53744 26.6262 7.53744 26.6257C11.8488 28.1682 15.893 27.2083 18.4892 24.6542C18.3451 24.6677 18.2012 24.6781 18.0571 24.6867C11.2083 25.0733 4.43261 19.683 4.60575 12.5046V12.5049ZM18.178 16.8235H16.147V18.8545H18.178V16.8235ZM17.9449 12.0726C17.1037 12.7174 16.147 13.4507 16.147 15.3002H18.178C18.178 14.1879 18.9 13.5569 19.6411 12.9093C20.4222 12.2266 21.2245 11.5255 21.2245 10.2227C21.2245 7.9785 19.4067 6.16077 17.1625 6.16077C14.9183 6.16077 13.1005 7.9785 13.1005 10.2227H15.1315C15.1315 9.1057 16.0455 8.19176 17.1625 8.19176C18.2796 8.19176 19.1935 9.1057 19.1935 10.2227C19.1935 11.1156 18.6047 11.5669 17.9449 12.0726Z" fill="black"/>
+      </mask>
+      <g mask="url(#support-hub-mask-mobile)">
+        <rect width="30" height="30" fill="white"/>
+      </g>
+    </svg>
+    <ui-core-icon class="m-topbar__icon" icon="add_circle" size="md"></ui-core-icon>
+  </div>
+</header>
+
+<!-- Page title + tabs -->
+<div class="m-header" [class.m-header--dimmed]="chrome.dimChrome()">
+  <h1 class="m-header__title">Page Title</h1>
+  <nav class="m-tabs">
+    @for (tab of tabs; track tab.label) {
+      <span class="m-tabs__tab" [class.m-tabs__tab--active]="tab.active">{{ tab.label }}</span>
+    }
+  </nav>
+</div>
+
+<!-- The routed prototype renders here -->
+<div class="m-content">
+  <ng-content></ng-content>
+</div>
+
+<!-- Bottom navigation, fixed to the bottom of the viewport -->
+<nav class="m-bottomnav" [class.m-bottomnav--dimmed]="chrome.dimChrome()">
+  @for (item of bottomNav; track item.label) {
+    <span class="m-bottomnav__item" [class.m-bottomnav__item--active]="item.active">
+      <ui-core-icon class="m-bottomnav__icon" [icon]="item.icon" size="sm"></ui-core-icon>
+      <span class="m-bottomnav__label">{{ item.label }}</span>
+    </span>
+  }
+</nav>
