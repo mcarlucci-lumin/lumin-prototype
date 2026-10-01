@@ -2,8 +2,8 @@ import { Component, HostBinding } from '@angular/core';
 import { ChromeService } from '../chrome.service';
 
 /**
- * "Admin" chrome — static visual of the admin portal nav bar: Lumin
- * Financial logo row + dark top nav with admin section links.
+ * "Admin Basic" chrome — static visual of an admin portal page: the shared
+ * admin top nav (see AdminTopNavComponent) above the prototype content.
  */
 @Component({
     selector: 'app-admin-chrome',

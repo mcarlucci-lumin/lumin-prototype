@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FILE_SERVER } from '../file-server';
 import { PROTOTYPES, PrototypeMeta } from '../prototype-registry';
+import { DEFAULT_PROTOTYPE_TYPE, fetchPrototypeType, PrototypeType } from '../prototype-type';
 
 type DropState = 'idle' | 'dragover' | 'uploading' | 'success' | 'error';
 
@@ -20,6 +21,12 @@ const RELOAD_DELAY_REMOVE_MS = IS_WEBCONTAINER ?  6000 : 2000;
 // The server ignores these too; skipping them here just avoids the round trip.
 const IGNORED_FILES = /(?:^|\/)(?:\.DS_Store|Thumbs\.db|desktop\.ini)$/;
 
+// Options for each tile's type picker. See prototype-type.ts.
+const TYPE_OPTIONS = [
+    { id: 'retail', label: 'Retail', value: 'retail', e2e: 'prototype-type-retail' },
+    { id: 'admin',  label: 'Admin',  value: 'admin',  e2e: 'prototype-type-admin' },
+];
+
 @Component({
     standalone: false,
     selector: 'app-home',
@@ -33,9 +40,50 @@ export class HomeComponent {
     statusMessage = '';
     removingSlug: string | null = null;
 
+    readonly typeOptions = TYPE_OPTIONS;
+    /** Saved type per prototype slug; missing entries show the default. */
+    readonly types: Record<string, PrototypeType> = {};
+
     private dragDepth = 0;
 
-    constructor(private readonly router: Router) {}
+    constructor(private readonly router: Router) {
+        this.loadTypes();
+    }
+
+    typeOf(proto: PrototypeMeta): PrototypeType {
+        return this.types[proto.path.slice(1)] ?? DEFAULT_PROTOTYPE_TYPE;
+    }
+
+    /** The picker's toggle shows just the chosen option, with no "Type:" prefix. */
+    typeLabel(proto: PrototypeMeta): string {
+        const type = this.typeOf(proto);
+        return TYPE_OPTIONS.find(o => o.value === type)?.label ?? '';
+    }
+
+    async onTypeChange(proto: PrototypeMeta, type: PrototypeType): Promise<void> {
+        const slug = proto.path.slice(1);
+        const previous = this.typeOf(proto);
+        if (type === previous) return;
+        this.types[slug] = type;
+
+        try {
+            let res: Response;
+            try {
+                res = await fetch(`${FILE_SERVER}/prototype/${encodeURIComponent(slug)}/type`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ type }),
+                });
+            } catch {
+                throw new Error('Could not reach the dev file server — is npm start running?');
+            }
+            if (!res.ok) throw new Error(`Saving type failed: ${await res.text()}`);
+        } catch (err: unknown) {
+            this.types[slug] = previous;
+            this.dropState = 'error';
+            this.statusMessage = err instanceof Error ? err.message : 'Saving type failed.';
+        }
+    }
 
     navigate(path: string): void {
         this.router.navigate([path]);
@@ -150,6 +198,13 @@ export class HomeComponent {
     }
 
     // ── private ─────────────────────────────────────────────────────────────
+
+    private loadTypes(): void {
+        for (const proto of this.prototypes) {
+            const slug = proto.path.slice(1);
+            fetchPrototypeType(slug).then(type => (this.types[slug] = type));
+        }
+    }
 
     private async finalize(): Promise<void> {
         try {

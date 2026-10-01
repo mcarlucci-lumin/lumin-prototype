@@ -1,12 +1,20 @@
 import { computed, Injectable, signal } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import CHROME_OPTIONS_DATA from './chrome-options.json';
+import { PrototypeType } from '../prototype-type';
 
 export interface ChromeOption {
     /** Stable id — matches the @switch case in app.component.html. */
     id: string;
     /** Human-readable name shown in the picker. */
     name: string;
+    /** Which prototype types this chrome is offered for. */
+    types: PrototypeType[];
+    /**
+     * False hides it from the toolbar picker while keeping it usable — e.g. the
+     * tablet/mobile chromes, which the viewport buttons and responsive mode apply.
+     */
+    picker?: boolean;
 }
 
 /**
@@ -21,9 +29,14 @@ export interface ChromeOption {
  * scripts/dev-file-server.js validate meta.json against the same ids — one source
  * of truth for TypeScript and Node alike.
  */
-export const CHROME_OPTIONS: ChromeOption[] = CHROME_OPTIONS_DATA;
+export const CHROME_OPTIONS = CHROME_OPTIONS_DATA as ChromeOption[];
 
-const DEFAULT_CHROME = 'default';
+/** Chrome ids the picker offers for a prototype of the given type. */
+export function chromeIdsForType(type: PrototypeType): string[] {
+    return CHROME_OPTIONS.filter(o => o.types.includes(type) && o.picker !== false).map(o => o.id);
+}
+
+const DEFAULT_CHROME = 'retail-basic';
 const DIM_STORAGE_KEY = 'prototype-chrome-dim';
 
 /**
@@ -62,20 +75,20 @@ export class ChromeService {
     /** Which fixed chrome the current viewport maps to for responsive mode. */
     private readonly viewportChrome = computed(() => {
         const w = this.viewportWidth();
-        if (w < 768) return 'mobile';
-        if (w < 1080) return 'tablet';
-        return 'desktop-side-nav';
+        if (w < 768) return 'retail-mobile';
+        if (w < 1080) return 'retail-tablet';
+        return 'retail-side-nav';
     });
 
     /**
      * The chrome that should actually render on screen.
-     * When the prototype's chrome is 'responsive' this resolves to the
+     * When the prototype's chrome is 'retail-responsive' this resolves to the
      * appropriate layout for the current viewport; otherwise it matches
      * activeChrome() directly.
      */
     readonly displayChrome = computed(() => {
         const active = this.activeChrome();
-        return active === 'responsive' ? this.viewportChrome() : active;
+        return active === 'retail-responsive' ? this.viewportChrome() : active;
     });
 
     /** The chrome to render for the prototype on screen. */

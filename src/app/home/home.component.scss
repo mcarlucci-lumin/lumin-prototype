@@ -161,13 +161,6 @@
         margin-bottom: 0.75rem;
     }
 
-    &__tile-path {
-        font-size: 0.75rem;
-        font-family: monospace;
-        color: var(--text-color-secondary, #888);
-        margin: 0 0 0.5rem;
-    }
-
     &__tile-name {
         font-size: 1.05rem;
         font-weight: 600;
@@ -175,12 +168,25 @@
         margin: 0 0 0.5rem;
     }
 
-    // margin-top: auto keeps the button pinned to the bottom of equal-height
-    // tiles — the description used to do that with flex-grow before it was
-    // removed from the tile.
+    &__tile-type {
+        align-self: flex-start;
+    }
+
+    // margin-top: auto keeps the hint pinned to the bottom of equal-height
+    // tiles. Plain text, not a button — the whole tile is the click target.
     &__tile-action {
-        margin-top: auto;
+        margin: auto 0 0;
         padding-top: 1.25rem;
+        text-align: center;
+        font-size: 0.75rem;
+        color: var(--text-color-secondary, #888);
+
+        svg {
+            width: 0.875rem;
+            height: 0.875rem;
+            margin-left: 0.25rem;
+            vertical-align: -0.15em;
+        }
     }
 }
 

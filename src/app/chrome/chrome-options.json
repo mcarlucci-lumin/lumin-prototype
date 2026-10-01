@@ -1,9 +1,10 @@
 [
-    { "id": "default", "name": "Default" },
-    { "id": "desktop-basic", "name": "Desktop Basic" },
-    { "id": "desktop-side-nav", "name": "Desktop Side Nav" },
-    { "id": "tablet", "name": "Tablet" },
-    { "id": "mobile", "name": "Mobile" },
-    { "id": "admin", "name": "Admin" },
-    { "id": "responsive", "name": "Responsive" }
+    { "id": "retail-basic", "name": "Retail Basic", "types": ["retail"] },
+    { "id": "retail-side-nav", "name": "Retail Side Nav", "types": ["retail"] },
+    { "id": "retail-tablet", "name": "Retail Tablet", "types": ["retail"], "picker": false },
+    { "id": "retail-mobile", "name": "Retail Mobile", "types": ["retail"], "picker": false },
+    { "id": "retail-responsive", "name": "Retail Responsive", "types": ["retail"] },
+    { "id": "admin-basic", "name": "Admin Basic", "types": ["admin"] },
+    { "id": "admin-side-nav", "name": "Admin Side Nav", "types": ["admin"] },
+    { "id": "no-chrome", "name": "No Chrome", "types": ["retail", "admin"] }
 ]

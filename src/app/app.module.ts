@@ -25,6 +25,8 @@ import { LuminFooterComponent } from './chrome/lumin-footer/lumin-footer.compone
 import { ChromePickerComponent } from './chrome/chrome-picker/chrome-picker.component';
 import { TabletChromeComponent } from './chrome/tablet-chrome/tablet-chrome.component';
 import { AdminChromeComponent } from './chrome/admin-chrome/admin-chrome.component';
+import { AdminSideNavChromeComponent } from './chrome/admin-side-nav-chrome/admin-side-nav-chrome.component';
+import { AdminTopNavComponent } from './chrome/admin-top-nav/admin-top-nav.component';
 // ─── Claude: add prototype component imports here ───────────────────────────
 
 // Initialize configurability with an empty config before the module loads.
@@ -48,6 +50,8 @@ if (typeof window !== 'undefined') {
         ChromePickerComponent,
         TabletChromeComponent,
         AdminChromeComponent,
+        AdminSideNavChromeComponent,
+        AdminTopNavComponent,
         // ─── Claude: add prototype components to declarations here ──────────
     ],
     imports: [

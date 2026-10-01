@@ -15,12 +15,17 @@
  *
  * Optional meta.json alongside the component:
  *   { "name": "Human-Readable Name", "description": "Short description",
- *     "chrome": "desktop-side-nav" }
+ *     "chrome": "retail-side-nav" }
  *
  * `chrome` names the visual frame the prototype renders inside — one of the ids
- * in src/app/chrome/chrome-options.json. Omitted means the plain 'default' frame.
+ * in src/app/chrome/chrome-options.json. Omitted means 'retail-basic'; 'no-chrome'
+ * is the plain frame with no surrounding chrome.
  * It is deliberately NOT written into prototype-registry.ts: the app fetches it
  * from the served meta.json so changing it never rebuilds a compiled file.
+ *
+ * `type` ("retail" | "admin", omitted means retail) records what kind of product
+ * the prototype is designed for. It's set from the picker on each gallery tile
+ * and, like `chrome`, is kept out of the registry for the same reason.
  *
  * Managed regions in app.module.ts are bounded by:
  *   - Imports:      the "Claude: add prototype component imports here" comment
@@ -41,7 +46,7 @@ const REGISTRY   = path.join(ROOT, 'src/app/prototype-registry.ts');
 // Same list ChromeService reads, so a meta.json chrome id means the same thing
 // to this script, the dev-file-server and the app.
 const CHROME_IDS = require('../src/app/chrome/chrome-options.json').map(o => o.id);
-const DEFAULT_CHROME = 'default';
+const DEFAULT_CHROME = 'retail-basic';
 
 // ─── helpers ────────────────────────────────────────────────────────────────
 

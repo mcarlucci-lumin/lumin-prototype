@@ -95,17 +95,28 @@
                     <div class="prototype-gallery__tile-inner">
                         <app-prototype-preview class="prototype-gallery__tile-preview"
                                                [path]="proto.path"></app-prototype-preview>
-                        <p class="prototype-gallery__tile-path">{{ proto.path }}</p>
                         <h2 class="prototype-gallery__tile-name">{{ proto.name }}</h2>
-                        <div class="prototype-gallery__tile-action">
-                            <ui-core-button
-                                theme="primary"
-                                themeGroup="neutral"
-                                message="View prototype"
-                                icon="arrow_forward"
-                                iconPosition="right">
-                            </ui-core-button>
+                        <!-- Stop clicks here from bubbling to the tile, which would open the prototype -->
+                        <div class="prototype-gallery__tile-type" (click)="$event.stopPropagation()">
+                            <ui-forms-picker
+                                ariaLabel="Prototype type"
+                                display="label"
+                                [label]="typeLabel(proto)"
+                                [desktopMaxWidth]="120"
+                                theme="white"
+                                [options]="typeOptions"
+                                [value]="typeOf(proto)"
+                                (change)="onTypeChange(proto, $event)">
+                            </ui-forms-picker>
                         </div>
+                        <p class="prototype-gallery__tile-action">
+                            View prototype
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true"
+                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"/>
+                                <polyline points="12 5 19 12 12 19"/>
+                            </svg>
+                        </p>
                     </div>
                 </ui-core-card>
 

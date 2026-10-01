@@ -1,7 +1,8 @@
 import { Component, computed, ElementRef, signal, untracked, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ChromeService } from './chrome/chrome.service';
+import { ChromeService, chromeIdsForType } from './chrome/chrome.service';
+import { fetchPrototypeType, PrototypeType } from './prototype-type';
 
 interface ViewportPreset {
     id: string;
@@ -19,9 +20,12 @@ const VIEWPORT_PRESETS: ViewportPreset[] = [
 ];
 
 // Desktop viewport shows the picker but limits it to these options.
-const DESKTOP_CHROME_IDS = ['desktop-basic', 'desktop-side-nav', 'admin'];
-const DESKTOP_CHROME_DEFAULT = 'desktop-side-nav';
-const DEFAULT_CHROME = 'default';
+const DESKTOP_CHROME_IDS = ['retail-basic', 'retail-side-nav'];
+const DESKTOP_CHROME_DEFAULT = 'retail-side-nav';
+// Retail prototypes open in this chrome in the Full viewport.
+const DEFAULT_CHROME = 'retail-basic';
+// Admin prototypes are desktop-only: no viewport picker, admin chromes only.
+const ADMIN_CHROME_DEFAULT = 'admin-basic';
 
 @Component({
     standalone: false,
@@ -42,7 +46,20 @@ export class AppComponent {
 
     readonly viewportPresets = VIEWPORT_PRESETS;
     readonly viewportPreset = signal<string>('full');
-    readonly desktopChromeIds = DESKTOP_CHROME_IDS;
+
+    /**
+     * The prototype on screen's type (from its meta.json). Null while it's being
+     * read — the toolbar and iframe wait for it so an admin prototype opens
+     * straight into an admin chrome instead of switching after it loads.
+     */
+    readonly protoType = signal<PrototypeType | null>(null);
+
+    /** Chrome ids the picker offers for the current prototype type and viewport. */
+    readonly pickerChromeIds = computed<string[]>(() => {
+        if (this.protoType() === 'admin') return chromeIdsForType('admin');
+        if (this.viewportPreset() === 'desktop') return DESKTOP_CHROME_IDS;
+        return chromeIdsForType('retail');
+    });
 
     // Remembered chrome for full-viewport mode — saved when leaving full so it
     // can be restored on return. Reset when leaving the prototype entirely.
@@ -54,15 +71,18 @@ export class AppComponent {
         window.location.pathname.split('?')[0] || '/'
     );
 
-    readonly safeFrameUrl = computed<SafeResourceUrl>(() => {
+    readonly safeFrameUrl = computed<SafeResourceUrl | null>(() => {
         const path = this.currentPath();
+        const type = this.protoType();
+        if (!type) return null;
         // Read viewport untracked — the URL only changes on path change, not on
         // viewport or chrome changes (those go via postMessage to avoid iframe reloads).
         const preset = untracked(() => this.viewportPreset());
         let chrome: string;
-        if (preset === 'desktop') chrome = DESKTOP_CHROME_DEFAULT;
-        else if (preset === 'tablet') chrome = 'tablet';
-        else if (preset === 'mobile') chrome = 'mobile';
+        if (type === 'admin') chrome = ADMIN_CHROME_DEFAULT;
+        else if (preset === 'desktop') chrome = DESKTOP_CHROME_DEFAULT;
+        else if (preset === 'tablet') chrome = 'retail-tablet';
+        else if (preset === 'mobile') chrome = 'retail-mobile';
         else chrome = DEFAULT_CHROME;
         const params = new URLSearchParams({ frame: '1', chrome });
         return this.sanitizer.bypassSecurityTrustResourceUrl(`${path}?${params}`);
@@ -87,7 +107,7 @@ export class AppComponent {
             const active = this.chrome.activeChrome();
             return DESKTOP_CHROME_IDS.includes(active) ? active : DESKTOP_CHROME_DEFAULT;
         }
-        return preset === 'tablet' ? 'tablet' : 'mobile';
+        return preset === 'tablet' ? 'retail-tablet' : 'retail-mobile';
     });
 
     constructor(
@@ -106,6 +126,9 @@ export class AppComponent {
         this.router.events.subscribe(e => {
             if (e instanceof NavigationEnd) {
                 const path = e.urlAfterRedirects.split('?')[0] || '/';
+                // Clear the type before the path so the iframe URL is never built
+                // from the previous prototype's type.
+                this.protoType.set(null);
                 this.currentPath.set(path);
                 if (path === '/') {
                     // Leaving the prototype — full reset.
@@ -119,6 +142,7 @@ export class AppComponent {
                     if (preset === 'desktop') {
                         this.chrome.setChromeForCurrentPrototype(DESKTOP_CHROME_DEFAULT);
                     }
+                    if (!this.isFrame && !this.isPreview) this.loadPrototypeType(path);
                 }
             }
         });
@@ -134,6 +158,19 @@ export class AppComponent {
                 }
             });
         }
+    }
+
+    /** Reads the prototype's type and sets the toolbar up for it. */
+    private async loadPrototypeType(path: string): Promise<void> {
+        const type = await fetchPrototypeType(path.slice(1));
+        if (this.currentPath() !== path) return; // navigated away meanwhile
+
+        if (type === 'admin') {
+            this.viewportPreset.set('full');
+            this.lastFullChrome = ADMIN_CHROME_DEFAULT;
+            this.chrome.setChromeForCurrentPrototype(ADMIN_CHROME_DEFAULT);
+        }
+        this.protoType.set(type);
     }
 
     get isPrototypeRoute(): boolean {
@@ -153,9 +190,9 @@ export class AppComponent {
             chrome = DESKTOP_CHROME_IDS.includes(active) ? active : DESKTOP_CHROME_DEFAULT;
             this.chrome.setChromeForCurrentPrototype(chrome);
         } else if (id === 'tablet') {
-            chrome = 'tablet';
+            chrome = 'retail-tablet';
         } else if (id === 'mobile') {
-            chrome = 'mobile';
+            chrome = 'retail-mobile';
         } else {
             // Returning to full — restore the last full-mode pick.
             chrome = this.lastFullChrome;

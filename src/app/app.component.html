@@ -11,37 +11,49 @@
             <span class="back-bar__label">Back to prototypes</span>
         </button>
 
-        <div class="back-bar__controls">
-            <!-- Viewport size picker — simulates the responsive breakpoints -->
-            <div class="back-bar__viewport" role="group" aria-label="Viewport size">
-                @for (p of viewportPresets; track p.id) {
-                    <button
-                        class="back-bar__viewport-btn"
-                        [class.back-bar__viewport-btn--active]="viewportPreset() === p.id"
-                        (click)="onViewportChange(p.id)"
-                        [title]="p.label + (p.width ? ' · ' + p.width + 'px' : ' · browser width')"
-                        [attr.aria-pressed]="viewportPreset() === p.id">
-                        <span class="material-icons">{{ p.icon }}</span>
-                    </button>
-                }
-            </div>
-
-            @if (effectiveChrome() !== 'default') {
-                <ui-forms-checkbox
-                    class="back-bar__dim"
-                    label="Dim chrome"
-                    [checked]="chrome.dimChrome()"
-                    (change)="onDimChange($event)">
-                </ui-forms-checkbox>
-            }
-
-            @if (viewportPreset() === 'full' || viewportPreset() === 'desktop') {
+        <!-- Controls wait for the prototype's type, which decides what's offered -->
+        <!-- Center: chrome picker -->
+        <div class="back-bar__center">
+            @if (protoType() && (viewportPreset() === 'full' || viewportPreset() === 'desktop')) {
                 <app-chrome-picker
                     class="back-bar__picker"
                     theme="white"
-                    [allowedIds]="viewportPreset() === 'desktop' ? desktopChromeIds : null"
+                    [allowedIds]="pickerChromeIds()"
                     (pick)="onChromePick($event)">
                 </app-chrome-picker>
+            }
+        </div>
+
+        <!-- Right: dim checkbox, then viewport size picker -->
+        <div class="back-bar__controls">
+            @if (protoType()) {
+                <!-- Hidden on No Chrome — there's no chrome to dim -->
+                @if (effectiveChrome() !== 'no-chrome') {
+                    <ui-forms-checkbox
+                        class="back-bar__dim"
+                        label="Dim chrome"
+                        [checked]="chrome.dimChrome()"
+                        (change)="onDimChange($event)">
+                    </ui-forms-checkbox>
+                }
+
+                <!-- Viewport size picker — simulates the responsive breakpoints.
+                     Hidden for admin prototypes (desktop-only), and while Retail
+                     Responsive is picked, since it follows the browser width. -->
+                @if (protoType() === 'retail' && chrome.activeChrome() !== 'retail-responsive') {
+                    <div class="back-bar__viewport" role="group" aria-label="Viewport size">
+                        @for (p of viewportPresets; track p.id) {
+                            <button
+                                class="back-bar__viewport-btn"
+                                [class.back-bar__viewport-btn--active]="viewportPreset() === p.id"
+                                (click)="onViewportChange(p.id)"
+                                [title]="p.label + (p.width ? ' · ' + p.width + 'px' : ' · browser width')"
+                                [attr.aria-pressed]="viewportPreset() === p.id">
+                                <span class="material-icons">{{ p.icon }}</span>
+                            </button>
+                        }
+                    </div>
+                }
             }
         </div>
     </div>
@@ -49,14 +61,16 @@
     <!-- The prototype renders inside this iframe. Its width is controlled by the
          viewport preset; the height always fills the remaining viewport below the bar. -->
     <div class="viewport-shell" [class.viewport-shell--constrained]="viewportPreset() !== 'full'">
+        @if (safeFrameUrl(); as frameUrl) {
         <iframe
             class="prototype-frame"
-            [src]="safeFrameUrl()"
+            [src]="frameUrl"
             [style.width]="frameWidth()"
             [style.height]="frameHeight()"
             title="Prototype"
             #protoFrame>
         </iframe>
+        }
     </div>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
@@ -66,36 +80,46 @@
 } @else if (isPrototypeRoute && !isPreview && isFrame) {
     @switch (chrome.displayChrome()) {
         <!-- Desktop Basic chrome — shared top nav + centered content + footer -->
-        @case ('desktop-basic') {
+        @case ('retail-basic') {
             <app-desktop-basic-chrome>
                 <router-outlet></router-outlet>
             </app-desktop-basic-chrome>
         }
         <!-- Desktop Side Nav chrome — top nav + side nav + page header + footer -->
-        @case ('desktop-side-nav') {
+        @case ('retail-side-nav') {
             <app-desktop-side-nav-chrome>
                 <router-outlet></router-outlet>
             </app-desktop-side-nav-chrome>
         }
         <!-- Mobile chrome — top bar + tabs + fixed bottom nav -->
-        @case ('mobile') {
+        @case ('retail-mobile') {
             <app-mobile-chrome>
                 <router-outlet></router-outlet>
             </app-mobile-chrome>
         }
         <!-- Tablet chrome — dark top bar (Lumin logo) + content card + bottom nav -->
-        @case ('tablet') {
+        @case ('retail-tablet') {
             <app-tablet-chrome>
                 <router-outlet></router-outlet>
             </app-tablet-chrome>
         }
-        <!-- Admin chrome — logo row + dark admin nav bar -->
-        @case ('admin') {
+        <!-- Admin Basic chrome — logo row + dark admin nav bar -->
+        @case ('admin-basic') {
             <app-admin-chrome>
                 <router-outlet></router-outlet>
             </app-admin-chrome>
         }
-        <!-- Default chrome — plain white, no chrome wrapper, no back-bar offset needed -->
+        <!-- Admin Side Nav chrome — logo row + dark admin nav bar + light side menu -->
+        @case ('admin-side-nav') {
+            <app-admin-side-nav-chrome>
+                <router-outlet></router-outlet>
+            </app-admin-side-nav-chrome>
+        }
+        <!-- No Chrome — plain white, no chrome wrapper. Also the fallback for an
+             unrecognised id (ChromeService already maps those to retail-basic). -->
+        @case ('no-chrome') {
+            <router-outlet></router-outlet>
+        }
         @default {
             <router-outlet></router-outlet>
         }

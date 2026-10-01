@@ -39,6 +39,11 @@ export class ChromePickerComponent {
         return this.chrome.activeChrome();
     }
 
+    /** The toggle shows just the chosen chrome's name, with no "Chrome:" prefix. */
+    get currentLabel(): string {
+        return this.allOptions.find(o => o.id === this.current)?.label ?? '';
+    }
+
     onChange(value: string): void {
         this.chrome.setChromeForCurrentPrototype(value);
         this.pick.emit(value);
