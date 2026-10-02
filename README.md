@@ -56,13 +56,57 @@ This works in the live preview, survives download (the asset comes back inside t
 
 Put design references, Figma exports, or other authoring material you don't want shipped in a `_reference/` folder inside the prototype — anything under it is excluded from both the live preview build and prototype downloads, but still lives in the folder for whoever works on it next.
 
-Add a `meta.json` to control how the tile reads, instead of accepting the title-cased folder name:
+Add a `meta.json` to control how the tile reads, instead of accepting the title-cased folder name, and to pick the chrome the prototype renders inside:
 
 ```json
-{ "name": "Loan Application", "description": "Multi-step application flow" }
+{ "name": "Loan Application", "description": "Multi-step application flow", "chrome": "retail-side-nav" }
 ```
 
-If the file isn't valid JSON the upload is rejected with an error telling you what's wrong, rather than quietly falling back to the folder name.
+If the file isn't valid JSON the upload is rejected with an error telling you what's wrong, rather than quietly falling back to the folder name. The same goes for a `chrome` value that isn't one of the known ids.
+
+`meta.json` can also record whether the prototype is a retail or admin design with `"type": "admin"` — omitted means `"retail"`. Each tile on the home page has a **Type** picker that writes this for you; changing it never rebuilds or reloads the app. Any other `type` value is rejected on upload. The type decides what the prototype toolbar offers — see [The toolbar](#the-toolbar).
+
+### Chrome — the frame a prototype renders inside
+
+Chrome is the surrounding app elements a prototype is presented in to mimic the look of different page layouts. It lets a prototype be reviewed in context without every prototype having to build its own shell.
+
+| `chrome` | What you get |
+| --- | --- |
+| omitted, or `"retail-basic"` | Top nav + footer, prototype in the content container |
+| `"retail-side-nav"` | Top nav + side nav + page header + footer |
+| `"retail-mobile"` | Mobile top bar + tabs + fixed bottom nav |
+| `"retail-tablet"` | Dark top bar with Lumin logo + white content card + bottom nav (no side nav) |
+| `"retail-responsive"` | Switches automatically: mobile below 768 px, tablet 768–1079 px, desktop ≥ 1080 px |
+| `"no-chrome"` | Plain white page, no furniture |
+| `"admin-basic"` | Logo row + dark admin navigation bar |
+| `"admin-side-nav"` | Logo row + dark admin navigation bar + light side menu beside the content |
+
+The canonical list lives in [`src/app/chrome/chrome-options.json`](src/app/chrome/chrome-options.json) — the app, the wiring script and the upload validator all read it, so there's one place to add a new frame. An id that isn't on the list is reported by the wiring script and the app falls back to `retail-basic`.
+
+#### The toolbar
+
+When you open a prototype, a dark toolbar appears permanently at the top of the page. The prototype itself renders inside an iframe below it, so the toolbar never overlaps the content.
+
+The toolbar has three sets of controls on the right:
+
+**Admin prototypes** (`"type": "admin"`) are desktop-only: the viewport size picker is hidden, the prototype renders at full browser width, and the chrome picker offers only Admin Basic, Admin Side Nav and No Chrome, opening in Admin Basic. Everything below describes retail prototypes, which never see the admin chromes.
+
+**Viewport size picker** — four icons that constrain the iframe width and height to simulate a specific screen size:
+
+| Button | Width | What you see |
+| --- | --- | --- |
+| Full | Browser window width | Prototype at full browser width; retail chromes available in the picker |
+| Desktop | 1440 px wide | Prototype at a typical desktop width; Retail Basic and Retail Side Nav available |
+| Tablet | 900 px wide | Prototype at a tablet width inside a dark surround; Retail Tablet chrome fixed |
+| Mobile | 390 × 852 px | Prototype at iPhone dimensions inside a dark surround; Retail Mobile chrome fixed |
+
+Switching viewports never reloads the prototype — the chrome swaps instantly. The viewport choice resets to Full when you leave the prototype.
+
+**Chrome picker** — visible in Full and Desktop modes. In Full mode it offers Retail Basic (the default), Retail Side Nav, Retail Responsive and No Chrome — Retail Tablet and Retail Mobile aren't listed because the Tablet and Mobile viewport buttons apply them (they're still valid `chrome` values in `meta.json`). In Desktop mode the picker is limited to Retail Basic and Retail Side Nav. The pick is remembered while you move between Full and Desktop and back; it resets when you leave the prototype.
+
+Retail Responsive is only offered in Full mode, where it responds to the browser window's width. While it's picked the viewport size picker is hidden — resize the browser window instead — and choosing any other chrome brings the picker back.
+
+**Dim chrome** checkbox — fades the chrome furniture so the prototype content stands out. Session-only viewing preference, applies instantly.
 
 If you drop a `.zip`, the zip's file name (minus `.zip`) becomes the folder name — it doesn't need to match the component file name either.
 
@@ -177,11 +221,15 @@ Edit [`vendor-config.json`](vendor-config.json) and bump the version(s). Pushing
 
 Create `src/app/prototypes/<slug>/<slug>.component.ts` (plus optional `.html` / `.scss`). The watcher wires it on save. Every `Ui*Module` is already imported in `app.module.ts`, so prototype components need no extra module setup.
 
-Optionally add a `meta.json` next to the component to control how the tile reads:
+Optionally add a `meta.json` next to the component to control how the tile reads and which chrome it renders inside:
 
 ```json
-{ "name": "Loan Application", "description": "Multi-step application flow" }
+{ "name": "Loan Application", "description": "Multi-step application flow", "chrome": "retail-side-nav" }
 ```
+
+`chrome` is one of the ids in [`src/app/chrome/chrome-options.json`](src/app/chrome/chrome-options.json) — see [Chrome](#chrome--the-frame-a-prototype-renders-inside) above. An unknown id is reported by the wiring script and falls back to `retail-basic`. Unlike `name` and `description`, `chrome` is read at runtime from the served copy of `meta.json` rather than from the generated registry, so changing it never rebuilds the bundle.
+
+The prototype renders inside an `<iframe>` in the outer shell. The toolbar always passes `?chrome=<id>` to the iframe URL — either the viewport-forced chrome or the user's in-session pick — so the inner app never needs to fetch meta.json and every internal navigation within the iframe keeps the same chrome.
 
 `meta.json` works the same whether the prototype is committed to the repo or dropped on the gallery. The drop zone accepts `.component.{ts,html,scss}`, `meta.json`, and asset files (images, fonts, media, `.json`/`.csv` data — see `ASSET_EXT` in [`scripts/dev-file-server.js`](scripts/dev-file-server.js) for the exact list); it silently skips OS bookkeeping files (`.DS_Store`, `Thumbs.db`, `desktop.ini`, `__MACOSX/`) and rejects anything else. Uploaded `meta.json` is parsed up front, so a malformed file fails the drop with a readable error instead of silently reverting the tile to the folder name.
 
@@ -202,11 +250,13 @@ lumin-prototype/
 ├── scripts/
 │   ├── start.js                  # Supervises watcher + ng serve + file server
 │   ├── wire-prototypes.js        # Generates registry, routes, module declarations
-│   ├── dev-file-server.js        # Upload / unzip / delete API on :7788
+│   ├── dev-file-server.js        # Upload / unzip / delete / set-chrome API on :7788
 │   ├── pack-vendor.js            # npm pack each @a3-digital package
 │   └── update-vendor-refs.js     # Rewrites package.json to file:./vendor/ refs
 ├── src/app/
 │   ├── home/                     # Prototype gallery + drop zone
+│   ├── chrome/                   # Frames a prototype can render inside
+│   │   └── chrome-options.json   # Canonical chrome ids — read by app + scripts
 │   ├── prototypes/               # One directory per prototype
 │   ├── prototype-registry.ts     # generated
 │   ├── app-routing.module.ts     # generated

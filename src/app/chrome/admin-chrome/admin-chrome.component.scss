@@ -1,0 +1,18 @@
+// "Admin Basic" chrome — shared admin top nav above the prototype content.
+
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.prototype-content {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  padding: var(--spacing-500);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-500);
+}

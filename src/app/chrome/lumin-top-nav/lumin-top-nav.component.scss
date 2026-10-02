@@ -1,0 +1,111 @@
+:host {
+  display: block;
+  width: 100%;
+  transition: opacity 0.2s ease;
+}
+
+// "Dim chrome" fades the nav, since it is part of the chrome frame.
+:host(.dimmed) {
+  opacity: 0.15;
+}
+
+// Brand nav background is a brand-specific shade not exposed as a general
+// ui-styles token, so it is set from the design's measured value.
+$nav-bar-bg: #002429;
+
+.top-nav {
+  width: 100%;
+
+  &__brand-row {
+    display: flex;
+    align-items: center;
+    height: var(--navbar-menu-desktop-height, 66px);
+    padding: 0 var(--spacing-300);
+    background: var(--color-default, #ffffff);
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+
+    svg {
+      display: block;
+      height: 40px;
+      width: auto;
+    }
+  }
+
+  &__bar {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-400);
+    height: var(--navbar-menu-desktop-height, 66px);
+    padding: 0 var(--spacing-300);
+    background: $nav-bar-bg;
+    color: #ffffff;
+  }
+
+  &__search {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-100);
+    flex: 0 0 auto;
+    width: 340px;
+    height: 40px;
+    padding: 0 var(--spacing-200);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  &__search-placeholder {
+    font-size: 16px;
+  }
+
+  &__links {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-400);
+  }
+
+  &__link {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+    cursor: default;
+    text-decoration: none;
+    color: #ffffff;
+  }
+
+  &__link-title1 {
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  &__link-title2 {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-300);
+    margin-left: auto;
+  }
+
+  &__support-icon {
+    display: block;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+  }
+
+  // ui-core-icon renders a Material glyph whose color defaults to a dark
+  // content color; force white so the icons read on the dark bar.
+  &__search-icon ::ng-deep *,
+  &__action-icon ::ng-deep * {
+    color: #ffffff;
+  }
+}

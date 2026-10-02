@@ -1,0 +1,67 @@
+// "Admin Side Nav" chrome — shared admin top nav, then a light side menu beside
+// the prototype content.
+
+$side-menu-bg: #f9f9f9;
+$side-menu-text: #002429;
+$side-menu-width: 292px;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  // The top nav dims itself; only the side menu is this chrome's own.
+  &.dimmed .side-menu {
+    opacity: 0.15;
+    pointer-events: none;
+  }
+}
+
+.admin-body {
+  display: flex;
+  flex: 1;
+  width: 100%;
+}
+
+.side-menu {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  width: $side-menu-width;
+  padding: var(--spacing-300) 0;
+  background: $side-menu-bg;
+  color: $side-menu-text;
+
+  &__title {
+    padding: 0 var(--spacing-300) var(--spacing-300);
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    padding: 0 var(--spacing-300);
+    color: $side-menu-text;
+    font-size: 15px;
+    text-decoration: none;
+    cursor: default;
+
+    &--active {
+      background: #ffffff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+  }
+}
+
+.prototype-content {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  padding: var(--spacing-500);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-500);
+  background: #ffffff;
+}

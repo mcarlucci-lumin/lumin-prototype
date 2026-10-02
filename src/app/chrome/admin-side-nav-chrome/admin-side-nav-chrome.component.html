@@ -1,0 +1,16 @@
+<app-admin-top-nav></app-admin-top-nav>
+
+<div class="admin-body">
+  <!-- Light side menu — static section links -->
+  <aside class="side-menu" aria-label="Section navigation">
+    <div class="side-menu__title">{{ sideMenuTitle }}</div>
+    @for (item of sideMenuItems; track item.label) {
+      <a class="side-menu__item no-link-hover" [class.side-menu__item--active]="item.active">{{ item.label }}</a>
+    }
+  </aside>
+
+  <!-- The routed prototype renders inside this content container. -->
+  <div class="prototype-content">
+    <ng-content></ng-content>
+  </div>
+</div>
