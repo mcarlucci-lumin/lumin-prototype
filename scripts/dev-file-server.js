@@ -6,9 +6,14 @@
  * src/app/prototypes/ and keeps wiring in sync.
  *
  * Endpoints:
- *   POST   /upload            X-File-Path: <relative>   body: raw bytes
- *   POST   /upload-zip        X-Dir-Name:  <slug>       body: raw zip bytes
- *   DELETE /prototype/<slug>                            removes dir + re-wires
+ *   POST   /upload                    X-File-Path: <relative>   body: raw bytes
+ *   POST   /upload-zip                X-Dir-Name:  <slug>       body: raw zip bytes
+ *   POST   /finalize                                            re-wires
+ *   GET    /prototype/<slug>/download                           zips the prototype
+ *   GET    /prototype/<slug>/meta                               returns meta.json ({} if none)
+ *   POST   /prototype/<slug>/chrome   body: {"chrome": "<id>"}  sets meta.json chrome
+ *   POST   /prototype/<slug>/type     body: {"type": "<type>"}  sets meta.json type
+ *   DELETE /prototype/<slug>                                    removes dir + re-wires
  *
  * Accepted files: *.component.{ts,html,scss} (any base name), meta.json, and
  * asset files (images, fonts, media, data — see ASSET_EXT below). Everything
@@ -43,6 +48,14 @@ function crc32(buf) {
 const PORT        = 7788;
 const PROTOS      = path.resolve(__dirname, '../src/app/prototypes');
 const { run: wireRun } = require('./wire-prototypes');
+
+// Same list ChromeService and wire-prototypes.js read — one source of truth for
+// which visual frames a prototype may ask for.
+const CHROME_IDS     = require('../src/app/chrome/chrome-options.json').map(o => o.id);
+const DEFAULT_CHROME = 'retail-basic';
+// What kind of product a prototype belongs to. Recorded now, read later.
+const PROTOTYPE_TYPES = ['retail', 'admin'];
+const DEFAULT_TYPE    = 'retail';
 
 // Uploads are restricted to the files wire-prototypes.js actually consumes,
 // plus static assets a prototype can reference from its template (images,
@@ -101,8 +114,9 @@ function readBody(req) {
 
 /**
  * Returns a human-readable problem with a meta.json payload, or null if it is
- * usable. Only `name` and `description` are read by wire-prototypes.js; other
- * keys are allowed through so the format can grow without breaking uploads.
+ * usable. Only `name`, `description` and `chrome` are read by
+ * wire-prototypes.js (`type` is read by the app at runtime); other keys are
+ * allowed through so the format can grow without breaking uploads.
  */
 function validateMeta(buffer) {
     let parsed;
@@ -114,12 +128,36 @@ function validateMeta(buffer) {
     if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
         return 'must contain a JSON object, e.g. { "name": "Loan Application" }';
     }
-    for (const key of ['name', 'description']) {
+    for (const key of ['name', 'description', 'chrome', 'type']) {
         if (key in parsed && typeof parsed[key] !== 'string') {
             return `"${key}" must be a string`;
         }
     }
+    // An unknown chrome id would leave the prototype in the default frame with no
+    // hint why, so reject the drop instead of letting it through quietly.
+    if ('chrome' in parsed && parsed.chrome !== '' && !CHROME_IDS.includes(parsed.chrome)) {
+        return `"chrome" must be one of ${CHROME_IDS.join(', ')} (got ${JSON.stringify(parsed.chrome)})`;
+    }
+    if ('type' in parsed && parsed.type !== '' && !PROTOTYPE_TYPES.includes(parsed.type)) {
+        return `"type" must be one of ${PROTOTYPE_TYPES.join(', ')} (got ${JSON.stringify(parsed.type)})`;
+    }
     return null;
+}
+
+/**
+ * Reads a prototype's meta.json, or an empty object when it has none yet.
+ * Malformed JSON is treated as absent — the caller is about to rewrite the file
+ * and refusing here would leave the prototype permanently unable to set a chrome.
+ */
+function readMeta(dir) {
+    const file = path.join(dir, 'meta.json');
+    if (!fs.existsSync(file)) return {};
+    try {
+        const parsed = JSON.parse(fs.readFileSync(file, 'utf8'));
+        return (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) ? parsed : {};
+    } catch {
+        return {};
+    }
 }
 
 function safePath(relative) {
@@ -406,6 +444,109 @@ if (u !== location.href) location.replace(u);
             console.log(`[dev-file-server] download ${slug}.zip (${zipBuf.length} bytes)`);
         } catch (e) {
             console.error('[dev-file-server] Error building zip:', e.message);
+            res.writeHead(500); res.end(e.message);
+        }
+        return;
+    }
+
+    // ── POST /prototype/:slug/chrome ──────────────────────────────
+    // Records the visual frame a prototype renders inside, in its own meta.json,
+    // so the choice belongs to the prototype rather than the viewer and travels
+    // with it into git and the download zip.
+    //
+    // No re-wire here: chrome is deliberately absent from the generated registry
+    // (the app fetches it from the served meta.json), so nothing compiled depends
+    // on it. Skipping the wire is what keeps a pick from changing the bundle and
+    // making ng serve reload the page.
+    const chromeMatch = url?.match(/^\/prototype\/([a-z0-9_-]+)\/chrome$/i);
+    if (req.method === 'POST' && chromeMatch) {
+        const slug = chromeMatch[1];
+        const dir  = path.join(PROTOS, slug);
+
+        try {
+            if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) {
+                res.writeHead(404); res.end('Prototype not found'); return;
+            }
+
+            let chrome;
+            try {
+                ({ chrome } = JSON.parse((await readBody(req)).toString('utf8')));
+            } catch (e) {
+                res.writeHead(400); res.end(`Body must be JSON, e.g. {"chrome":"retail-mobile"} (${e.message})`); return;
+            }
+
+            if (typeof chrome !== 'string' || !CHROME_IDS.includes(chrome)) {
+                res.writeHead(400);
+                res.end(`"chrome" must be one of ${CHROME_IDS.join(', ')} (got ${JSON.stringify(chrome)})`);
+                return;
+            }
+
+            const meta = readMeta(dir);
+            // 'retail-basic' is the implicit fallback, so drop the key instead of
+            // writing it — meta.json stays as small as what it actually overrides.
+            if (chrome === DEFAULT_CHROME) delete meta.chrome;
+            else meta.chrome = chrome;
+
+            fs.writeFileSync(path.join(dir, 'meta.json'), `${JSON.stringify(meta, null, 4)}\n`);
+            console.log(`[dev-file-server] ~ ${slug}/meta.json chrome=${chrome}`);
+            res.writeHead(200); res.end('OK');
+        } catch (e) {
+            console.error('[dev-file-server] Error:', e.message);
+            res.writeHead(500); res.end(e.message);
+        }
+        return;
+    }
+
+    // ── GET /prototype/:slug/meta ─────────────────────────────────────────
+    // Lets the app read values that are kept out of the generated registry
+    // (like `type`) so changing them never rebuilds the bundle.
+    const metaMatch = url?.match(/^\/prototype\/([a-z0-9_-]+)\/meta$/i);
+    if (req.method === 'GET' && metaMatch) {
+        const dir = path.join(PROTOS, metaMatch[1]);
+        if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) {
+            res.writeHead(404); res.end('Prototype not found'); return;
+        }
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(readMeta(dir)));
+        return;
+    }
+
+    // ── POST /prototype/:slug/type ────────────────────────────────────────
+    // Records whether a prototype is a retail or admin design, in its own
+    // meta.json. Like chrome, no re-wire: type is not in the generated registry.
+    const typeMatch = url?.match(/^\/prototype\/([a-z0-9_-]+)\/type$/i);
+    if (req.method === 'POST' && typeMatch) {
+        const slug = typeMatch[1];
+        const dir  = path.join(PROTOS, slug);
+
+        try {
+            if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) {
+                res.writeHead(404); res.end('Prototype not found'); return;
+            }
+
+            let type;
+            try {
+                ({ type } = JSON.parse((await readBody(req)).toString('utf8')));
+            } catch (e) {
+                res.writeHead(400); res.end(`Body must be JSON, e.g. {"type":"admin"} (${e.message})`); return;
+            }
+
+            if (typeof type !== 'string' || !PROTOTYPE_TYPES.includes(type)) {
+                res.writeHead(400);
+                res.end(`"type" must be one of ${PROTOTYPE_TYPES.join(', ')} (got ${JSON.stringify(type)})`);
+                return;
+            }
+
+            const meta = readMeta(dir);
+            // 'retail' is the implicit fallback, so drop the key instead of writing it.
+            if (type === DEFAULT_TYPE) delete meta.type;
+            else meta.type = type;
+
+            fs.writeFileSync(path.join(dir, 'meta.json'), `${JSON.stringify(meta, null, 4)}\n`);
+            console.log(`[dev-file-server] ~ ${slug}/meta.json type=${type}`);
+            res.writeHead(200); res.end('OK');
+        } catch (e) {
+            console.error('[dev-file-server] Error:', e.message);
             res.writeHead(500); res.end(e.message);
         }
         return;
