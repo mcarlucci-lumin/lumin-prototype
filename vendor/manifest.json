@@ -4,12 +4,12 @@
   "@a3-digital/formatter": "1.4.8",
   "@a3-digital/inversify-plugins": "2.0.25",
   "@a3-digital/ui-core": "4.0.123",
-  "@a3-digital/ui-forms": "4.0.57",
+  "@a3-digital/ui-forms": "4.0.59",
   "@a3-digital/ui-layouts": "4.0.17",
   "@a3-digital/ui-management": "4.0.26",
   "@a3-digital/ui-styles": "4.0.83",
   "@a3-digital/ui-workflows": "4.0.79",
   "@a3-digital/utils": "1.2.76",
-  "@a3-digital/lumin-ai-interface": "1.0.55",
+  "@a3-digital/lumin-ai-interface": "1.0.57",
   "@a3-digital/validation": "1.11.21"
 }
