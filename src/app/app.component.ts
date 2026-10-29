@@ -2,7 +2,7 @@ import { Component, computed, ElementRef, signal, untracked, ViewChild } from '@
 import { NavigationEnd, Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ChromeService, chromeIdsForType } from './chrome/chrome.service';
-import { fetchPrototypeType, PrototypeType } from './prototype-type';
+import { fetchPrototypeSettings, PrototypeType } from './prototype-type';
 
 interface ViewportPreset {
     id: string;
@@ -54,6 +54,13 @@ export class AppComponent {
      */
     readonly protoType = signal<PrototypeType | null>(null);
 
+    /**
+     * The prototype's own `chrome` from its meta.json, once checked against its
+     * type's picker list; null when absent or not valid for the type. Set just
+     * before protoType, which is what the toolbar and iframe wait on.
+     */
+    private readonly protoChrome = signal<string | null>(null);
+
     /** Chrome ids the picker offers for the current prototype type and viewport. */
     readonly pickerChromeIds = computed<string[]>(() => {
         if (this.protoType() === 'admin') return chromeIdsForType('admin');
@@ -78,12 +85,13 @@ export class AppComponent {
         // Read viewport untracked — the URL only changes on path change, not on
         // viewport or chrome changes (those go via postMessage to avoid iframe reloads).
         const preset = untracked(() => this.viewportPreset());
+        const metaChrome = untracked(() => this.protoChrome());
         let chrome: string;
-        if (type === 'admin') chrome = ADMIN_CHROME_DEFAULT;
+        if (type === 'admin') chrome = metaChrome ?? ADMIN_CHROME_DEFAULT;
         else if (preset === 'desktop') chrome = DESKTOP_CHROME_DEFAULT;
         else if (preset === 'tablet') chrome = 'retail-tablet';
         else if (preset === 'mobile') chrome = 'retail-mobile';
-        else chrome = DEFAULT_CHROME;
+        else chrome = metaChrome ?? DEFAULT_CHROME;
         const params = new URLSearchParams({ frame: '1', chrome });
         return this.sanitizer.bypassSecurityTrustResourceUrl(`${path}?${params}`);
     });
@@ -129,6 +137,7 @@ export class AppComponent {
                 // Clear the type before the path so the iframe URL is never built
                 // from the previous prototype's type.
                 this.protoType.set(null);
+                this.protoChrome.set(null);
                 this.currentPath.set(path);
                 if (path === '/') {
                     // Leaving the prototype — full reset.
@@ -160,15 +169,20 @@ export class AppComponent {
         }
     }
 
-    /** Reads the prototype's type and sets the toolbar up for it. */
+    /** Reads the prototype's type and chrome and sets the toolbar up for them. */
     private async loadPrototypeType(path: string): Promise<void> {
-        const type = await fetchPrototypeType(path.slice(1));
+        const { type, chrome } = await fetchPrototypeSettings(path.slice(1));
         if (this.currentPath() !== path) return; // navigated away meanwhile
 
-        if (type === 'admin') {
-            this.viewportPreset.set('full');
-            this.lastFullChrome = ADMIN_CHROME_DEFAULT;
-            this.chrome.setChromeForCurrentPrototype(ADMIN_CHROME_DEFAULT);
+        if (type === 'admin') this.viewportPreset.set('full');
+        // A chrome the type doesn't offer falls back to the type's default.
+        const metaChrome = chrome && chromeIdsForType(type).includes(chrome) ? chrome : null;
+        // Retail's meta chrome is the Full-viewport pick; skip it if a viewport is already chosen.
+        if (type === 'admin' || this.viewportPreset() === 'full') {
+            const initial = metaChrome ?? (type === 'admin' ? ADMIN_CHROME_DEFAULT : DEFAULT_CHROME);
+            this.lastFullChrome = initial;
+            this.chrome.setChromeForCurrentPrototype(initial);
+            this.protoChrome.set(metaChrome);
         }
         this.protoType.set(type);
     }
