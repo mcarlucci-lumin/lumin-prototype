@@ -11,5 +11,6 @@
   "@a3-digital/ui-workflows": "4.0.95",
   "@a3-digital/utils": "1.2.78",
   "@a3-digital/lumin-ai-interface": "1.0.64",
-  "@a3-digital/validation": "1.11.21"
+  "@a3-digital/validation": "1.11.21",
+  "@a3-digital/ui-charts": "4.0.11"
 }
