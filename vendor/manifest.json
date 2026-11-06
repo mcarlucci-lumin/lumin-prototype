@@ -1,16 +1,16 @@
 {
   "@a3-digital/configurability": "2.4.44",
-  "@a3-digital/date-utils": "1.1.30",
+  "@a3-digital/date-utils": "1.1.31",
   "@a3-digital/formatter": "1.4.9",
   "@a3-digital/inversify-plugins": "2.0.25",
-  "@a3-digital/ui-core": "4.0.144",
-  "@a3-digital/ui-forms": "4.0.72",
-  "@a3-digital/ui-layouts": "4.0.20",
-  "@a3-digital/ui-management": "4.0.31",
-  "@a3-digital/ui-styles": "4.0.92",
-  "@a3-digital/ui-workflows": "4.0.101",
+  "@a3-digital/ui-core": "4.0.148",
+  "@a3-digital/ui-forms": "4.0.74",
+  "@a3-digital/ui-layouts": "4.0.22",
+  "@a3-digital/ui-management": "4.0.32",
+  "@a3-digital/ui-styles": "4.0.95",
+  "@a3-digital/ui-workflows": "4.0.104",
   "@a3-digital/utils": "1.2.78",
   "@a3-digital/lumin-ai-interface": "1.0.64",
-  "@a3-digital/validation": "1.11.21",
-  "@a3-digital/ui-charts": "4.0.11"
+  "@a3-digital/validation": "1.11.22",
+  "@a3-digital/ui-charts": "4.0.13"
 }
